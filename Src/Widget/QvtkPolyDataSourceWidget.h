@@ -34,8 +34,8 @@ public:
 
 
 	virtual void Render();
-	virtual void SetPolyData(PolyData* polydata) { this->PolyData = polydata; }
-	virtual PolyData* GetPolyData() { return this->PolyData; }
+	virtual void SetPolyData(PolyData* polydata) { this->SourceWidgetPolyData = polydata; }
+	virtual PolyData* GetPolyData() { return this->SourceWidgetPolyData; }
 public slots:
 	static void DisableFollowCursor(bool flag);
 
@@ -66,8 +66,8 @@ protected:
 
 	virtual void FollowCursor();
 
-	Prop* Prop;
-	PolyData* PolyData;
+	Prop* SourceWidgetProp;
+	PolyData* SourceWidgetPolyData;
 	static bool m_unfollowCursorFlag;
 	//AnnotationPolyData* AnnotationPolyData;
 	Ui::PolyDataSourceWidget* ui;

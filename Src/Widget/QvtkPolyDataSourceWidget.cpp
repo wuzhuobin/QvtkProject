@@ -38,13 +38,13 @@ void PolyDataSourceWidget::setCustomEnable(bool flag)
 	//UniqueUiInteractorObserver::setCustomEnable(flag);
 	InteractorObserver::setCustomEnable(flag);
 	if (flag) {
-		if (!this->PolyData) {
-			vtkErrorMacro(<< "this->PolyData is a nullptr. " << "Please SetPolyData(). ");
+		if (!this->SourceWidgetPolyData) {
+			vtkErrorMacro(<< "this->SourceWidgetPolyData is a nullptr. " << "Please SetPolyData(). ");
 			return;
 		}
 		PlanarViewer* planarViewer = qobject_cast<PlanarViewer*>(this->getViewer());
-		if (this->Prop) {
-			delete this->Prop;
+		if (this->SourceWidgetProp) {
+			delete this->SourceWidgetProp;
 		}
 		if (planarViewer) {
 			PolyDataActor2D* actor2d = new PolyDataActor2D;
@@ -54,18 +54,18 @@ void PolyDataSourceWidget::setCustomEnable(bool flag)
 				planarViewer->GetCursorPosition()[0],
 				planarViewer->GetCursorPosition()[1],
 				planarViewer->GetCursorPosition()[2]);
-			this->Prop = actor2d;
+			this->SourceWidgetProp = actor2d;
 		}
 		else {
 			PolyDataActor* actor = new PolyDataActor;
 			this->getViewer()->AddProp(actor);
-			this->Prop = actor;
-			//this->getViewer()->AddProp(this->Prop);
+			this->SourceWidgetProp = actor;
+			//this->getViewer()->AddProp(this->SourceWidgetProp);
 		}
-		this->Prop->setRenderDataSet(this->PolyData);
+		this->SourceWidgetProp->setRenderDataSet(this->SourceWidgetPolyData);
 
-		this->SetInputData(this->Prop->getRenderDataSet()->getDataSet());
-		this->SetProp3D(this->Prop->getProp());
+		this->SetInputData(this->SourceWidgetProp->getRenderDataSet()->getDataSet());
+		this->SetProp3D(this->SourceWidgetProp->getProp());
 
 	}
 	else {
@@ -73,11 +73,11 @@ void PolyDataSourceWidget::setCustomEnable(bool flag)
 		this->SetProp3D(nullptr);
 		this->SetInputData(nullptr);
 
-		this->Prop->setRenderDataSet(nullptr);
-		this->getViewer()->RemoveProp(this->Prop);
-		delete this->Prop;
-		this->Prop = nullptr;
-		this->PolyData = nullptr;
+		this->SourceWidgetProp->setRenderDataSet(nullptr);
+		this->getViewer()->RemoveProp(this->SourceWidgetProp);
+		delete this->SourceWidgetProp;
+		this->SourceWidgetProp = nullptr;
+		this->SourceWidgetPolyData = nullptr;
 	}
 	this->Render();
 }
@@ -114,12 +114,12 @@ void PolyDataSourceWidget::Render()
 
 PolyDataSourceWidget::PolyDataSourceWidget()
 {
-	this->Prop = nullptr;
+	this->SourceWidgetProp = nullptr;
 }
 
 PolyDataSourceWidget::~PolyDataSourceWidget()
 {
-	this->Prop = nullptr;
+	this->SourceWidgetProp = nullptr;
 }
 
 void PolyDataSourceWidget::uniqueInstall()
@@ -161,7 +161,7 @@ void PolyDataSourceWidget::UniformScale()
 void PolyDataSourceWidget::Select(bool flag)
 {
 
-	AnnotationPolyData* annotationPolyData = qobject_cast<AnnotationPolyData*>(this->PolyData);
+	AnnotationPolyData* annotationPolyData = qobject_cast<AnnotationPolyData*>(this->SourceWidgetPolyData);
 	if (annotationPolyData) {
 		if (flag && 
 			annotationPolyData->getAnnotationStatus() != AnnotationPolyData::SELECTED) {
@@ -183,7 +183,7 @@ void PolyDataSourceWidget::Select(bool flag)
 
 void PolyDataSourceWidget::Hover(bool flag)
 {
-	AnnotationPolyData* annotationPolyData = qobject_cast<AnnotationPolyData*>(this->PolyData);
+	AnnotationPolyData* annotationPolyData = qobject_cast<AnnotationPolyData*>(this->SourceWidgetPolyData);
 	if (annotationPolyData) {
 		if (annotationPolyData->getAnnotationStatus() == AnnotationPolyData::SELECTED) {
 			return;
