@@ -1,5 +1,5 @@
 // me
-#include "QvtKDentalCrown.h"
+#include "QvtkDentalCrown.h"
 #include "QvtkProp.h"
 
 #include <QDebug>
@@ -55,9 +55,10 @@ void DentalCrown::setToothPosition(ToothPosition toothPosition)
 	unsigned int id = this->getToothPosition().toFDI();
 	this->setRelativePath(QStringList() << "Crown_" + QString::number(id) + ".stl");
 	this->readData("...");
-	for each (Prop* prop in *this->getReferenceProps())
-	{
-		prop->resetDisplayRegion();
+	for (QList<Prop*>::const_iterator cit = this->getReferenceProps()->cbegin();
+		cit != this->getReferenceProps()->cend(); ++cit) {
+		(*cit)->resetDisplayRegion();
+
 	}
 }
 

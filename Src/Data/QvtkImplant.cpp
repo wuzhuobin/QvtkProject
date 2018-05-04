@@ -86,11 +86,11 @@ void Implant::setImplantSource(unsigned int i)
 	this->setRelativePath(QStringList() << IMPLANT_PATHS[i] );
 	this->readData("...");
 
-	for each(Prop* prop in *this->getReferenceProps())
-	{
+	for (QList<Prop*>::const_iterator cit = this->getReferenceProps()->cbegin();
+		cit != this->getReferenceProps()->cend(); ++cit) {
 		double bounds[6];
 		this->getWorldBounds(bounds);
-		prop->setDisplayRegion(bounds);
+		(*cit)->setDisplayRegion(bounds);
 	}
 
 }
