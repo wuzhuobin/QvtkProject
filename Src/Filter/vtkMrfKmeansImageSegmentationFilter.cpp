@@ -169,7 +169,7 @@ int vtkMrfKmeansImageSegmentationFilter::ITK_Calculation(vtkImageData* input, vt
 	}
 	kmeansFilter->Update();
 
-	ScalarImageKmeansImageFilterType::ParametersType estimatedMeans = kmeansFilter->GetFinalMeans();
+	typename ScalarImageKmeansImageFilterType::ParametersType estimatedMeans = kmeansFilter->GetFinalMeans();
 	const unsigned int numberOfClasses = estimatedMeans.Size();
 
 	std::cout << "number of kmenas estimated classes = " << numberOfClasses << std::endl;
