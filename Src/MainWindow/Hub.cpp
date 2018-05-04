@@ -471,7 +471,7 @@ void Hub::slotAddImplantWidget()
 	for (int i = 0; i < NUM_OF_ORTHOGONAL_VIEWER; i++)
 	{
 		ImplantWidget* widget = this->widgets[i]->ProduceImplantWidgets();
-		widget->GetProp()->setRenderDataSet(implant);
+		widget->GetImplantWidgetProp()->setRenderDataSet(implant);
 		this->widgets[i]->SetOneOfImplantWidgetsEnabled(widget, true);
 	}
 }
@@ -487,7 +487,7 @@ void Hub::slotRemoveImplantWidget()
 			continue;
 		}
 		ImplantWidget* widget = this->widgets[i]->GetImplantWidgets().last();
-		implant = widget->GetProp()->getRenderDataSet();
+		implant = widget->GetImplantWidgetProp()->getRenderDataSet();
 		this->widgets[i]->SetOneOfImplantWidgetsEnabled(widget, false);
 	}
 

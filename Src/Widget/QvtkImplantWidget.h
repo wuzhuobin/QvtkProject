@@ -31,13 +31,13 @@ public:
 	
 	virtual void SetEnabled(int i) VTK_OVERRIDE;
 
-	vtkGetMacro(Prop, Prop*);
-	vtkSetMacro(Prop, Prop*);
+	vtkGetMacro(ImplantWidgetProp, Prop*);
+	vtkSetMacro(ImplantWidgetProp, Prop*);
 protected:
 	ImplantWidget();
 	virtual ~ImplantWidget() VTK_OVERRIDE;
 	ImplantWidgetCameraCallback* CameraCallback;
-	Prop* Prop;
+	Prop* ImplantWidgetProp;
 };
 	}
 }

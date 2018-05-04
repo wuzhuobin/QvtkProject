@@ -65,11 +65,11 @@ void ImplantWidget::setCustomEnable(bool flag)
 		//	return;
 		//}
 		//this->ImplantActor->setRenderDataSet(this->Implant);
-		this->Prop->getProp()->GetUserMatrix()->SetElement(0, 3, this->getViewer()->GetCursorPosition()[0]);
-		this->Prop->getProp()->GetUserMatrix()->SetElement(1, 3, this->getViewer()->GetCursorPosition()[1]);
-		this->Prop->getProp()->GetUserMatrix()->SetElement(2, 3, this->getViewer()->GetCursorPosition()[2]);
+		this->ImplantWidgetProp->getProp()->GetUserMatrix()->SetElement(0, 3, this->getViewer()->GetCursorPosition()[0]);
+		this->ImplantWidgetProp->getProp()->GetUserMatrix()->SetElement(1, 3, this->getViewer()->GetCursorPosition()[1]);
+		this->ImplantWidgetProp->getProp()->GetUserMatrix()->SetElement(2, 3, this->getViewer()->GetCursorPosition()[2]);
 		static_cast<vtkAffineRepresentation2D2*>(this->GetRepresentation())->SetUserMatrix(
-			this->Prop->getProp()->GetUserMatrix());
+			this->ImplantWidgetProp->getProp()->GetUserMatrix());
 		static_cast<vtkAffineRepresentation2D2*>(this->GetRepresentation())->SetOrientation(
 			this->getViewer()->GetOrientation());
 		connect(this->getViewer(), &OrthogonalViewer::OrientationChanged,
@@ -78,7 +78,7 @@ void ImplantWidget::setCustomEnable(bool flag)
 		});
 
 
-		this->getViewer()->AddProp(this->Prop);
+		this->getViewer()->AddProp(this->ImplantWidgetProp);
 		//this->GetAffineRepresentation()->PlaceWidget();
 
 		//static_cast<vtkAffineRepresentation2D*>(
@@ -91,7 +91,7 @@ void ImplantWidget::setCustomEnable(bool flag)
 	}
 	else
 	{
-		this->getViewer()->RemoveProp(this->Prop);
+		this->getViewer()->RemoveProp(this->ImplantWidgetProp);
 	}
 }
 
@@ -100,12 +100,12 @@ void ImplantWidget::SetEnabled(int i)
 	Superclass::SetEnabled(i);
 	vtkCamera* camera = this->DefaultRenderer->GetActiveCamera();
 	if (i) {
-		//this->Prop->getProp()->GetUserMatrix()->AddObserver(vtkCommand::ModifiedEvent, this->CameraCallback);
+		//this->ImplantWidgetProp->getProp()->GetUserMatrix()->AddObserver(vtkCommand::ModifiedEvent, this->CameraCallback);
 		camera->AddObserver(vtkCommand::ModifiedEvent, this->CameraCallback);
 	}
 	else {
 		camera->RemoveObserver(this->CameraCallback);
-		//this->Prop->getProp()->GetUserMatrix()->RemoveObserver(this->CameraCallback);
+		//this->ImplantWidgetProp->getProp()->GetUserMatrix()->RemoveObserver(this->CameraCallback);
 	}
 }
 
@@ -116,8 +116,8 @@ ImplantWidget::ImplantWidget()
 
 	//this->Matrix = nullptr;
 
-	this->Prop = nullptr;
-	this->Prop = new PolyDataActor;
+	this->ImplantWidgetProp = nullptr;
+	this->ImplantWidgetProp = new PolyDataActor;
 	//this->Implant = nullptr;
 
 	this->CameraCallback = ImplantWidgetCameraCallback::New();
@@ -228,8 +228,8 @@ ImplantWidget::~ImplantWidget()
 	this->CameraCallback->Delete();
 
 	//this->Implant = nullptr;
-	delete this->Prop;
-	//this->Prop = nullptr;
+	delete this->ImplantWidgetProp;
+	//this->ImplantWidgetProp = nullptr;
 }
 
 	}
