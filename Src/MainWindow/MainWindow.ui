@@ -1,0 +1,1020 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="windowModality">
+   <enum>Qt::WindowModal</enum>
+  </property>
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1334</width>
+    <height>715</height>
+   </rect>
+  </property>
+  <property name="acceptDrops">
+   <bool>true</bool>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>:/HyperBlue/hyperblue/icon/Orthopedics-icon.png</normaloff>:/HyperBlue/hyperblue/icon/Orthopedics-icon.png</iconset>
+  </property>
+  <property name="dockNestingEnabled">
+   <bool>true</bool>
+  </property>
+  <property name="dockOptions">
+   <set>QMainWindow::AllowNestedDocks|QMainWindow::AnimatedDocks</set>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <property name="styleSheet">
+    <string notr="true"/>
+   </property>
+   <layout class="QVBoxLayout" name="verticalLayoutCentral">
+    <property name="spacing">
+     <number>0</number>
+    </property>
+    <property name="leftMargin">
+     <number>0</number>
+    </property>
+    <property name="topMargin">
+     <number>0</number>
+    </property>
+    <property name="rightMargin">
+     <number>0</number>
+    </property>
+    <property name="bottomMargin">
+     <number>9</number>
+    </property>
+    <item>
+     <widget class="QTabWidget" name="tabWidget_2">
+      <property name="styleSheet">
+       <string notr="true"/>
+      </property>
+      <property name="tabPosition">
+       <enum>QTabWidget::South</enum>
+      </property>
+      <property name="currentIndex">
+       <number>0</number>
+      </property>
+      <widget class="QWidget" name="tabOrthogonal">
+       <attribute name="title">
+        <string>Orthogonal</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="verticalLayoutOrthogonal">
+        <property name="spacing">
+         <number>0</number>
+        </property>
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="tab2">
+       <attribute name="title">
+        <string>Paranomic</string>
+       </attribute>
+       <layout class="QGridLayout" name="gridLayout_4">
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
+        <property name="spacing">
+         <number>3</number>
+        </property>
+        <item row="2" column="0" colspan="2">
+         <layout class="QGridLayout" name="gridLayout_3">
+          <property name="spacing">
+           <number>0</number>
+          </property>
+          <item row="0" column="2" colspan="4">
+           <widget class="QGraphicsView" name="graphicsView_5">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(0, 0, 0);</string>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Plain</enum>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="4">
+           <widget class="QGraphicsView" name="graphicsView_21">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(0, 0, 0);</string>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Plain</enum>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="2">
+           <widget class="QGraphicsView" name="graphicsView_17">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(0, 0, 0);</string>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Plain</enum>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="5">
+           <widget class="QGraphicsView" name="graphicsView_22">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(0, 0, 0);</string>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Plain</enum>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QGraphicsView" name="graphicsView_11">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(0, 0, 0);</string>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Plain</enum>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="1">
+           <widget class="QGraphicsView" name="graphicsView_12">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(0, 0, 0);</string>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Plain</enum>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="3">
+           <widget class="QGraphicsView" name="graphicsView_18">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(0, 0, 0);</string>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Plain</enum>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="4">
+           <widget class="QGraphicsView" name="graphicsView_23">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(0, 0, 0);</string>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Plain</enum>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="5">
+           <widget class="QGraphicsView" name="graphicsView_24">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(0, 0, 0);</string>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Plain</enum>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QGraphicsView" name="graphicsView_9">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(0, 0, 0);</string>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Plain</enum>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QGraphicsView" name="graphicsView_10">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(0, 0, 0);</string>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Plain</enum>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="3">
+           <widget class="QGraphicsView" name="graphicsView_16">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(0, 0, 0);</string>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Plain</enum>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0" rowspan="2" colspan="2">
+           <widget class="QGraphicsView" name="graphicsView_6">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(0, 0, 0);</string>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Plain</enum>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="2">
+           <widget class="QGraphicsView" name="graphicsView_15">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(0, 0, 0);</string>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Plain</enum>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="tabSpatial">
+       <attribute name="title">
+        <string>Spatial</string>
+       </attribute>
+       <layout class="QGridLayout" name="gridLayoutSpatial">
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
+        <property name="spacing">
+         <number>0</number>
+        </property>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="tab_2">
+       <attribute name="title">
+        <string>Navigation</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout_31">
+        <property name="spacing">
+         <number>0</number>
+        </property>
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
+        <item>
+         <layout class="QGridLayout" name="gridLayout_15">
+          <property name="spacing">
+           <number>0</number>
+          </property>
+          <item row="0" column="0">
+           <widget class="QGraphicsView" name="graphicsView_50">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(0, 0, 0);</string>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::Box</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Plain</enum>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QGraphicsView" name="graphicsView_43">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(0, 0, 0);</string>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::Box</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Plain</enum>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_6">
+          <property name="spacing">
+           <number>0</number>
+          </property>
+          <item>
+           <widget class="QGraphicsView" name="graphicsView_49">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(0, 0, 0);</string>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::Box</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Plain</enum>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QGraphicsView" name="graphicsView_48">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(0, 0, 0);</string>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::Box</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Plain</enum>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QGraphicsView" name="graphicsView_46">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(0, 0, 0);</string>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::Box</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Plain</enum>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1334</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="MinimumExpanding" vsizetype="Minimum">
+     <horstretch>0</horstretch>
+     <verstretch>50</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>0</width>
+     <height>0</height>
+    </size>
+   </property>
+   <property name="styleSheet">
+    <string notr="true"/>
+   </property>
+   <property name="defaultUp">
+    <bool>false</bool>
+   </property>
+   <widget class="QMenu" name="menuFile">
+    <property name="minimumSize">
+     <size>
+      <width>0</width>
+      <height>0</height>
+     </size>
+    </property>
+    <property name="sizeIncrement">
+     <size>
+      <width>0</width>
+      <height>0</height>
+     </size>
+    </property>
+    <property name="baseSize">
+     <size>
+      <width>0</width>
+      <height>0</height>
+     </size>
+    </property>
+    <property name="title">
+     <string>File</string>
+    </property>
+    <widget class="QMenu" name="menuRecentProject">
+     <property name="title">
+      <string>Recent Project</string>
+     </property>
+    </widget>
+    <widget class="QMenu" name="menu_Recent_Images">
+     <property name="title">
+      <string>&amp;Recent Images</string>
+     </property>
+    </widget>
+    <addaction name="action_Import_Images"/>
+    <addaction name="menu_Recent_Images"/>
+    <addaction name="action_Import_Project"/>
+    <addaction name="action_Import_Project_Without_Clean"/>
+    <addaction name="action_Import_Project_String"/>
+    <addaction name="menuRecentProject"/>
+    <addaction name="action_Commit_Project"/>
+    <addaction name="action_Clear_Project"/>
+    <addaction name="action_Admin_Mode"/>
+    <addaction name="action_Exit"/>
+   </widget>
+   <widget class="QMenu" name="menuHelp">
+    <property name="title">
+     <string>Help</string>
+    </property>
+    <addaction name="action_About"/>
+    <addaction name="action_Help"/>
+   </widget>
+   <widget class="QMenu" name="menuInteraction">
+    <property name="title">
+     <string>Interaction</string>
+    </property>
+    <addaction name="action_Navigation_Mode"/>
+    <addaction name="action_Window_Level_Mode"/>
+    <addaction name="action_Dental_Planning"/>
+    <addaction name="action_Seed_Placer"/>
+    <addaction name="action_Micron_Tracker_Navigation"/>
+    <addaction name="action_Testing_Mode"/>
+   </widget>
+   <widget class="QMenu" name="menuView">
+    <property name="title">
+     <string>View</string>
+    </property>
+    <addaction name="actionAxial"/>
+    <addaction name="actionSagittal"/>
+    <addaction name="actionCoronal"/>
+    <addaction name="actionThreeD"/>
+    <addaction name="actionFourViews"/>
+   </widget>
+   <widget class="QMenu" name="menuWindow">
+    <property name="title">
+     <string>Window</string>
+    </property>
+    <addaction name="action_Scene_Widget"/>
+    <addaction name="action_Interactor_Observer_Widget"/>
+   </widget>
+   <widget class="QMenu" name="menuWidget">
+    <property name="title">
+     <string>Widget</string>
+    </property>
+    <addaction name="action_Distance_Widget_On"/>
+    <addaction name="action_Distance_Widget_Off"/>
+    <addaction name="action_Planar_Seed_Widget"/>
+    <addaction name="action_Implant_Widget_On"/>
+    <addaction name="action_Implant_Widget_Off"/>
+    <addaction name="action_PolyData_Source_Widget_On"/>
+    <addaction name="action_PolyData_Source_Widget_Off"/>
+    <addaction name="action_Biopsy_On"/>
+    <addaction name="action_Biopsy_Off"/>
+   </widget>
+   <widget class="QMenu" name="menuTesting">
+    <property name="title">
+     <string>Testing</string>
+    </property>
+    <addaction name="action_Testing_Action"/>
+   </widget>
+   <addaction name="menuFile"/>
+   <addaction name="menuWidget"/>
+   <addaction name="menuInteraction"/>
+   <addaction name="menuView"/>
+   <addaction name="menuWindow"/>
+   <addaction name="menuHelp"/>
+   <addaction name="menuTesting"/>
+  </widget>
+  <widget class="QDockWidget" name="dockWidgetInteractorObserver">
+   <property name="features">
+    <set>QDockWidget::DockWidgetFloatable|QDockWidget::DockWidgetMovable</set>
+   </property>
+   <property name="allowedAreas">
+    <set>Qt::AllDockWidgetAreas</set>
+   </property>
+   <property name="windowTitle">
+    <string>dockWidgetInteractorObserver</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>1</number>
+   </attribute>
+   <widget class="QWidget" name="cursorProbeDockWidgetContents">
+    <layout class="QVBoxLayout" name="verticalLayout_3">
+     <property name="spacing">
+      <number>0</number>
+     </property>
+     <property name="leftMargin">
+      <number>0</number>
+     </property>
+     <property name="topMargin">
+      <number>0</number>
+     </property>
+     <property name="rightMargin">
+      <number>0</number>
+     </property>
+     <property name="bottomMargin">
+      <number>0</number>
+     </property>
+     <item>
+      <widget class="QTabWidget" name="tabWidget">
+       <property name="currentIndex">
+        <number>0</number>
+       </property>
+       <widget class="QWidget" name="tabInteractorStyle">
+        <attribute name="title">
+         <string>tabInteractorStyle</string>
+        </attribute>
+        <layout class="QVBoxLayout" name="verticalLayout_5">
+         <property name="spacing">
+          <number>0</number>
+         </property>
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <item>
+          <widget class="QStackedWidget" name="stackedWidgetStyle"/>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QWidget" name="tabInteractorWidget">
+        <attribute name="title">
+         <string>tabInteractorWidget</string>
+        </attribute>
+        <layout class="QVBoxLayout" name="verticalLayout_4">
+         <property name="spacing">
+          <number>0</number>
+         </property>
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <item>
+          <widget class="QToolBox" name="toolBoxWidget">
+           <property name="font">
+            <font>
+             <family>Georgia</family>
+             <pointsize>10</pointsize>
+            </font>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <widget class="QDockWidget" name="dockWidgetScene">
+   <property name="features">
+    <set>QDockWidget::DockWidgetFloatable|QDockWidget::DockWidgetMovable</set>
+   </property>
+   <property name="windowTitle">
+    <string>dockWidgetScene</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>1</number>
+   </attribute>
+   <widget class="QWidget" name="dockWidgetContents_2">
+    <layout class="QVBoxLayout" name="verticalLayout_2">
+     <property name="spacing">
+      <number>0</number>
+     </property>
+     <property name="leftMargin">
+      <number>0</number>
+     </property>
+     <property name="topMargin">
+      <number>0</number>
+     </property>
+     <property name="rightMargin">
+      <number>0</number>
+     </property>
+     <property name="bottomMargin">
+      <number>0</number>
+     </property>
+    </layout>
+   </widget>
+  </widget>
+  <action name="action_About">
+   <property name="text">
+    <string>&amp;About</string>
+   </property>
+  </action>
+  <action name="action_Help">
+   <property name="text">
+    <string>&amp;Help</string>
+   </property>
+   <property name="toolTip">
+    <string>Help</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+H</string>
+   </property>
+  </action>
+  <action name="action_Window_Level_Mode">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>:/HyperBlue/hyperblue/icon/windowlevel-normal.png</normaloff>
+     <normalon>:/HyperBlue/hyperblue/icon/windowlevel-hover.png</normalon>
+     <activeoff>:/HyperBlue/hyperblue/icon/windowlevel-hover.png</activeoff>:/HyperBlue/hyperblue/icon/windowlevel-normal.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;WindowLevel Mode</string>
+   </property>
+  </action>
+  <action name="action_Navigation_Mode">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normalon>:/HyperBlue/hyperblue/icon/product-icon.png</normalon>
+    </iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Navigation Mode</string>
+   </property>
+  </action>
+  <action name="actionAxial">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>:/icon/LayoutAxialView.png</normaloff>:/icon/LayoutAxialView.png</iconset>
+   </property>
+   <property name="text">
+    <string>Axial</string>
+   </property>
+  </action>
+  <action name="actionSagittal">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>:/icon/LayoutSagittalView.png</normaloff>:/icon/LayoutSagittalView.png</iconset>
+   </property>
+   <property name="text">
+    <string>Sagittal</string>
+   </property>
+  </action>
+  <action name="actionCoronal">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>:/icon/LayoutCoronalView.png</normaloff>:/icon/LayoutCoronalView.png</iconset>
+   </property>
+   <property name="text">
+    <string>Coronal</string>
+   </property>
+  </action>
+  <action name="actionThreeD">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>:/icon/Layout3DView.png</normaloff>:/icon/Layout3DView.png</iconset>
+   </property>
+   <property name="text">
+    <string>3D</string>
+   </property>
+  </action>
+  <action name="actionFourViews">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>:/icon/LayoutFourViews.png</normaloff>:/icon/LayoutFourViews.png</iconset>
+   </property>
+   <property name="text">
+    <string>Four Views</string>
+   </property>
+  </action>
+  <action name="action_Import_Images">
+   <property name="icon">
+    <iconset>
+     <normaloff>:/HyperBlue/hyperblue/icon/new-normal.png</normaloff>
+     <normalon>:/HyperBlue/hyperblue/icon/new-hover.png</normalon>
+     <activeoff>:/HyperBlue/hyperblue/icon/new-hover.png</activeoff>:/HyperBlue/hyperblue/icon/new-normal.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Import Images</string>
+   </property>
+   <property name="toolTip">
+    <string>Import Images</string>
+   </property>
+  </action>
+  <action name="action_Import_Project">
+   <property name="icon">
+    <iconset>
+     <normaloff>:/HyperBlue/hyperblue/icon/open-normal.png</normaloff>
+     <normalon>:/HyperBlue/hyperblue/icon/open-hover.png</normalon>
+     <activeoff>:/HyperBlue/hyperblue/icon/open-hover.png</activeoff>:/HyperBlue/hyperblue/icon/open-normal.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Import Project</string>
+   </property>
+  </action>
+  <action name="action_Commit_Project">
+   <property name="icon">
+    <iconset>
+     <normaloff>:/HyperBlue/hyperblue/icon/save-normal.png</normaloff>
+     <normalon>:/HyperBlue/hyperblue/icon/save-hover.png</normalon>
+     <activeoff>:/HyperBlue/hyperblue/icon/save-hover.png</activeoff>:/HyperBlue/hyperblue/icon/save-normal.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Commit Project</string>
+   </property>
+  </action>
+  <action name="action_Testing_Mode">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>&amp;Testing Mode</string>
+   </property>
+   <property name="toolTip">
+    <string>Testing Mode</string>
+   </property>
+  </action>
+  <action name="action_Dental_Planning">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>:/HyperBlue/hyperblue/icon/product-icon.png</normaloff>:/HyperBlue/hyperblue/icon/product-icon.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Dental Planning</string>
+   </property>
+   <property name="toolTip">
+    <string>Dental Planning</string>
+   </property>
+  </action>
+  <action name="action_Clear_Project">
+   <property name="text">
+    <string>&amp;Clear Project</string>
+   </property>
+  </action>
+  <action name="action_Exit">
+   <property name="text">
+    <string>&amp;Exit</string>
+   </property>
+  </action>
+  <action name="action_Seed_Placer">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>&amp;Seed Placer</string>
+   </property>
+   <property name="toolTip">
+    <string>Seed Placer</string>
+   </property>
+  </action>
+  <action name="action_Import_Project_String">
+   <property name="text">
+    <string>&amp;Import Project String</string>
+   </property>
+   <property name="toolTip">
+    <string>Import Project String</string>
+   </property>
+  </action>
+  <action name="action_Scene_Widget">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>&amp;Scene Widget</string>
+   </property>
+   <property name="toolTip">
+    <string>Scene Widget</string>
+   </property>
+  </action>
+  <action name="action_Distance_Widget_On">
+   <property name="text">
+    <string>&amp;Distance Widget On</string>
+   </property>
+   <property name="toolTip">
+    <string>Distance Widget On</string>
+   </property>
+  </action>
+  <action name="action_Distance_Widget_Off">
+   <property name="text">
+    <string>&amp;Distance Widget Off</string>
+   </property>
+   <property name="toolTip">
+    <string>Distance Widget Off</string>
+   </property>
+  </action>
+  <action name="action_Interactor_Observer_Widget">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>&amp;Interactor Observer Widget</string>
+   </property>
+   <property name="toolTip">
+    <string>Interactor Observer Widget</string>
+   </property>
+  </action>
+  <action name="action_Admin_Mode">
+   <property name="text">
+    <string>&amp;Admin Mode</string>
+   </property>
+   <property name="toolTip">
+    <string>Admin Mode</string>
+   </property>
+  </action>
+  <action name="action_Planar_Seed_Widget">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>&amp;Planar Seed Widget</string>
+   </property>
+   <property name="toolTip">
+    <string>Planar Seed Widget</string>
+   </property>
+  </action>
+  <action name="action_Implant_Widget_On">
+   <property name="text">
+    <string>&amp;Implant Widget On</string>
+   </property>
+   <property name="toolTip">
+    <string>Implant Widget On</string>
+   </property>
+  </action>
+  <action name="action_Implant_Widget_Off">
+   <property name="text">
+    <string>&amp;Implant Widget Off</string>
+   </property>
+   <property name="toolTip">
+    <string>Implant Widget Off</string>
+   </property>
+  </action>
+  <action name="action_PolyData_Source_Widget_On">
+   <property name="text">
+    <string>&amp;PolyData Source Widget On</string>
+   </property>
+   <property name="toolTip">
+    <string>PolyData Source Widget On</string>
+   </property>
+  </action>
+  <action name="action_PolyData_Source_Widget_Off">
+   <property name="text">
+    <string>&amp;PolyData Source Widget Off</string>
+   </property>
+   <property name="toolTip">
+    <string>PolyData Source Widget Off</string>
+   </property>
+  </action>
+  <action name="action_Micron_Tracker_Navigation">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>&amp;Micron Tracker Navigation</string>
+   </property>
+   <property name="toolTip">
+    <string>Micron Tracker Navigation</string>
+   </property>
+  </action>
+  <action name="action_Import_Project_Without_Clean">
+   <property name="text">
+    <string>&amp;Import Project Without Clean</string>
+   </property>
+   <property name="toolTip">
+    <string>Import Project Without Clean</string>
+   </property>
+  </action>
+  <action name="action_Biopsy_On">
+   <property name="text">
+    <string>&amp;Biopsy On</string>
+   </property>
+   <property name="toolTip">
+    <string>Biopsy On</string>
+   </property>
+  </action>
+  <action name="action_Biopsy_Off">
+   <property name="text">
+    <string>&amp;Biopsy Off</string>
+   </property>
+   <property name="toolTip">
+    <string>Biopsy Off</string>
+   </property>
+  </action>
+  <action name="action_Testing_Action">
+   <property name="text">
+    <string>&amp;Testing Action</string>
+   </property>
+   <property name="toolTip">
+    <string>Testing Action</string>
+   </property>
+  </action>
+ </widget>
+ <resources>
+  <include location="../../Resource/Project.qrc"/>
+ </resources>
+ <connections>
+  <connection>
+   <sender>action_Scene_Widget</sender>
+   <signal>triggered(bool)</signal>
+   <receiver>dockWidgetScene</receiver>
+   <slot>setVisible(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>126</x>
+     <y>714</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_Interactor_Observer_Widget</sender>
+   <signal>triggered(bool)</signal>
+   <receiver>dockWidgetInteractorObserver</receiver>
+   <slot>setVisible(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>126</x>
+     <y>273</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>

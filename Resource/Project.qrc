@@ -1,0 +1,10 @@
+<RCC>
+    <qresource prefix="/TrackerToolRepresentationMeshes">
+        <file>TrackerToolRepresentationMesh/Drill.stl</file>
+        <file>TrackerToolRepresentationMesh/Handpiece for visualization.stl</file>
+        <file>TrackerToolRepresentationMesh/NeuralBiopsyNeedle.stl</file>
+        <file>TrackerToolRepresentationMesh/NeuralFixture.stl</file>
+        <file>TrackerToolRepresentationMesh/OrthopedicProbe.stl</file>
+        <file>TrackerToolRepresentationMesh/RoboticArmFixtureVisualization.stl</file>
+    </qresource>
+</RCC>

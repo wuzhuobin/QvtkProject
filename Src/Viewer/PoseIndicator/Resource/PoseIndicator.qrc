@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/PoseIndicator">
+        <file>drill.png</file>
+        <file>back.png</file>
+        <file>cross.png</file>
+    </qresource>
+</RCC>

@@ -1,0 +1,6 @@
+[submodule "Src/QvtkUtil"]
+	path = Src/QvtkUtil
+	url = git@github.com:wuzhuobin/QvtkUtil.git
+[submodule "Src/MainWindow/MedicalImageFinder"]
+	path = Src/MainWindow/MedicalImageFinder
+	url = git@github.com:wuzhuobin/MedicalImageFinder.git
