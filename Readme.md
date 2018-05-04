@@ -31,9 +31,6 @@ If you only clone the repository and found submodules missing, use following com
 To update local repository, use ```git submodule foreach --recursive git pull origin master```
 
 ## Latest Binary
-- [Dental](https://gitlab.com/Qvtk/QvtkDental/tags)
-- [Orthopedics (Under development)]()
-- [Neural (Under development)]() 
 
 ## Version
 Qvtk Project v0.0.1a
