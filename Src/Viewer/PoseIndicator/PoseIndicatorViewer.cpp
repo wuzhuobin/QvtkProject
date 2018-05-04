@@ -6,7 +6,7 @@
 #include <vtkMatrix4x4.h>
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>
-#include <vtkRenderWindow.h>;
+#include <vtkRenderWindow.h>
 #include <vtkInteractorStyle.h>
 
 #include <vtkImageActor.h>
