@@ -76,14 +76,18 @@ endif()
 # Adding dependency library you need
 # Please remember to set it to SYSTEM_LIBRARIES as well 
 
+# SuperBuild
+option(SUPER_BUILD "SuperBuild Dependency" ON)
+if(SUPER_BUILD)
+	add_subdirectory(SuperBuild)
+	return()
+endif(SUPER_BUILD)
 # ITK
 find_package(ITK REQUIRED)
 include(${ITK_USE_FILE})
-
 # VTK
 find_package(VTK REQUIRED) 
 include(${VTK_USE_FILE})
-
 # QT
 find_package(Qt5Core REQUIRED)
 find_package(Qt5Widgets REQUIRED)
