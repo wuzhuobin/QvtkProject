@@ -159,7 +159,7 @@ void Hub::slotInitializationImport()
 	this->mainWindow->getViewer(3)->GetCursorActor()->VisibilityOn();
 
 	Scene* scene = Scene::getCurrentScene();
-	QStringList props = scene->getAllDataByClassName("Prop");
+	QStringList props = scene->getAllDataByClassName("Q::vtk::Prop");
 
 	for (QStringList::const_iterator cit = props.cbegin(); 
 		cit != props.cend(); ++cit) {

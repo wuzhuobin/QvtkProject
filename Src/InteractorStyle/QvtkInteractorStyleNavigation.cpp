@@ -208,7 +208,7 @@ void InteractorStyleNavigation::CentralizeCursorPosition()
 	//	return;
 	//}
 	double bounds[6];
-	QStringList allImage = Scene::getCurrentScene()->getAllDataByClassName("SCBImage");
+	QStringList allImage = Scene::getCurrentScene()->getAllDataByClassName("Q::vtk::Image");
 	if (allImage.size() == 0) {
 		return;
 	}
