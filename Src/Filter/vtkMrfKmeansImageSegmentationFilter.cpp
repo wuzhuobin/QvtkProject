@@ -134,19 +134,19 @@ int vtkMrfKmeansImageSegmentationFilter::ITK_Calculation(vtkImageData* input, vt
 	intensityRescaler->Update();
 
 	// down sample to speed up computation speed
-	ImageType::SizeType outputSize;
+	typename ImageType::SizeType outputSize;
 	outputSize.SetElement(0, vtkImageToImageFilter->GetOutput()->GetLargestPossibleRegion().GetSize()[0] / 2);
 	outputSize.SetElement(1, vtkImageToImageFilter->GetOutput()->GetLargestPossibleRegion().GetSize()[1] / 2);
 	outputSize.SetElement(2, vtkImageToImageFilter->GetOutput()->GetLargestPossibleRegion().GetSize()[2] / 2);
 
-	ImageType::SpacingType outputSpacing;
+	typename ImageType::SpacingType outputSpacing;
 	outputSpacing[0] = static_cast<double>(vtkImageToImageFilter->GetOutput()->GetSpacing()[0]) * (static_cast<double>(vtkImageToImageFilter->GetOutput()->GetLargestPossibleRegion().GetSize()[0]) / static_cast<double>(outputSize[0]));
 	outputSpacing[1] = static_cast<double>(vtkImageToImageFilter->GetOutput()->GetSpacing()[1]) * (static_cast<double>(vtkImageToImageFilter->GetOutput()->GetLargestPossibleRegion().GetSize()[1]) / static_cast<double>(outputSize[1]));
 	outputSpacing[2] = static_cast<double>(vtkImageToImageFilter->GetOutput()->GetSpacing()[2]) * (static_cast<double>(vtkImageToImageFilter->GetOutput()->GetLargestPossibleRegion().GetSize()[2]) / static_cast<double>(outputSize[2]));
 
 	typedef itk::IdentityTransform<double,3> TransformType;
 	typedef itk::ResampleImageFilter<ImageType, ImageType> ResampleImageFilterType;
-	ResampleImageFilterType::Pointer downSampler = ResampleImageFilterType::New();
+	typename ResampleImageFilterType::Pointer downSampler = ResampleImageFilterType::New();
 	downSampler->SetInput(intensityRescaler->GetOutput());
 	downSampler->SetSize(outputSize);
 	downSampler->SetOutputSpacing(outputSpacing);
@@ -190,7 +190,7 @@ int vtkMrfKmeansImageSegmentationFilter::ITK_Calculation(vtkImageData* input, vt
 
 	// thresholding based on kmeans value
 	typedef itk::BinaryThresholdImageFilter<ImageType, LabelImageType> BinaryThresholdingImageFilterType;
-	BinaryThresholdingImageFilterType::Pointer binaryThresholder = BinaryThresholdingImageFilterType::New();
+	typename BinaryThresholdingImageFilterType::Pointer binaryThresholder = BinaryThresholdingImageFilterType::New();
 	binaryThresholder->SetInput(intensityRescaler->GetOutput());
 	binaryThresholder->SetInsideValue(1);
 	binaryThresholder->SetOutsideValue(0);
@@ -436,7 +436,7 @@ int vtkMrfKmeansImageSegmentationFilter::ITK_Calculation(vtkImageData* input, vt
 
 	std::cout << "exporting result..." << std::endl;
 
-	itk::ImageFileWriter<ImageType>::Pointer writer = itk::ImageFileWriter<ImageType>::New();
+	typename itk::ImageFileWriter<ImageType>::Pointer writer = itk::ImageFileWriter<ImageType>::New();
 	writer->SetInput(kmeansCast->GetOutput());
 	writer->SetFileName("D:/projects/SucabotProject/build/ImageData/1/nii/seg.nii.gz");
 	writer->Write();

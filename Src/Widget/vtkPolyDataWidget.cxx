@@ -1,5 +1,6 @@
+// me
 #include "vtkPolyDataWidget.h"
-
+// vtk
 #include <vtkObjectFactory.h>
 #include <vtkProp3D.h>
 #include <vtkMatrix4x4.h>
@@ -10,7 +11,8 @@
 #include <vtkProperty.h>
 #include <vtkCamera.h>
 #include <vtkTransform.h>
-
+// std
+#include <algorithm>
 vtkCxxSetObjectMacro(vtkPolyDataWidget, PropProperty, vtkProperty);
 vtkStandardNewMacro(vtkPolyDataWidget);
 void vtkPolyDataWidget::PrintSelf(ostream & os, vtkIndent indent)
