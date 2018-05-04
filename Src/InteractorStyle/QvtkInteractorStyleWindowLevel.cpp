@@ -151,9 +151,9 @@ Image * InteractorStyleWindowLevel::FindPokedImage()
 {
 	typedef QList<QMetaObject::Connection> ConnectionList;
 	ConnectionList connections;
-	for each (Prop *prop in this->getViewer()->GetProps())
-	{
-		ImageSlice* slice = qobject_cast<ImageSlice*>(prop);
+	for (QList<Prop*>::const_iterator cit = this->getViewer()->GetProps().cbegin();
+		cit != this->getViewer()->GetProps().cend(); ++cit) {
+		ImageSlice* slice = qobject_cast<ImageSlice*>(*cit);
 		if (slice) {
 			//connections << connect(slice, &SCBImageSlice::picked,
 			//	this, &InteractorStyleWindowLevel::ImagePicked);
@@ -190,9 +190,9 @@ Image * InteractorStyleWindowLevel::FindPokedImage()
 	// if it cannot pick any Image, return the first BImage in the current viewer.
 	// if there is no image, the qobject_cast should return a nullptr.
 	if (!InteractorStyleWindowLevel::pockedImage) {
-		for each (Prop *prop in this->getViewer()->GetProps())
-		{
-			ImageSlice* slice = qobject_cast<ImageSlice*>(prop);
+		for(QList<Prop*>::const_iterator cit = this->getViewer()->GetProps().cbegin(); 
+			cit != this->getViewer()->GetProps().cend(); ++cit){
+			ImageSlice* slice = qobject_cast<ImageSlice*>(*cit);
 			if (slice) {
 				InteractorStyleWindowLevel::pockedImage =  qobject_cast<Image*>(slice->getRenderDataSet());
 				return InteractorStyleWindowLevel::pockedImage;
