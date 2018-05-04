@@ -103,12 +103,13 @@ void PolyDataSourceWidget::DisableFollowCursor(bool flag)
 
 void PolyDataSourceWidget::Render()
 {
-	synchronalCall(this, [&](InteractorObserver* ob) {
+	FunctionSet2 f = [&](InteractorObserver* ob) {
 		PolyDataSourceWidget* widget = qobject_cast<PolyDataSourceWidget*>(ob);
 		if (widget && widget->getViewer()) {
 			widget->getViewer()->Render();
 		}
-	});
+	};
+	synchronalCall(this, f);
 }
 
 PolyDataSourceWidget::PolyDataSourceWidget()

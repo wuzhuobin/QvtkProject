@@ -56,7 +56,7 @@ void BiopsyWidget::setCustomEnable(bool flag)
 {
 	UniqueUiInteractorObserver::setCustomEnable(flag);
 	if (flag) {
-		QList<Prop*>& props = this->getViewer()->GetProps();
+		const QList<Prop*>& props = this->getViewer()->GetProps();
 		
 		this->SetProjectionNormal(this->getViewer()->GetOrientation());
 		double* pos = this->getViewer()->GetCursorPosition();
