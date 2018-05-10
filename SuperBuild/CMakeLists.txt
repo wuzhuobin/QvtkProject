@@ -95,9 +95,14 @@ if(NOT ${BUILD_SHARED_LIBS} AND NOT MSVC)
 	message(SEND_ERROR "Qt5_ExtrasX11 is needed in STATIC LIBRARY except for MSVC.")
 endif()
 
+if(NOT ${BUILD_SHARED_LIBS})
+	message(SEND_ERROR "Please check BUILD_SHARED_LIBS. ")
+	message(SEND_ERROR "CTK ERROR: INSTALL(EXPORT) given unknown export CTKExports. ")
+endif()
 include(ExternalProject)
 include(External_VTK.cmake)
 include(External_ITK.cmake)
+include(External_CTK.cmake)
 include(External_OpenCV.cmake)
 
 ExternalProject_Add(
@@ -105,6 +110,7 @@ ExternalProject_Add(
 	DEPENDS
 	VTK
 	ITK
+	CTK
 	OpenCV
 	TMP_DIR
 	${CMAKE_BINARY_DIR}/tmp

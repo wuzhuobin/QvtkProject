@@ -110,6 +110,7 @@ set(
 # )
 
 add_subdirectory(MedicalImageFinder)
+add_subdirectory(ctkDicomAppWidget2)
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #  
 # # # # # # # # # # # # # # # # # LIBRARIES # # # # # # # # # # # # # # # # # #  
