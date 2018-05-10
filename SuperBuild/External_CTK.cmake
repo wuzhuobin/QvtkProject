@@ -102,10 +102,11 @@ else()
 
 endif()
 
-# add_custom_target(
-# 	CTK_bin
-# 	ALL
-# 	${CMAKE_COMMAND} -E copy_directory ${CMAKE_BINARY_DIR}/CTK-build/bin ${CMAKE_BINARY_DIR}/${CMAKE_PROJECT_NAME}-build/bin
-# 	DEPENDS
-# 	CTK
-# )
+add_custom_target(
+	CTK_bin
+	ALL
+	COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_BINARY_DIR}/CTK-build/CTK-build/bin ${CMAKE_BINARY_DIR}/${CMAKE_PROJECT_NAME}-build/bin
+	COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_BINARY_DIR}/CTK-build/DCMTK-build/bin ${CMAKE_BINARY_DIR}/${CMAKE_PROJECT_NAME}-build/bin
+	DEPENDS
+	CTK
+)

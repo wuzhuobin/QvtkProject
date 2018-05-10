@@ -1,5 +1,0 @@
-if(NOT EXISTS ${Qt5_DIR})
-  message(FATAL_ERROR "Cannot find Qt5_DIR")
-else()
-  get_filename_component()
-endif()
