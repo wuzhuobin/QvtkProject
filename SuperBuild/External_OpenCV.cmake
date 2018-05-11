@@ -37,6 +37,7 @@ if(${BUILD_LOCAL})
         -DBUILD_opencv_java:BOOL=OFF
         -DBUILD_opencv_python3:BOOL=OFF
         -DWITH_MATLAB:BOOL=OFF
+        -DWITH_CUDA:BOOL=OFF
     )
 
 else()
@@ -71,6 +72,7 @@ else()
         -DBUILD_opencv_java:BOOL=OFF
         -DBUILD_opencv_python3:BOOL=OFF
         -DWITH_MATLAB:BOOL=OFF
+        -DWITH_CUDA:BOOL=OFF
     )
 
 endif()
