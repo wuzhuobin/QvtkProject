@@ -103,6 +103,7 @@ find_package(Qt5Widgets REQUIRED)
 # OTHERS
 #find_package()
 #....
+add_subdirectory(QsLog)
 
 # QT_QRC
 #set(
@@ -117,7 +118,6 @@ find_package(Qt5Widgets REQUIRED)
 # 	# PATH
 # )
 
-add_subdirectory(QsLog)
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #  
 # # # # # # # # # # # # # # # # # LIBRARIES # # # # # # # # # # # # # # # # # #  

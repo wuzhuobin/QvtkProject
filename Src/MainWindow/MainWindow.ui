@@ -438,6 +438,7 @@
      </property>
     </widget>
     <addaction name="action_Import_Images"/>
+    <addaction name="actionImport_Image_From_Database"/>
     <addaction name="menu_Recent_Images"/>
     <addaction name="action_Import_Project"/>
     <addaction name="action_Import_Project_Without_Clean"/>
@@ -977,6 +978,14 @@
    </property>
    <property name="toolTip">
     <string>Testing Action</string>
+   </property>
+  </action>
+  <action name="actionImport_Image_From_Database">
+   <property name="text">
+    <string>Import Image From Database</string>
+   </property>
+   <property name="toolTip">
+    <string>Import Image From Database</string>
    </property>
   </action>
  </widget>

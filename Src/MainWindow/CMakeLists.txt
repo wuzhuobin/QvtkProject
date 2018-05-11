@@ -95,6 +95,9 @@ find_package(Qt5Widgets REQUIRED)
 #find_package()
 #....
 
+add_subdirectory(MedicalImageFinder)
+add_subdirectory(ctkDicomAppWidget2)
+
 # QT_QRC
 set(
 	PROJECT_QRC
@@ -108,9 +111,6 @@ set(
 # 	WINDOWS_RESOURCES
 # 	# PATH
 # )
-
-add_subdirectory(MedicalImageFinder)
-add_subdirectory(ctkDicomAppWidget2)
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #  
 # # # # # # # # # # # # # # # # # LIBRARIES # # # # # # # # # # # # # # # # # #  
@@ -159,6 +159,7 @@ set(
 	QvtkViewer
 	QvtkInteractorObserver
 	MedicalImageFinder
+	ctkDicomAppWidget2
 	Data
 	Filter
 	InteractorStyle

@@ -6,6 +6,7 @@
 #include "QvtkSceneWidget.h"
 #include "QvtkOrthogonalViewer.h"
 #include "ui_MainWindow.h"
+#include "ctkDicomAppWidget2.h"
 
 // qt
 #include <QMainWindow>
@@ -30,6 +31,7 @@ public:
 public slots:
 	// menu file
 	void slotImportImages(QString path = QString());
+	void slotImportImagesFromDatabase();
 	void slotRecentImages();
 	void slotImportProject(QString path = QString(), bool clean = true);
 	void slotImportProjectString(QString xml = QString());
@@ -57,6 +59,7 @@ private:
 	QActionGroup stylesGroup;
 	Q::vtk::SceneWidget sceneWidget;
 	Q::vtk::OrthogonalDockViewers viewers;
+	ctkDICOMAppWidget2 databaseWidget;
 };
 
 

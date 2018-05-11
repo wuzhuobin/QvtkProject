@@ -43,6 +43,8 @@ MainWindow::MainWindow(int numOfViewers, QWidget * parent)
 	// menu file
 	connect(this->action_Import_Images, SIGNAL(triggered()),
 		this, SLOT(slotImportImages()));
+	connect(this->actionImport_Image_From_Database, &QAction::triggered,
+		this, &MainWindow::slotImportImagesFromDatabase);
 	connect(this->action_Commit_Project, SIGNAL(triggered()),
 		this, SLOT(slotCommitProject()));
 	connect(this->action_Import_Project, SIGNAL(triggered()),
@@ -51,6 +53,8 @@ MainWindow::MainWindow(int numOfViewers, QWidget * parent)
 		this, [this]() {this->slotImportProject(QString(), false);});
 	connect(this->action_Import_Project_String, SIGNAL(triggered()),
 		this, SLOT(slotImportProjectString()));
+	connect(&this->databaseWidget, &ctkDICOMAppWidget2::imageFilesSent,
+		this, &MainWindow::signalImportImages);
 
 	// for recent images used
 	this->settings = new QSettings("Setting.ini", QSettings::IniFormat, this);
@@ -76,17 +80,21 @@ void MainWindow::slotImportImages(QString path)
 	rw.setImageModalityNames(3, "Image 3");
 
 	if (QWizard::Accepted == rw.exec()) {
-
-		QStringList imagePaths;
-		for (int i = 0; i < rw.getNumberOfImages(); ++i) {
-			if (rw.getFileNames(i).isEmpty()) {
-				continue;
-			}
-			imagePaths << rw.getFileNames(i);
-		}
+		//QStringList imagePaths;
+		//for (int i = 0; i < rw.getNumberOfImages(); ++i) {
+		//	if (rw.getFileNames(i).isEmpty()) {
+		//		continue;
+		//	}
+		//	imagePaths << rw.getFileNames(i);
+		//}
 		adjustForCurrentFile(rw.getDirectory());
-		emit signalImportImages(imagePaths);
+		emit signalImportImages(rw.getFileNames());
 	}
+}
+void MainWindow::slotImportImagesFromDatabase()
+{
+	this->databaseWidget.show();
+	this->databaseWidget.raise();
 }
 void MainWindow::slotRecentImages()
 {

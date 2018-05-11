@@ -95,6 +95,8 @@ find_package(Qt5Widgets REQUIRED)
 #find_package()
 #....
 
+add_subdirectory(PoseIndicator)
+
 # QT_QRC
 #set(
 #	PROJECT_QRC
@@ -108,7 +110,6 @@ find_package(Qt5Widgets REQUIRED)
 # 	# PATH
 # )
 
-add_subdirectory(PoseIndicator)
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #  
 # # # # # # # # # # # # # # # # # LIBRARIES # # # # # # # # # # # # # # # # # #  
