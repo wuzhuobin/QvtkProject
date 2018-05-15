@@ -1,8 +1,8 @@
  /**
- * @file	Project\code\filter\vtkAluminiumMarkerPolyDataExtraction.h
+ * @file		QvtkProject\Src\Filter\vtkAMPDEFilter.h
  * @language	C++
- * @author	wuzhuobin jiejin2022@163.com
- * @date	2017/12/28
+ * @author		wuzhuobin jiejin2022@163.com
+ * @date		2017/12/28
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
  *			This program is distributed in the hope that it will be useful, but	 *
  *			WITHOUT ANY WARRANTY; without even the implied warranty of			 * 
@@ -17,20 +17,21 @@
  *			NOT publish and distribute without the author's permission.  	     *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  */
-#ifndef __VTK_ALUMINIUM_MARKER_POLY_DATA_EXTRACTION_FILTER_H__
-#define __VTK_ALUMINIUM_MARKER_POLY_DATA_EXTRACTION_FILTER_H__
+#ifndef __VTK_AMPDE_FILTER_H__
+#define __VTK_AMPDE_FILTER_H__
 
 // vtk
 #include <vtkPolyDataAlgorithm.h>
 class vtkImageData;
 
 /**
- * @class	vtkAluminiumMarkerPolyDataExtractionFilter
- * @brief	For Sucabot Dental, automatic extract a aluminium marker mesh to do ICP
+ * @class	vtkAMPDEFilter
+ * @brief	For doing Aluminium-Poly-Data-Extraction, automatic extract a aluminium marker mesh to do ICP
  *			registration. 
  * @author	WUZHUOBIN
- * @date	2017/12/28
- *
+ * @date	2018/05/15	
+ * @since	2017/12/28
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  * This class was only applied to 2 phantom images which has an aluminium marker. It might not 
  * be appliable to real human mandible or maxilla. 
  *
@@ -62,23 +63,25 @@ class vtkImageData;
  * and aluminium marker since other irrelevant voxel have been removed. Or by knowing the volume 
  * of the aluminium marker, doing hitogram statistics the finding the volume matching.
  * Anyway, by doing masking can optimize other thresholding. 
- * 
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+ * Artifact in CBCT can cause the aluminium marker in image to become disuniform. K-means cannot seperate
+ * an uniform label. 
  */
 
-class vtkAluminiumMarkerPolyDataExtractionFilter : public vtkPolyDataAlgorithm
+class vtkAMPDEFilter : public vtkPolyDataAlgorithm
 {
 public:
 	/**
-	 * @fn	static vtkAluminiumMarkerPolyDataExtractionFilter* New();
+	 * @fn	static vtkAMPDEFilter* New();
 	 * @brief	static vtk New() method; 
 	 * @static
-	 * @return	A vtkAluminiumMarkerPolyDataExtractionFilter pointer.
+	 * @return	A vtkAMPDEFilter pointer.
 	 */
-	static vtkAluminiumMarkerPolyDataExtractionFilter* New();
+	static vtkAMPDEFilter* New();
 	/**
 	 * @brief	vtkTypeMacro
 	 */
-	vtkTypeMacro(vtkAluminiumMarkerPolyDataExtractionFilter, vtkPolyDataAlgorithm);
+	vtkTypeMacro(vtkAMPDEFilter, vtkPolyDataAlgorithm);
 	/**
 	 * @fn	virtual void PrintSelf(ostream& os, vtkIndent indent) VTK_OVERRIDE;
 	 * @brief	 vtk PrintSelf method.
@@ -122,8 +125,8 @@ public:
 
 
 protected:
-	vtkAluminiumMarkerPolyDataExtractionFilter();
-	virtual ~vtkAluminiumMarkerPolyDataExtractionFilter() VTK_OVERRIDE;
+	vtkAMPDEFilter();
+	virtual ~vtkAMPDEFilter() VTK_OVERRIDE;
 
 
 	/**
@@ -159,4 +162,4 @@ protected:
 
 };
 
-#endif // !__VTK_ALUMINIUM_MARKER_POLY_DATA_EXTRACTION_FILTER_H__
+#endif // !__VTK_AMPDE_FILTER_H__
