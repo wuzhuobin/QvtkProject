@@ -42,7 +42,7 @@ if(${BUILD_LOCAL})
 		-DModule_vtkGUISupportQt:BOOL=ON
 		-DModule_vtkGUISupportQtOpenGL:BOOL=ON
 		-DModule_vtkGUISupportQtSQL:BOOL=ON
-		-DModule_vtkGUISupportQtWebkit:BOOL=ON
+		-DModule_vtkGUISupportQtWebkit:BOOL=OFF
 		-DQt5_DIR:PATH=${Qt5_DIR}
 		-DQt5Core_DIR:PATH=${Qt5_DIR}Core
 		-DQt5Gui_DIR:PATH=${Qt5_DIR}Gui
@@ -88,7 +88,7 @@ else()
         -DModule_vtkGUISupportQt:BOOL=ON
         -DModule_vtkGUISupportQtOpenGL:BOOL=ON
         -DModule_vtkGUISupportQtSQL:BOOL=ON
-        -DModule_vtkGUISupportQtWebkit:BOOL=ON
+        -DModule_vtkGUISupportQtWebkit:BOOL=OFF
         -DQt5_DIR:PATH=${Qt5_DIR}
         -DQt5Core_DIR:PATH=${Qt5_DIR}Core
         -DQt5Gui_DIR:PATH=${Qt5_DIR}Gui
