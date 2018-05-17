@@ -6,7 +6,7 @@
 #include "QvtkSceneWidget.h"
 #include "QvtkOrthogonalViewer.h"
 #include "ui_MainWindow.h"
-#include "ctkDicomAppWidget2.h"
+#include "ctkDICOMAppWidget2.h"
 
 // qt
 #include <QMainWindow>
