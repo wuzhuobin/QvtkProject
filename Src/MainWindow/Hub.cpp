@@ -3,6 +3,7 @@
 #include "QvtkScene.h"
 #include "QvtkImage.h"
 #include "QvtkImageSlice.h"
+#include "QvtkImageLabel.h"
 #include "QvtkOrthogonalViewer.h"
 #include "QvtkVolume.h"
 #include "QvtkImplant.h"
@@ -59,6 +60,8 @@ Hub::Hub(QObject* parent)
 		this, &Hub::slotImportString);
 	QObject::connect(this->mainWindow, &MainWindow::signalCommitedProject,
 		this, &Hub::slotCommit);
+	QObject::connect(this->mainWindow, &MainWindow::signalImportLabel,
+		this, &Hub::slotInitializationLabel);
 	QObject::connect(this->mainWindow->action_Clear_Project, &QAction::triggered,
 		this, &Hub::slotClean);
 	QObject::connect(this->mainWindow->action_Exit, &QAction::triggered,
@@ -129,13 +132,6 @@ Hub::Hub(QObject* parent)
 
 Hub::~Hub()
 {
-	//this->mainWindow->stackedWidgetStyle->removeWidget(this->styles[0]->GetWindowLevel()->getWidget());
-	//this->mainWindow->stackedWidgetStyle->removeWidget(this->styles[0]->GetNavigation()->getWidget());
-	//this->mainWindow->stackedWidgetStyle->removeWidget(this->styles[0]->GetDentalPlanning()->getWidget());
-	//this->mainWindow->stackedWidgetStyle->removeWidget(this->styles[0]->GetSeedPlacer()->getWidget());
-	//this->mainWindow->stackedWidgetStyle->removeWidget(this->styles[0]->GetMicronTrackerNavigation()->getWidget());
-	//this->mainWindow->stackedWidgetStyle->removeWidget(this->styles[0]->GetMicronTrackerRobotNavigation()->getWidget());
-
     delete this->mainWindow;
 
 	for (int i = 0; i < NUM_OF_ORTHOGONAL_VIEWER; ++i) {
@@ -191,28 +187,32 @@ void Hub::slotInitializationImport()
 	}
 
 
+	this->slotInitialization();
 	this->slotInitializationPolyDataSourceWidget();
 	this->slotInitializationBiopsyWidget();
+	this->slotInitializationPlanarSeedWidges();
+}
 
-	this->slotInitializationMainWindow();
-
+void Hub::slotInitialization()
+{
 	this->mainWindow->action_Navigation_Mode->trigger();
 	this->styles[0]->GetNavigation()->CentralizeCursorPosition();
 	this->styles[1]->GetNavigation()->CentralizeCursorPosition();
 	this->styles[2]->GetNavigation()->CentralizeCursorPosition();
-	this->styles[3]->GetNavigation()->CentralizeCursorPosition();
-
-
+	
 	this->mainWindow->getViewer(0)->ResetCamera(0);
 	this->mainWindow->getViewer(0)->ResetCameraClippingRange(0);
+	this->mainWindow->getViewer(0)->GetCursorActor()->VisibilityOn();
 	this->mainWindow->getViewer(1)->ResetCamera(0);
 	this->mainWindow->getViewer(1)->ResetCameraClippingRange(0);
+	this->mainWindow->getViewer(1)->GetCursorActor()->VisibilityOn();
 	this->mainWindow->getViewer(2)->ResetCamera(0);
 	this->mainWindow->getViewer(2)->ResetCameraClippingRange(0);
+	this->mainWindow->getViewer(2)->GetCursorActor()->VisibilityOn();
 	this->mainWindow->getViewer(3)->ResetCamera(0);
-
 	this->mainWindow->getViewer(3)->ResetCameraClippingRange(0);
-	Viewer::RenderAllViewers();
+	this->mainWindow->getViewer(3)->GetCursorActor()->VisibilityOn();
+	Q::vtk::Viewer::RenderAllViewers();
 }
 
 void Hub::slotInitializationPolyDataSourceWidget()
@@ -262,7 +262,7 @@ void Hub::slotInitializationBiopsyWidget()
 	}
 }
 
-void Hub::slotInitializationMainWindow()
+void Hub::slotInitializationPlanarSeedWidges()
 {
 	using namespace Q::vtk;
 	Scene* scene = Scene::getCurrentScene();
@@ -276,8 +276,6 @@ void Hub::slotInitializationMainWindow()
 
 		this->widgets[0]->GetPlanarSeedWidgets().last()->AddIndex(id);
 	}
-
-
 	
 }
 
@@ -640,41 +638,69 @@ void Hub::slotInitializationImages(QStringList imagePaths)
 				break;
 			}
 		}
-
 		Volume* volume = new Volume;
 		volume->setRenderDataSet(image);
-		//volume->setPresetToCBCTDental();
 		scene->addData(volume);
 		this->mainWindow->getViewer(3)->AddProp(volume);
 		this->mainWindow->getViewer(3)->SetOrientationToAxial();
 	}
 
-
-	this->mainWindow->action_Navigation_Mode->trigger();
-	this->styles[0]->GetNavigation()->CentralizeCursorPosition();
-	this->styles[1]->GetNavigation()->CentralizeCursorPosition();
-	this->styles[2]->GetNavigation()->CentralizeCursorPosition();
-	//this->mainWindow->action_Dental_Planning->trigger();
-	//this->styles[3]->GetNavigation()->CentralizeCursorPosition();
-	
-	
-	this->mainWindow->getViewer(0)->ResetCamera(0);
-	this->mainWindow->getViewer(0)->ResetCameraClippingRange(0);
-	this->mainWindow->getViewer(0)->GetCursorActor()->VisibilityOn();
-	this->mainWindow->getViewer(1)->ResetCamera(0);
-	this->mainWindow->getViewer(1)->ResetCameraClippingRange(0);
-	this->mainWindow->getViewer(1)->GetCursorActor()->VisibilityOn();
-	this->mainWindow->getViewer(2)->ResetCamera(0);
-	this->mainWindow->getViewer(2)->ResetCameraClippingRange(0);
-	this->mainWindow->getViewer(2)->GetCursorActor()->VisibilityOn();
-	this->mainWindow->getViewer(3)->ResetCamera(0);
-	this->mainWindow->getViewer(3)->ResetCameraClippingRange(0);
-	this->mainWindow->getViewer(3)->GetCursorActor()->VisibilityOn();
-	Viewer::RenderAllViewers();
-
+	this->slotInitialization();
 }
 
+void Hub::slotInitializationLabel(QString path)
+{
+	using namespace Q::vtk;
+	Scene *scene = Scene::getCurrentScene();
+	ImageLabel *label = scene->addNewDataByClass<ImageLabel>();
+	label->setAbsolutePath(QStringList() << path);
+	label->readData();
+	label->setRelativePath(QStringList() << label->getUniqueName() + ".nii.gz");
+	for (int i = 0; i < 3; ++i) {
+			ImageSlice* imageSlice = new ImageSlice;
+			imageSlice->setRenderDataSet(label);
+			scene->addData(imageSlice);
+			this->mainWindow->getViewer(i)->AddProp(imageSlice);
+			switch (i)
+			{
+			case 0:
+				this->mainWindow->getViewer(i)->SetOrientationToAxial();
+				break;
+			case 1:
+				this->mainWindow->getViewer(i)->SetOrientationToCoronal();
+				break;
+			case 2:
+				this->mainWindow->getViewer(i)->SetOrientationToSagital();
+				break;
+			default:
+				break;
+			}
+		}
+	this->slotInitialization();
+}
+#include <QvtkNeuralTube.h>
 void Hub::slotTestingAction()
 {
+	using namespace Q::vtk;
+	NeuralTube *tube = new NeuralTube;
+	tube->setProperty("tubeRadius", 5.0);
+	tube->setProperty("tubeLength", 200);
+	tube->setProperty("intermediatePoint", QVariantList() << -46.71 << -70.75 << 74.52);
+	tube->setProperty("endPoint", QVariantList() << 5.14 << -14.82 << 39.52);
+	tube->setColor(1, 1, 1);
+	//tube->setOpacity(0.3);
 
+	PolyDataActor *tubeActor = new PolyDataActor;
+	tubeActor->setRenderDataSet(tube);
+	this->mainWindow->getViewer(3)->AddProp(tubeActor);
+
+	Implant* implant = new Implant;
+	implant->setColor(1, 0, 0);
+	//implant->setOpacity(0.3);
+	implant->getUserMatrix()->DeepCopy(tube->getAdditionalMatrix());
+	cout << *tube->getAdditionalMatrix() << '\n';
+
+	PolyDataActor *implantActor = new PolyDataActor;
+	implantActor->setRenderDataSet(implant);
+	this->mainWindow->getViewer(3)->AddProp(implantActor);
 }

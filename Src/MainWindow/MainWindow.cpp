@@ -41,20 +41,24 @@ MainWindow::MainWindow(int numOfViewers, QWidget * parent)
 
 	// connection
 	// menu file
-	connect(this->action_Import_Images, SIGNAL(triggered()),
-		this, SLOT(slotImportImages()));
-	connect(this->actionImport_Image_From_Database, &QAction::triggered,
+	QObject::connect(this->action_Import_Images_From_Medical_Image_Finder, SIGNAL(triggered()),
+		this, SLOT(slotImportImagesFromMedicalImageFinder()));
+	QObject::connect(this->action_Import_Images_From_Database, &QAction::triggered,
 		this, &MainWindow::slotImportImagesFromDatabase);
-	connect(this->action_Commit_Project, SIGNAL(triggered()),
+	QObject::connect(this->action_Commit_Project, SIGNAL(triggered()),
 		this, SLOT(slotCommitProject()));
-	connect(this->action_Import_Project, SIGNAL(triggered()),
+	QObject::connect(this->action_Import_Project, SIGNAL(triggered()),
 		this, SLOT(slotImportProject()));
-	connect(this->action_Import_Project_Without_Clean, &QAction::triggered,
+	QObject::connect(this->action_Import_Project_Without_Clean, &QAction::triggered,
 		this, [this]() {this->slotImportProject(QString(), false);});
-	connect(this->action_Import_Project_String, SIGNAL(triggered()),
+	QObject::connect(this->action_Import_Project_String, SIGNAL(triggered()),
 		this, SLOT(slotImportProjectString()));
-	connect(&this->databaseWidget, &ctkDICOMAppWidget2::imageFilesSent,
+	QObject::connect(&this->databaseWidget, &ctkDICOMAppWidget2::imageFilesSent,
 		this, &MainWindow::signalImportImages);
+	QObject::connect(this->action_Import_Images, SIGNAL(triggered()), 
+		this, SLOT(slotImportImages()));
+	QObject::connect(this->action_Import_Label, SIGNAL(triggered()),
+		this, SLOT(slotImportLabel()));
 
 	// for recent images used
 	this->settings = new QSettings("Setting.ini", QSettings::IniFormat, this);
@@ -71,7 +75,17 @@ Q::vtk::OrthogonalViewer * MainWindow::getViewer(int i)
 	return this->viewers.getViewers(i);
 }
 
-void MainWindow::slotImportImages(QString path)
+void MainWindow::slotImportImages(QStringList paths)
+{
+	if (paths.isEmpty()) {
+		paths = QFileDialog::getOpenFileNames(this, "Import Images", QString(), "Images (* *.nii *.nii.gz)");
+	}
+	if (!paths.isEmpty()) {
+		emit signalImportImages(QStringList() << paths.join(';'));
+	}
+}
+
+void MainWindow::slotImportImagesFromMedicalImageFinder(QString path)
 {
 	MedicalImageFinder rw(path, 4);
 	rw.setImageModalityNames(0, "Image 0");
@@ -80,13 +94,6 @@ void MainWindow::slotImportImages(QString path)
 	rw.setImageModalityNames(3, "Image 3");
 
 	if (QWizard::Accepted == rw.exec()) {
-		//QStringList imagePaths;
-		//for (int i = 0; i < rw.getNumberOfImages(); ++i) {
-		//	if (rw.getFileNames(i).isEmpty()) {
-		//		continue;
-		//	}
-		//	imagePaths << rw.getFileNames(i);
-		//}
 		adjustForCurrentFile(rw.getDirectory());
 		emit signalImportImages(rw.getFileNames());
 	}
@@ -96,14 +103,23 @@ void MainWindow::slotImportImagesFromDatabase()
 	this->databaseWidget.show();
 	this->databaseWidget.raise();
 }
-void MainWindow::slotRecentImages()
+void MainWindow::slotRecentImagesFromMedicalImageFinder()
 {
 	QCoreApplication::processEvents();
 
 	QAction *action = qobject_cast<QAction *>(sender());
 	if (action)
 	{
-		slotImportImages(action->data().toString());
+		slotImportImagesFromMedicalImageFinder(action->data().toString());
+	}
+}
+void MainWindow::slotImportLabel(QString path)
+{
+	if (path.isEmpty()) {
+		path = QFileDialog::getOpenFileName(this, "Import Label", QString(), "Label(*.nii *.nii.gz)");
+	}
+	if (!path.isEmpty()) {
+		emit signalImportLabel(path);
 	}
 }
 void MainWindow::slotImportProject(QString path, bool clean)
@@ -129,6 +145,7 @@ void MainWindow::slotImportProjectString(QString xml)
 	}
 	emit signalImportedProjectString(xml);
 }
+
 void MainWindow::slotCommitProject(QString path)
 {
     QString project = QFileDialog::getSaveFileName(this, tr("Commit XML"),
@@ -138,8 +155,6 @@ void MainWindow::slotCommitProject(QString path)
     }
     emit signalCommitedProject(project);
 }
-
-
 
 void MainWindow::closeEvent(QCloseEvent* closeEvent)
 {
@@ -153,10 +168,10 @@ void MainWindow::createRecentImageActions()
 	for (int i = 0; i < MAX_RECENT_IMAGE; i++) {
 		recentFileAction = new QAction(this);
 		recentFileAction->setVisible(false);
-		connect(recentFileAction, SIGNAL(triggered()), this, SLOT(slotRecentImages()));
+		QObject::connect(recentFileAction, SIGNAL(triggered()), this, SLOT(slotRecentImagesFromMedicalImageFinder()));
 
 		recentFileActionList.append(recentFileAction);
-		this->menu_Recent_Images->addAction(recentFileAction);
+		this->menu_Recent_Images_From_Medical_Finder->addAction(recentFileAction);
 	}
 
 	updateRecentActionList();

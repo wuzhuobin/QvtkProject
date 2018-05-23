@@ -28,18 +28,22 @@ public:
 	virtual ~MainWindow() override;
 
 	Q::vtk::OrthogonalViewer* getViewer(int i);
-public slots:
+public Q_SLOTS:
 	// menu file
-	void slotImportImages(QString path = QString());
+	void slotImportImages(QStringList paths = QStringList());
+	void slotImportImagesFromMedicalImageFinder(QString path = QString());
 	void slotImportImagesFromDatabase();
-	void slotRecentImages();
+	void slotRecentImagesFromMedicalImageFinder();
+	void slotImportLabel(QString path = QString());
+	// project things
 	void slotImportProject(QString path = QString(), bool clean = true);
 	void slotImportProjectString(QString xml = QString());
 	void slotCommitProject(QString path = QString());
 	
 
-signals:
+Q_SIGNALS:
 	void signalImportImages(QStringList paths);
+	void signalImportLabel(QString path);
 	void signalImportedProject(QString path, bool clean);
 	void signalImportedProjectString(QString string);
 	void signalCommitedProject(QString path);

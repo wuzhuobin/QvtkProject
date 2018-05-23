@@ -25,11 +25,12 @@ public:
 public slots:
 	//void 
 	void slotInitializationImages(QStringList imagePaths);
-	
+	void slotInitializationLabel(QString path);
 	void slotInitializationImport();
+	void slotInitialization();
 	void slotInitializationPolyDataSourceWidget();
 	void slotInitializationBiopsyWidget();
-	void slotInitializationMainWindow();
+	void slotInitializationPlanarSeedWidges();
 
 	void slotCommit(QString path);
 	void slotImport(QString path, bool clean);

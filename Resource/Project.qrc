@@ -7,4 +7,9 @@
         <file>TrackerToolRepresentationMesh/OrthopedicProbe.stl</file>
         <file>TrackerToolRepresentationMesh/RoboticArmFixtureVisualization.stl</file>
     </qresource>
+    <qresource prefix="/">
+        <file>Implant/OrthopedicNail.stl</file>
+        <file>Implant/OrthopedicNail2.stl</file>
+        <file>Implant/Wital Implant.stl</file>
+    </qresource>
 </RCC>

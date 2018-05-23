@@ -140,14 +140,16 @@
       <string>Recent Project</string>
      </property>
     </widget>
-    <widget class="QMenu" name="menu_Recent_Images">
+    <widget class="QMenu" name="menu_Recent_Images_From_Medical_Finder">
      <property name="title">
-      <string>&amp;Recent Images</string>
+      <string>&amp;Recent Images From Medical Image Finder</string>
      </property>
     </widget>
     <addaction name="action_Import_Images"/>
-    <addaction name="actionImport_Image_From_Database"/>
-    <addaction name="menu_Recent_Images"/>
+    <addaction name="action_Import_Images_From_Database"/>
+    <addaction name="action_Import_Images_From_Medical_Image_Finder"/>
+    <addaction name="menu_Recent_Images_From_Medical_Finder"/>
+    <addaction name="action_Import_Label"/>
     <addaction name="action_Import_Project"/>
     <addaction name="action_Import_Project_Without_Clean"/>
     <addaction name="action_Import_Project_String"/>
@@ -688,12 +690,22 @@
     <string>Testing Action</string>
    </property>
   </action>
-  <action name="actionImport_Image_From_Database">
+  <action name="action_Import_Images_From_Database">
    <property name="text">
-    <string>Import Image From Database</string>
+    <string>&amp;Import Images From Database</string>
    </property>
    <property name="toolTip">
-    <string>Import Image From Database</string>
+    <string>Import Images</string>
+   </property>
+  </action>
+  <action name="action_Import_Images_From_Medical_Image_Finder">
+   <property name="text">
+    <string>&amp;Import Images From Medical Image Finder</string>
+   </property>
+  </action>
+  <action name="action_Import_Label">
+   <property name="text">
+    <string>&amp;Import Label</string>
    </property>
   </action>
  </widget>

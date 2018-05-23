@@ -3,12 +3,14 @@
 #include "QvtkScene.h"
 #include "QvtkPolyData.h"
 #include "QvtkImage.h"
+#include "QvtkImageLabel.h"
 #include "QvtkVolume.h"
 #include "QvtkPolyDataActor.h"
 #include "QvtkImageSlice.h"
 #include "QvtkPolyDataActor2D.h"
 #include "QvtkAnnotationPolyData.h"
 #include "QvtkPolyDataSource.h"
+#include "QvtkNeuralTube.h"
 #include "itkQDebugWindow.h"
 #include "vtkQDebugWindow.h"
 // qt
@@ -62,28 +64,19 @@ namespace Q {
 					file.close();
 				});
 
-				vtkOutputWindow::SetInstance(vtkQDebugWindow::New());
 				itk::OutputWindow::SetInstance(itk::QDebugWindow::New());
-
+				vtkOutputWindow::SetInstance(vtkQDebugWindow::New());
 
 				Scene* scene = new Scene();
-
 				scene->registerData(new AnnotationPolyData);
-
 				scene->registerData(new Image);
-
+				scene->registerData(new ImageLabel);
 				scene->registerData(new ImageSlice);
-
 				scene->registerData(new PolyData);
-
 				scene->registerData(new PolyDataActor);
-
 				scene->registerData(new PolyDataActor2D);
-
 				scene->registerData(new PolyDataSource);
-
 				scene->registerData(new Volume);
-
 			}
 		};
 
