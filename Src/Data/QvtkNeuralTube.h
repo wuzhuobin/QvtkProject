@@ -6,6 +6,7 @@
 // vtk
 class vtkTubeFilter;
 class vtkLineSource;
+class vtkPassArrays;
 /**
 * @class	SCBNeural
 * @brief	A data type of tube for Nerual. 
@@ -48,12 +49,12 @@ class NeuralTube : public PolyData {
 		WRITE	setTubeLength
 		NOTIFY	tubeLengthChanged);
 	Q_PROPERTY(
-		QList<double>	intermediatePoint
+		QVariantList	intermediatePoint
 		READ			getIntermediatePoint
 		WRITE			setIntermediatePoint
 		NOTIFY			intermediatePointChanged);
 	Q_PROPERTY(
-		QList<double>	endPoint
+		QVariantList	endPoint
 		READ			getEndPoint
 		WRITE			setEndPoint
 		NOTIFY			endPointChanged);
@@ -73,29 +74,30 @@ public:
 	virtual double getTubeRadius() const;
 	virtual double getTubeLength() const { return this->m_tubeLength; }
 	virtual const double* getIntermediatePoint() const { return this->m_intermediatePoint; }
-	virtual QList<double> getIntermediatePoint() { return QList<double>{this->m_intermediatePoint[0], this->m_intermediatePoint[1], this->m_intermediatePoint[2]}; }
+	virtual QVariantList getIntermediatePoint() { return QVariantList{this->m_intermediatePoint[0], this->m_intermediatePoint[1], this->m_intermediatePoint[2]}; }
 	virtual const double* getEndPoint() const;
-	virtual QList<double> getEndPoint();
+	virtual QVariantList getEndPoint();
 public Q_SLOTS:
 	virtual void setTubeLength(double length);
 	virtual void setTubeRadius(double radius); 
 	virtual void setIntermediatePoint(double x, double y, double z);
 	virtual void setIntermediatePoint(const double point[3]) { this->setIntermediatePoint(point[0], point[1], point[2]); }
-	virtual void setIntermediatePoint(QList<double> point) { this->setIntermediatePoint(point[0], point[1], point[2]); }
+	virtual void setIntermediatePoint(QVariantList point) { this->setIntermediatePoint(point[0].toDouble(), point[1].toDouble(), point[2].toDouble()); }
 	virtual void setEndPoint(double x, double y, double z);
 	virtual void setEndPoint(const double point[3]) { this->setEndPoint(point[0], point[1], point[2]); }
-	virtual void setEndPoint(QList<double> point) { this->setEndPoint(point[0], point[1], point[2]); }
+	virtual void setEndPoint(QVariantList point) { this->setEndPoint(point[0].toDouble(), point[1].toDouble(), point[2].toDouble()); }
 Q_SIGNALS:
 	void tubeRadiusChanged(double radius) const;
 	void tubeLengthChanged(double length) const;
 	void intermediatePointChanged(const double *point) const;
-	void intermediatePointChanged(QList<double> point) const;
+	void intermediatePointChanged(QVariantList point) const;
 	void endPointChanged(const double *point) const;
-	void endPointChanged(QList<double> point) const;
+	void endPointChanged(QVariantList point) const;
 protected:
 	virtual Data* newInstance() const override { return new NeuralTube; }
 	vtkLineSource *m_lineSource;
 	vtkTubeFilter *m_tubeFilter;
+	vtkPassArrays *m_passArrays;
 private:
 	double m_tubeLength;
 	double m_intermediatePoint[3];

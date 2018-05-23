@@ -18,9 +18,9 @@ namespace Q {
 
 Q_VTK_DATA_CPP(Implant);
 const QStringList IMPLANT_PATHS = {
-	"implant/Wital Implant.stl", 
-	"implant/OrthopedicNail.stl",
-	"implant/OrthopedicNail2.stl"
+	":/Implant/Wital Implant.stl", 
+	":/Implant/OrthopedicNail.stl",
+	":/Implant/OrthopedicNail2.stl"
 };
 
 Implant::Implant()
@@ -54,7 +54,7 @@ bool Implant::readData(QString rootDirectory)
 			qCritical() << "getRelativePath() is empty. ";
 			return false;
 		}
-		path = QCoreApplication::applicationDirPath() + '/' + this->getRelativePath().first();
+		path = this->getRelativePath().first();
 
 	}
 	if (!this->getDataSet())
