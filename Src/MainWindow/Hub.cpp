@@ -678,29 +678,29 @@ void Hub::slotInitializationLabel(QString path)
 		}
 	this->slotInitialization();
 }
-#include <QvtkNeuralTube.h>
+//#include <QvtkNeuralTube.h>
 void Hub::slotTestingAction()
 {
-	using namespace Q::vtk;
-	NeuralTube *tube = new NeuralTube;
-	tube->setProperty("tubeRadius", 5.0);
-	tube->setProperty("tubeLength", 200);
-	tube->setProperty("intermediatePoint", QVariantList() << -46.71 << -70.75 << 74.52);
-	tube->setProperty("endPoint", QVariantList() << 5.14 << -14.82 << 39.52);
-	tube->setColor(1, 1, 1);
-	//tube->setOpacity(0.3);
+	//using namespace Q::vtk;
+	//NeuralTube *tube = new NeuralTube;
+	//tube->setProperty("tubeRadius", 5.0);
+	//tube->setProperty("tubeLength", 200);
+	//tube->setProperty("intermediatePoint", QVariantList() << -46.71 << -70.75 << 74.52);
+	//tube->setProperty("endPoint", QVariantList() << 5.14 << -14.82 << 39.52);
+	//tube->setColor(1, 1, 1);
+	////tube->setOpacity(0.3);
 
-	PolyDataActor *tubeActor = new PolyDataActor;
-	tubeActor->setRenderDataSet(tube);
-	this->mainWindow->getViewer(3)->AddProp(tubeActor);
+	//PolyDataActor *tubeActor = new PolyDataActor;
+	//tubeActor->setRenderDataSet(tube);
+	//this->mainWindow->getViewer(3)->AddProp(tubeActor);
 
-	Implant* implant = new Implant;
-	implant->setColor(1, 0, 0);
-	//implant->setOpacity(0.3);
-	implant->getUserMatrix()->DeepCopy(tube->getAdditionalMatrix());
-	cout << *tube->getAdditionalMatrix() << '\n';
+	//Implant* implant = new Implant;
+	//implant->setColor(1, 0, 0);
+	////implant->setOpacity(0.3);
+	//implant->getUserMatrix()->DeepCopy(tube->getAdditionalMatrix());
+	//cout << *tube->getAdditionalMatrix() << '\n';
 
-	PolyDataActor *implantActor = new PolyDataActor;
-	implantActor->setRenderDataSet(implant);
-	this->mainWindow->getViewer(3)->AddProp(implantActor);
+	//PolyDataActor *implantActor = new PolyDataActor;
+	//implantActor->setRenderDataSet(implant);
+	//this->mainWindow->getViewer(3)->AddProp(implantActor);
 }

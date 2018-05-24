@@ -64,11 +64,12 @@ namespace Q {
 				double vector[3];
 				vtkMath::Subtract(const_cast<const NeuralTube*>(this)->getIntermediatePoint(), const_cast<const NeuralTube*>(this)->getEndPoint(), vector);
 				vtkMath::Normalize(vector);
+				double vector_IE[3] = { -vector[0], -vector[1], -vector[2] };
 				double rotation[3];
-				double z_axis_down[3] = { 0, 0, 1 };
-				vtkMath::Cross(z_axis_down, vector, rotation);
+				double z_axis_down[3] = { 0, 0, -1 };
+				vtkMath::Cross(z_axis_down, vector_IE, rotation);
 				vtkMath::Normalize(rotation);
-				double angleInRadius = vtkMath::AngleBetweenVectors(z_axis_down, vector);
+				double angleInRadius = vtkMath::AngleBetweenVectors(z_axis_down, vector_IE);
 				vtkMath::MultiplyScalar(vector, this->getTubeLength());
 				vtkMath::Add(const_cast<const NeuralTube*>(this)->getEndPoint(), vector, vector);
 				this->m_lineSource->SetPoint1(vector);
