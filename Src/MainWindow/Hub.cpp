@@ -212,7 +212,7 @@ void Hub::slotInitialization()
 	this->mainWindow->getViewer(3)->ResetCamera(0);
 	this->mainWindow->getViewer(3)->ResetCameraClippingRange(0);
 	this->mainWindow->getViewer(3)->GetCursorActor()->VisibilityOn();
-	Q::vtk::Viewer::RenderAllViewers();
+	Q::vtk::Viewer::renderAllViewers();
 }
 
 void Hub::slotInitializationPolyDataSourceWidget()
@@ -349,7 +349,7 @@ void Hub::slotClean()
 	this->mainWindow->getViewer(2)->GetCursorActor()->VisibilityOff();
 	this->mainWindow->getViewer(3)->RemoveAllProp(this->mainWindow->getViewer(3)->GetRenderers()[0]);
 	this->mainWindow->getViewer(3)->GetCursorActor()->VisibilityOff();
-	Viewer::RenderAllViewers();
+	Viewer::renderAllViewers();
 
 	Scene::getCurrentScene()->clear();
 }
