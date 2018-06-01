@@ -36,6 +36,7 @@ namespace Q {
 			Ui::InteractorStyleNavigation* getUi() { return this->ui; }
 
 			virtual void OnLeftButtonDown() override;
+			virtual void OnLeftButtonUp() override;
 
 			public slots:
 

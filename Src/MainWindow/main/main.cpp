@@ -3,10 +3,12 @@
 #include "QvtkScene.h"
 #include "QvtkPolyData.h"
 #include "QvtkImage.h"
+#include "QvtkImageLabel2.h"
 #include "QvtkImageLabel.h"
 #include "QvtkVolume.h"
 #include "QvtkPolyDataActor.h"
 #include "QvtkImageSlice.h"
+#include "QvtkImageSliceLabel.h"
 #include "QvtkPolyDataActor2D.h"
 #include "QvtkAnnotationPolyData.h"
 #include "QvtkPolyDataSource.h"
@@ -71,7 +73,9 @@ namespace Q {
 				scene->registerData(new AnnotationPolyData);
 				scene->registerData(new Image);
 				scene->registerData(new ImageLabel);
+				scene->registerData(new ImageLabel2);
 				scene->registerData(new ImageSlice);
+				scene->registerData(new ImageSliceLabel);
 				scene->registerData(new PolyData);
 				scene->registerData(new PolyDataActor);
 				scene->registerData(new PolyDataActor2D);

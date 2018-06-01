@@ -53,7 +53,11 @@ void InteractorStyleNavigation::uninstall()
 
 void InteractorStyleNavigation::OnLeftButtonDown()
 {
-	vtkInteractorStyleNavigation::OnLeftButtonDown();
+	//vtkInteractorStyleNavigation::OnLeftButtonDown();
+	FunctionSet2 f = [](InteractorObserver *ob) {
+		static_cast<InteractorStyleNavigation*>(ob)->vtkInteractorStyleNavigation::OnLeftButtonDown();
+	};
+	synchronalCall(this, f);
 	switch (this->State)
 	{
 	case VTKIS_NAVIGATION:
@@ -62,6 +66,14 @@ void InteractorStyleNavigation::OnLeftButtonDown()
 	default:
 		break;
 	}
+}
+
+void InteractorStyleNavigation::OnLeftButtonUp()
+{
+	FunctionSet2 f = [](InteractorObserver *ob) {
+		static_cast<InteractorStyleNavigation*>(ob)->vtkInteractorStyleNavigation::OnLeftButtonUp();
+	};
+	synchronalCall(this, f);
 }
 
 void InteractorStyleNavigation::SetCursorPosition(double x, double y, double z)

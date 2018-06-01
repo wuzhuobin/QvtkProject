@@ -3,7 +3,8 @@
 #include "QvtkScene.h"
 #include "QvtkImage.h"
 #include "QvtkImageSlice.h"
-#include "QvtkImageLabel.h"
+#include "QvtkImageSliceLabel.h"
+#include "QvtkImageLabel2.h"
 #include "QvtkOrthogonalViewer.h"
 #include "QvtkVolume.h"
 #include "QvtkImplant.h"
@@ -652,30 +653,54 @@ void Hub::slotInitializationLabel(QString path)
 {
 	using namespace Q::vtk;
 	Scene *scene = Scene::getCurrentScene();
-	ImageLabel *label = scene->addNewDataByClass<ImageLabel>();
+	ImageLabel2 *label = scene->addNewDataByClass<ImageLabel2>();
 	label->setAbsolutePath(QStringList() << path);
 	label->readData();
 	label->setRelativePath(QStringList() << label->getUniqueName() + ".nii.gz");
 	for (int i = 0; i < 3; ++i) {
-			ImageSlice* imageSlice = new ImageSlice;
-			imageSlice->setRenderDataSet(label);
-			scene->addData(imageSlice);
-			this->mainWindow->getViewer(i)->AddProp(imageSlice);
-			switch (i)
-			{
-			case 0:
-				this->mainWindow->getViewer(i)->SetOrientationToAxial();
-				break;
-			case 1:
-				this->mainWindow->getViewer(i)->SetOrientationToCoronal();
-				break;
-			case 2:
-				this->mainWindow->getViewer(i)->SetOrientationToSagital();
-				break;
-			default:
-				break;
-			}
+		ImageSlice* imageSlice = new ImageSlice;
+		imageSlice->setRenderDataSet(label);
+		scene->addData(imageSlice);
+		this->mainWindow->getViewer(i)->AddProp(imageSlice);
+		switch (i)
+		{
+		case 0:
+			this->mainWindow->getViewer(i)->SetOrientationToAxial();
+			break;
+		case 1:
+			this->mainWindow->getViewer(i)->SetOrientationToCoronal();
+			break;
+		case 2:
+			this->mainWindow->getViewer(i)->SetOrientationToSagital();
+			break;
+		default:
+			break;
 		}
+	}
+	//Image *label2 = scene->addNewDataByClass<Image>("LabelSlice");
+	//label2->setAbsolutePath(QStringList() << path);
+	//label2->readData();
+	//label2->setRelativePath(QStringList() << label2->getUniqueName() + ".nii.gz");
+	//for (int i = 0; i < 3; ++i) {
+	//	ImageSliceLabel* imageSlice = new ImageSliceLabel;
+	//	imageSlice->setRenderDataSet(label2);
+	//	scene->addData(imageSlice);
+	//	this->mainWindow->getViewer(i)->AddProp(imageSlice);
+	//	switch (i)
+	//	{
+	//	case 0:
+	//		this->mainWindow->getViewer(i)->SetOrientationToAxial();
+	//		break;
+	//	case 1:
+	//		this->mainWindow->getViewer(i)->SetOrientationToCoronal();
+	//		break;
+	//	case 2:
+	//		this->mainWindow->getViewer(i)->SetOrientationToSagital();
+	//		break;
+	//	default:
+	//		break;
+	//	}
+	//}
 	this->slotInitialization();
 }
 //#include <QvtkNeuralTube.h>
