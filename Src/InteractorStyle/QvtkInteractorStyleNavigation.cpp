@@ -17,6 +17,7 @@
 #include <vtkProp3D.h>
 #include <vtkSmartPointer.h>
 
+#include <vtkCallbackCommand.h>
 // qt
 #include <QDebug>
 namespace Q {
@@ -53,11 +54,7 @@ void InteractorStyleNavigation::uninstall()
 
 void InteractorStyleNavigation::OnLeftButtonDown()
 {
-	//vtkInteractorStyleNavigation::OnLeftButtonDown();
-	FunctionSet2 f = [](InteractorObserver *ob) {
-		static_cast<InteractorStyleNavigation*>(ob)->vtkInteractorStyleNavigation::OnLeftButtonDown();
-	};
-	synchronalCall(this, f);
+	vtkInteractorStyleNavigation::OnLeftButtonDown();
 	switch (this->State)
 	{
 	case VTKIS_NAVIGATION:
@@ -66,12 +63,21 @@ void InteractorStyleNavigation::OnLeftButtonDown()
 	default:
 		break;
 	}
+	// Lowering update rate. 
+	FunctionSet2 f = [](InteractorObserver *ob) {
+		static_cast<InteractorStyleNavigation*>(ob)->StartInteraction();
+	};
+	synchronalCall(this, f);
 }
 
 void InteractorStyleNavigation::OnLeftButtonUp()
 {
+	vtkInteractorStyleNavigation::OnLeftButtonUp();
+	// Restoring update rate.
 	FunctionSet2 f = [](InteractorObserver *ob) {
-		static_cast<InteractorStyleNavigation*>(ob)->vtkInteractorStyleNavigation::OnLeftButtonUp();
+		InteractorStyleNavigation *style = static_cast<InteractorStyleNavigation*>(ob);
+		style->EndInteraction();
+		style->GetInteractor()->Render();
 	};
 	synchronalCall(this, f);
 }
@@ -83,7 +89,6 @@ void InteractorStyleNavigation::SetCursorPosition(double x, double y, double z)
 		this->ui->doubleSpinBoxZ->value() == z) {
 		return;
 	}
-
 	// connect and disconnect to speed up
 	//disconnect(this->m_ui->doubleSpinBoxX, static_cast<void(QDoubleSpinBox::*)(double)>(&QDoubleSpinBox::valueChanged),
 	//	static_cast<InteractorStyleNavigation*>(getUniqueThis()), &InteractorStyleNavigation::SetCursorPositionX);
@@ -149,30 +154,32 @@ void InteractorStyleNavigation::SetCursorPosition(double x, double y, double z)
 	//	}
 	//}
 
-	if (x < this->ui->doubleSpinBoxX->minimum()) {
-		this->ui->doubleSpinBoxX->setMinimum(x);
-	}
-	if (x > this->ui->doubleSpinBoxX->maximum()) {
-		this->ui->doubleSpinBoxX->setMaximum(x);
-	}
+	//if (x < this->ui->doubleSpinBoxX->minimum()) {
+	//	this->ui->doubleSpinBoxX->setMinimum(x);
+	//}
+	//if (x > this->ui->doubleSpinBoxX->maximum()) {
+	//	this->ui->doubleSpinBoxX->setMaximum(x);
+	//}
 	this->ui->doubleSpinBoxX->setValue(x);
-
-	if (y > this->ui->doubleSpinBoxY->maximum()) {
-		this->ui->doubleSpinBoxY->setMaximum(y);
-	}
-	if (y < this->ui->doubleSpinBoxY->minimum()) {
-		this->ui->doubleSpinBoxY->setMinimum(y);
-	}
+	//if (y > this->ui->doubleSpinBoxY->maximum()) {
+	//	this->ui->doubleSpinBoxY->setMaximum(y);
+	//}
+	//if (y < this->ui->doubleSpinBoxY->minimum()) {
+	//	this->ui->doubleSpinBoxY->setMinimum(y);
+	//}
 	this->ui->doubleSpinBoxY->setValue(y);
-
-	if (z > this->ui->doubleSpinBoxZ->maximum()) {
-		this->ui->doubleSpinBoxZ->setMaximum(z);
-	}
-	if (z < this->ui->doubleSpinBoxZ->minimum()) {
-		this->ui->doubleSpinBoxZ->setMinimum(z);
-	}
+	//if (z > this->ui->doubleSpinBoxZ->maximum()) {
+	//	this->ui->doubleSpinBoxZ->setMaximum(z);
+	//}
+	//if (z < this->ui->doubleSpinBoxZ->minimum()) {
+	//	this->ui->doubleSpinBoxZ->setMinimum(z);
+	//}
 	this->ui->doubleSpinBoxZ->setValue(z);
-
+	//Image *image = qobject_cast<Image*>(this->findPokedDataSet);
+	//if (image) {
+	//	
+	//}
+	//this->ui->spinBoxI->
 	// connect and disconnect to speed up
 	//connect(this->m_ui->doubleSpinBoxX, static_cast<void(QDoubleSpinBox::*)(double)>(&QDoubleSpinBox::valueChanged),
 	//	static_cast<InteractorStyleNavigation*>(getUniqueThis()), &InteractorStyleNavigation::SetCursorPositionX);
@@ -211,6 +218,21 @@ void InteractorStyleNavigation::SetCursorPositionZ(double z)
 	//	return;
 	//}
 	SetCursorPosition(pos[0], pos[1], z);
+}
+
+void InteractorStyleNavigation::SetCursorPositionI(double i)
+{
+	qWarning() << "Not implementd.";
+}
+
+void InteractorStyleNavigation::SetCursorPositionJ(double j)
+{
+	qWarning() << "Not implementd.";
+}
+
+void InteractorStyleNavigation::SetCursorPositionK(double k)
+{
+	qWarning() << "Not implementd.";
 }
 
 void InteractorStyleNavigation::CentralizeCursorPosition()
@@ -266,7 +288,6 @@ InteractorStyleNavigation::~InteractorStyleNavigation()
 	this->VolumePicker->Delete();
 }
 
-
 bool InteractorStyleNavigation::CalculateIndex(double index[3])
 {
 	if (vtkInteractorStyleNavigation::CalculateIndex(index)) {
@@ -276,7 +297,7 @@ bool InteractorStyleNavigation::CalculateIndex(double index[3])
 		this->GetInteractor()->GetEventPosition()[0],
 		this->GetInteractor()->GetEventPosition()[1],
 		0,  // always zero.
-		GetCurrentRenderer())) {
+		this->GetCurrentRenderer())) {
 		return false;
 	}
 	this->VolumePicker->GetPickPosition(index);
@@ -292,6 +313,33 @@ void InteractorStyleNavigation::uniqueInstall()
 		this, &InteractorStyleNavigation::SetCursorPositionY);
 	connect(this->ui->doubleSpinBoxZ, static_cast<void(QDoubleSpinBox::*)(double)>(&QDoubleSpinBox::valueChanged),
 		this, &InteractorStyleNavigation::SetCursorPositionZ);
+	this->ui->doubleSpinBoxX->setRange(VTK_DOUBLE_MIN, VTK_DOUBLE_MAX);
+	this->ui->doubleSpinBoxY->setRange(VTK_DOUBLE_MIN, VTK_DOUBLE_MAX);
+	this->ui->doubleSpinBoxZ->setRange(VTK_DOUBLE_MIN, VTK_DOUBLE_MAX);
 }
+int InteractorStyleNavigation::tryPick(double xyz[3])
+{
+	return this->CalculateIndex(xyz);
+	//return 0;
+}
+//int InteractorStyleNavigation::tryPick(double xyz[3])
+//{
+//	this->SetCurrentRenderer(this->GetDefaultRenderer());
+//	int ret = this->GetInteractor()->GetPicker()->Pick(
+//		this->GetInteractor()->GetEventPosition()[0],
+//		this->GetInteractor()->GetEventPosition()[1],
+//		0,  // always zero.
+//		this->GetCurrentRenderer());
+//	if (!ret) {
+//		return this->VolumePicker->Pick(
+//			this->GetInteractor()->GetEventPosition()[0],
+//			this->GetInteractor()->GetEventPosition()[1],
+//			0,  // always zero.
+//			this->GetCurrentRenderer());
+//	}
+//	else {
+//		return ret;
+//	}
+//}
 	}
 }

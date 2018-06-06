@@ -21,50 +21,50 @@ namespace Q {
 	namespace vtk {
 
 vtkStandardNewMacro(InteractorStyleWindowLevel);
-Image* InteractorStyleWindowLevel::pockedImage = nullptr;
+Image* InteractorStyleWindowLevel::pokedImage = nullptr;
 void InteractorStyleWindowLevel::setCustomEnable(bool flag)
 {
 	UniqueUiInteractorObserver::setCustomEnable(flag);
-	InteractorStyleWindowLevel::pockedImage = nullptr;
+	InteractorStyleWindowLevel::pokedImage = nullptr;
 
 }
 
 double InteractorStyleWindowLevel::GetWindow() 
 {
 	//SCBImage* image = this->FindPokedImage();
-	if (!InteractorStyleWindowLevel::pockedImage) {
+	if (!InteractorStyleWindowLevel::pokedImage) {
 		qWarning()<< "Cannot poke an image";
 		return 0.0;
 	}
-	return InteractorStyleWindowLevel::pockedImage->getWindow();
+	return InteractorStyleWindowLevel::pokedImage->getWindow();
 }
 
 double InteractorStyleWindowLevel::GetLevel()
 {
-	if (!InteractorStyleWindowLevel::pockedImage) {
+	if (!InteractorStyleWindowLevel::pokedImage) {
 		qWarning()<< "Cannot poke an image";
 		return 0.0;
 	}
-	return InteractorStyleWindowLevel::pockedImage->getLevel();
+	return InteractorStyleWindowLevel::pokedImage->getLevel();
 }
 
 double InteractorStyleWindowLevel::GetResetWindow()
 {
-	if (!InteractorStyleWindowLevel::pockedImage) {
+	if (!InteractorStyleWindowLevel::pokedImage) {
 		qWarning()<< "Cannot poke an image";
 		return 0.0;
 	}
-	const double* range = InteractorStyleWindowLevel::pockedImage->getImageData()->GetScalarRange();
+	const double* range = InteractorStyleWindowLevel::pokedImage->getImageData()->GetScalarRange();
 	return (range[1] - range[0]) ;
 }
 
 double InteractorStyleWindowLevel::GetResetLevel()
 {
-	if (!InteractorStyleWindowLevel::pockedImage) {
+	if (!InteractorStyleWindowLevel::pokedImage) {
 		qWarning()<< "Cannot poke an image";
 		return 0.0;
 	}
-	const double* range = InteractorStyleWindowLevel::pockedImage->getImageData()->GetScalarRange();
+	const double* range = InteractorStyleWindowLevel::pokedImage->getImageData()->GetScalarRange();
 	return (range[1] + range[0]) / 2;
 }
 
@@ -78,7 +78,7 @@ void InteractorStyleWindowLevel::SynchronalRender()
 
 void InteractorStyleWindowLevel::SetWindow(double window)
 {
-	if (!InteractorStyleWindowLevel::pockedImage) {
+	if (!InteractorStyleWindowLevel::pokedImage) {
 		qWarning()<< "Cannot poke an image";
 		return;
 	}
@@ -87,24 +87,24 @@ void InteractorStyleWindowLevel::SetWindow(double window)
 		return;
 	}
 
-	if (qRound(window) > this->ui->spinBoxWindow->maximum()) {
-		this->ui->spinBoxWindow->setMaximum(qRound(window));
-		this->ui->horizontalSliderWindow->setMaximum(qRound(window));
-	}
-	if (qRound(window) < this->ui->spinBoxWindow->minimum()) {
-		this->ui->spinBoxWindow->setMinimum(qRound(window));
-		this->ui->horizontalSliderWindow->setMinimum(qRound(window));
-	}
+	//if (qRound(window) > this->ui->spinBoxWindow->maximum()) {
+	//	this->ui->spinBoxWindow->setMaximum(qRound(window));
+	//	this->ui->horizontalSliderWindow->setMaximum(qRound(window));
+	//}
+	//if (qRound(window) < this->ui->spinBoxWindow->minimum()) {
+	//	this->ui->spinBoxWindow->setMinimum(qRound(window));
+	//	this->ui->horizontalSliderWindow->setMinimum(qRound(window));
+	//}
 
 	this->ui->spinBoxWindow->setValue(qRound(window));
-	InteractorStyleWindowLevel::pockedImage->setWindow(window);
+	InteractorStyleWindowLevel::pokedImage->setWindow(window);
 	SynchronalRender();
 	//Render();
 }
 
 void InteractorStyleWindowLevel::SetLevel(double level)
 {
-	if (!InteractorStyleWindowLevel::pockedImage) {
+	if (!InteractorStyleWindowLevel::pokedImage) {
 		qWarning()<< "Cannot poke an image";
 		return;
 	}
@@ -113,29 +113,29 @@ void InteractorStyleWindowLevel::SetLevel(double level)
 		return;
 	}
 
-	if (qRound(level) > this->ui->spinBoxLevel->maximum()) {
-		this->ui->spinBoxLevel->setMaximum(qRound(level));
-		this->ui->horizontalSliderLevel->setMaximum(qRound(level));
-	}
-	if (qRound(level) < this->ui->spinBoxLevel->minimum()) {
-		this->ui->spinBoxLevel->setMinimum(qRound(level));
-		this->ui->horizontalSliderLevel->setMinimum(qRound(level));
-	}
+	//if (qRound(level) > this->ui->spinBoxLevel->maximum()) {
+	//	this->ui->spinBoxLevel->setMaximum(qRound(level));
+	//	this->ui->horizontalSliderLevel->setMaximum(qRound(level));
+	//}
+	//if (qRound(level) < this->ui->spinBoxLevel->minimum()) {
+	//	this->ui->spinBoxLevel->setMinimum(qRound(level));
+	//	this->ui->horizontalSliderLevel->setMinimum(qRound(level));
+	//}
 
 	this->ui->spinBoxLevel->setValue(qRound(level));
-	InteractorStyleWindowLevel::pockedImage->setLevel(level);
+	InteractorStyleWindowLevel::pokedImage->setLevel(level);
 	SynchronalRender();
 	//Render();
 }
 
 InteractorStyleWindowLevel::InteractorStyleWindowLevel()
 {
-	InteractorStyleWindowLevel::pockedImage = nullptr;
+	InteractorStyleWindowLevel::pokedImage = nullptr;
 }
 
 InteractorStyleWindowLevel::~InteractorStyleWindowLevel()
 {
-	InteractorStyleWindowLevel::pockedImage = nullptr;
+	InteractorStyleWindowLevel::pokedImage = nullptr;
 }
 
 void InteractorStyleWindowLevel::uniqueInstall()
@@ -147,63 +147,75 @@ void InteractorStyleWindowLevel::uniqueInstall()
 		this, static_cast<void(InteractorStyleWindowLevel::*)(int)>(&InteractorStyleWindowLevel::SetLevel));
 }
 
-Image * InteractorStyleWindowLevel::FindPokedImage()
+int InteractorStyleWindowLevel::tryPick(double xyz[3]) 
 {
-	typedef QList<QMetaObject::Connection> ConnectionList;
-	ConnectionList connections;
-	for (QList<Prop*>::const_iterator cit = this->getViewer()->GetProps().cbegin();
-		cit != this->getViewer()->GetProps().cend(); ++cit) {
-		ImageSlice* slice = qobject_cast<ImageSlice*>(*cit);
-		if (slice) {
-			//connections << connect(slice, &SCBImageSlice::picked,
-			//	this, &InteractorStyleWindowLevel::ImagePicked);
-			connections << connect(slice, &ImageSlice::picked,
-				this, [this]() {
-				ImageSlice* slice = qobject_cast<ImageSlice*>(this->sender());
-				if (slice) {
-					InteractorStyleWindowLevel::pockedImage = qobject_cast<Image*>(slice->getRenderDataSet());
-					return;
-				}
-				InteractorStyleWindowLevel::pockedImage = nullptr;	});
-
-		}
-	}
-	InteractorStyleWindowLevel::pockedImage = nullptr;
-		//foreach(Prop* prop, this->getViewer()->GetProps()) {
-		//	SCBImageSlice* slice = qobject_cast<SCBImageSlice*>(prop);
-		//	if (slice) {
-		//		disconnect(slice, &SCBImageSlice::picked,
-		//			this, &InteractorStyleWindowLevel::ImagePicked);
-		//	}
-		//}
-		//this->FindPokedRenderer(
-		//this->GetInteractor()->GetEventPosition()[0],
-		//this->GetInteractor()->GetEventPosition()[1]);
-		this->CurrentRenderer = this->GetDefaultRenderer();
-	// there is a connection for picked, when picked event, the picked Image pointer will be saved to 
-	// this->Image
-	int picked = this->GetInteractor()->GetPicker()->Pick(
+	this->CurrentRenderer = this->GetDefaultRenderer();
+	return this->GetInteractor()->GetPicker()->Pick(
 		this->GetInteractor()->GetEventPosition()[0],
 		this->GetInteractor()->GetEventPosition()[1],
 		0,
 		this->GetCurrentRenderer());
-	// if it cannot pick any Image, return the first BImage in the current viewer.
+}
+
+DataSet * InteractorStyleWindowLevel::findPokedDataSet()
+{
+	typedef QList<QMetaObject::Connection> ConnectionList;
+	ConnectionList connections;
+	QList<Q::vtk::Prop*> props = this->getViewer()->GetProps();
+	for (QList<Prop*>::const_iterator cit = props.cbegin();
+		cit != props.cend(); ++cit) {
+		ImageSlice* slice = qobject_cast<ImageSlice*>(*cit);
+		if (slice) {
+			// there is a connection for picked, when picked event, the picked Image pointer will be saved to 
+			// pokedImage
+			connections << connect(slice, &ImageSlice::picked,
+				this, [this, slice]() {
+				InteractorStyleOrthogonalViewer::pokedDataSet = slice->getRenderDataSet();
+				InteractorStyleWindowLevel::pokedImage = qobject_cast<Image*>(slice->getRenderDataSet());
+			});
+		}
+	}
+	InteractorStyleWindowLevel::pokedImage = nullptr;
+	InteractorStyleOrthogonalViewer::pokedDataSet = nullptr;
+	this->tryPick();
+	for (ConnectionList::const_iterator cit = connections.cbegin(); cit != connections.cend(); ++cit) {
+		QObject::disconnect(*cit);
+	}
+
+	// if it cannot pick any Image, return the first Image in the current viewer.
 	// if there is no image, the qobject_cast should return a nullptr.
-	if (!InteractorStyleWindowLevel::pockedImage) {
-		for(QList<Prop*>::const_iterator cit = this->getViewer()->GetProps().cbegin(); 
-			cit != this->getViewer()->GetProps().cend(); ++cit){
+	if (!InteractorStyleWindowLevel::pokedImage) {
+		for (QList<Prop*>::const_iterator cit = props.cbegin(); cit != props.cend(); ++cit) {
 			ImageSlice* slice = qobject_cast<ImageSlice*>(*cit);
 			if (slice) {
-				InteractorStyleWindowLevel::pockedImage =  qobject_cast<Image*>(slice->getRenderDataSet());
-				return InteractorStyleWindowLevel::pockedImage;
+				InteractorStyleOrthogonalViewer::pokedDataSet = slice->getRenderDataSet();
+				InteractorStyleWindowLevel::pokedImage =
+					qobject_cast<Image*>(slice->getRenderDataSet());
+				break;
 			}
 		}
 	}
-	for (ConnectionList::const_iterator cit = connections.cbegin(); cit != connections.cend(); ++cit)
-	{
-		disconnect(*cit);
-	}
-	return InteractorStyleWindowLevel::pockedImage;
+	return InteractorStyleWindowLevel::pokedImage;
+
+}
+
+Image * InteractorStyleWindowLevel::FindPokedImage()
+{
+
+	//InteractorStyleWindowLevel::pokedImage = qobject_cast<Image*>(this->findPokedDataSet());
+
+	//QList<Prop*> lists = this->getViewer()->GetProps();
+	//if (!InteractorStyleWindowLevel::pokedImage) {
+	//	for (QList<Prop*>::const_iterator cit = lists.cbegin(); cit != lists.cend(); ++cit) {
+	//		ImageSlice* slice = qobject_cast<ImageSlice*>(*cit);
+	//		if (slice) {
+	//			InteractorStyleWindowLevel::pokedImage =
+	//				qobject_cast<Image*>(slice->getRenderDataSet());
+	//		}
+	//	}
+	//}
+	this->findPokedDataSet();
+	return InteractorStyleWindowLevel::pokedImage;
 }
 
 void InteractorStyleWindowLevel::install()
@@ -220,12 +232,46 @@ void InteractorStyleWindowLevel::OnLeftButtonDown()
 {
 	//this->CurrentRenderer = this->GetDefaultRenderer();
 	if(this->FindPokedImage()){
+		const double *scalarRange = InteractorStyleWindowLevel::pokedImage->getImageData()->GetScalarRange();
+		this->getUi()->horizontalSliderLevel->setRange(qRound(scalarRange[0]), qRound(scalarRange[1]));
+		this->getUi()->horizontalSliderWindow->setRange(qRound(scalarRange[0]), qRound(scalarRange[1]));
+		this->getUi()->spinBoxLevel->setRange(qRound(scalarRange[0]), qRound(scalarRange[1]));
+		this->getUi()->spinBoxWindow->setRange(qRound(scalarRange[0]), qRound(scalarRange[1]));
 		vtkInteractorStyleWindowLevel::OnLeftButtonDown();
 	}
 	else
 	{
+		this->getUi()->horizontalSliderLevel->blockSignals(true);
+		this->getUi()->horizontalSliderWindow->blockSignals(true);
+		this->getUi()->spinBoxLevel->blockSignals(true);
+		this->getUi()->spinBoxWindow->blockSignals(true);
+		this->getUi()->horizontalSliderLevel->setRange(0, 0);
+		this->getUi()->horizontalSliderWindow->setRange(0, 0);
+		this->getUi()->spinBoxLevel->setRange(0, 0);
+		this->getUi()->spinBoxWindow->setRange(0, 0);
+		this->getUi()->horizontalSliderLevel->blockSignals(false);
+		this->getUi()->horizontalSliderWindow->blockSignals(false);
+		this->getUi()->spinBoxLevel->blockSignals(false);
+		this->getUi()->spinBoxWindow->blockSignals(false);
 		vtkInteractorStyleTrackballCamera::OnLeftButtonDown();
 	}
+	// Lowering update rate. 
+	FunctionSet2 f = [](InteractorObserver *ob) {
+		static_cast<InteractorStyleWindowLevel*>(ob)->StartInteraction();
+	};
+	synchronalCall(this, f);
+}
+
+void InteractorStyleWindowLevel::OnLeftButtonUp()
+{
+	vtkInteractorStyleWindowLevel::OnLeftButtonUp();
+	// Restoring update rate.
+		FunctionSet2 f = [](InteractorObserver *ob) {
+			InteractorStyleWindowLevel *style = static_cast<InteractorStyleWindowLevel*>(ob);
+			style->EndInteraction();
+			style->GetInteractor()->Render();
+	};
+	synchronalCall(this, f);
 }
 
 void InteractorStyleWindowLevel::SetWindow(int window)

@@ -71,7 +71,6 @@ protected:
 
 	virtual void GenerateWidgetFromSeedsData();
 	virtual void ClearSeedsWidget();
-
 	static QString ItemTranslate(vtkIdType id, const double pos[3]);
 
 	double DisplayThickness;

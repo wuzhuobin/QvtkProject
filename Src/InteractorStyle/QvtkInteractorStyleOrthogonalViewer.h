@@ -1,19 +1,15 @@
 #ifndef __QVTK_INTERACTOR_STYLE_ORTHOGONAL_VIEWER_H__
 #define __QVTK_INTERACTOR_STYLE_ORTHOGONAL_VIEWER_H__
-
+#pragma once
 // me
 namespace Q {
 	namespace vtk {
 		class OrthogonalViewer;
-
+		class DataSet;
 	}
 }
-
-// vtk
-#include <vtkInteractorStyle.h>
 namespace Q {
 	namespace vtk {
-
 		class InteractorStyleOrthogonalViewer
 		{
 		public:
@@ -21,8 +17,10 @@ namespace Q {
 			virtual OrthogonalViewer* getViewer() const { return this->m_viewer; }
 		protected:
 			OrthogonalViewer* m_viewer;
+			virtual DataSet *findPokedDataSet();
+			virtual int tryPick(double xyz[3] = nullptr);
+			static DataSet *pokedDataSet;
 		};
-
 	}
 }
 

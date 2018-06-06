@@ -1,6 +1,6 @@
 #ifndef __QVTK_INTERACTOR_STYLE_NAVIGATION_H__
 #define __QVTK_INTERACTOR_STYLE_NAVIGATION_H__
-
+#pragma once
 // me 
 #include "QvtkInteractorStyleOrthogonalViewer.h"
 #include "vtkInteractorStyleNavigation.h"
@@ -12,13 +12,11 @@ namespace Q {
 	class Volume;
 	}
 }
-
 // vtk
 class vtkVolumePicker;
 class vtkPropPicker;
 namespace Q {
 	namespace vtk {
-
 		class InteractorStyleNavigation :
 			public UniqueUiInteractorObserver,
 			public InteractorStyleOrthogonalViewer,
@@ -38,7 +36,7 @@ namespace Q {
 			virtual void OnLeftButtonDown() override;
 			virtual void OnLeftButtonUp() override;
 
-			public slots:
+			public Q_SLOTS:
 
 			virtual void SetCursorPosition(double x, double y, double z) override;
 			virtual void CentralizeCursorPosition() override;
@@ -47,6 +45,9 @@ namespace Q {
 			virtual void SetCursorPositionX(double x);
 			virtual void SetCursorPositionY(double y);
 			virtual void SetCursorPositionZ(double z);
+			virtual void SetCursorPositionI(double i);
+			virtual void SetCursorPositionJ(double j);
+			virtual void SetCursorPositionK(double k);
 
 		protected:
 
@@ -60,7 +61,7 @@ namespace Q {
 			virtual void uniqueFunction() override {}
 			virtual void uniqueEnable() override {}
 			virtual void uniqueDisable() override {}
-
+			virtual int tryPick(double xyz[3] = nullptr) override;
 			vtkVolumePicker* VolumePicker;
 
 			Ui::InteractorStyleNavigation* ui;

@@ -89,7 +89,6 @@ protected:
 	//virtual void CentralCursorPosition(double index[3]);
 	virtual bool CalculateIndex(double index[3]);
 
-
 	//SCBImage* Image;
 	bool CursorFollowsImplant;
 
