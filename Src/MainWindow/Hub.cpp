@@ -4,6 +4,7 @@
 #include "QvtkImage.h"
 #include "QvtkImageSlice.h"
 #include "QvtkImageSliceLabel.h"
+#include "QvtkImageSurfaceActor.h"
 #include "QvtkImageLabel2.h"
 #include "QvtkOrthogonalViewer.h"
 #include "QvtkVolume.h"
@@ -648,6 +649,7 @@ void Hub::slotInitializationImages(QStringList imagePaths)
 
 	this->slotInitialization();
 }
+//#include "itkImage.h"
 
 void Hub::slotInitializationLabel(QString path)
 {
@@ -657,6 +659,7 @@ void Hub::slotInitializationLabel(QString path)
 	label->setAbsolutePath(QStringList() << path);
 	label->readData();
 	label->setRelativePath(QStringList() << label->getUniqueName() + ".nii.gz");
+	label->setDefaultColorFile(19);
 	for (int i = 0; i < 3; ++i) {
 		ImageSlice* imageSlice = new ImageSlice;
 		imageSlice->setRenderDataSet(label);
@@ -677,6 +680,11 @@ void Hub::slotInitializationLabel(QString path)
 			break;
 		}
 	}
+	
+	ImageSurfaceActor *actor = new ImageSurfaceActor;
+	actor->setRenderDataSet(label);
+	scene->addData(actor);
+	this->mainWindow->getViewer(3)->AddProp(actor);
 	//Image *label2 = scene->addNewDataByClass<Image>("LabelSlice");
 	//label2->setAbsolutePath(QStringList() << path);
 	//label2->readData();

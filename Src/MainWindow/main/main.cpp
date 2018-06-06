@@ -7,6 +7,7 @@
 #include "QvtkImageLabel.h"
 #include "QvtkVolume.h"
 #include "QvtkPolyDataActor.h"
+#include "QvtkImageSurfaceActor.h"
 #include "QvtkImageSlice.h"
 #include "QvtkImageSliceLabel.h"
 #include "QvtkPolyDataActor2D.h"
@@ -75,7 +76,8 @@ namespace Q {
 				scene->registerData(new ImageLabel);
 				scene->registerData(new ImageLabel2);
 				scene->registerData(new ImageSlice);
-				scene->registerData(new ImageSliceLabel);
+				//scene->registerData(new ImageSliceLabel);
+				scene->registerData(new ImageSurfaceActor);
 				scene->registerData(new PolyData);
 				scene->registerData(new PolyDataActor);
 				scene->registerData(new PolyDataActor2D);
