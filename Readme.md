@@ -1,8 +1,8 @@
 # Qvtk Project
-A medical imaged assisted surgical guidance robotic system
+Stupid Projects.
 
 ## Overview
-The Qvtk Project is a software designed for medical image assisted surgical robotic system.
+The Qvtk Project.
 
 ## Prerequisites
 Known good build dependecies:
@@ -19,7 +19,7 @@ Known good build dependecies:
 <p>
   Following the Qt installation wizard to install Qt binary<br>
 </p>
-<h3><a href="https://github.com/Kitware/VTK">VTK-7.1.1</a></h3><hr>
+<h3><a href="https://github.com/Kitware/VTK">VTK-8.1.1</a></h3><hr>
 <p>
   <ul>
     <li>CMAKE_CXX_MP_FLAG:BOOL=ON<br></li>
