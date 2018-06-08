@@ -71,7 +71,7 @@ else()
         GIT_REPOSITORY
         "https://github.com/Kitware/VTK.git"
         GIT_TAG
-        "v7.1.1"
+        "v8.1.1"
         INSTALL_COMMAND
         ""
         CMAKE_CACHE_ARGS

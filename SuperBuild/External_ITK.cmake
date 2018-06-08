@@ -61,7 +61,7 @@ else()
         GIT_REPOSITORY
         "https://github.com/InsightSoftwareConsortium/ITK.git"
         GIT_TAG
-        "v4.12.2"
+        "v4.13.0"
         INSTALL_COMMAND
         ""
         CMAKE_CACHE_ARGS
