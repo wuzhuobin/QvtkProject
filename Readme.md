@@ -15,70 +15,78 @@ Known good build dependecies:
 <p>
   Following the CMake installation wizard to install CMake binary<br>
 </p>
-<h2><a href="https://download.qt.io/official_releases/qt/5.10/5.10.1/">Qt-5.10.1</a></h2><hr>
+<h2><a href="https://download.qt.io/official_releases/qt/5.10/5.10.1/">Qt-5.10.1</a></h2>
 <p>
   Following the Qt installation wizard to install Qt binary<br>
 </p>
-<h2><a href="https://github.com/Kitware/VTK">VTK-7.1.1</a></h2><hr>
+<h2><a href="https://github.com/Kitware/VTK">VTK-7.1.1</a></h2>
 <p>
-  CMAKE_CXX_MP_FLAG:BOOL=ON<br>
-  BUILD_DOCUMENTATION:BOOL=OFF<br>
-  BUILD_EXAMPLES:BOOL=OFF<br>
-  BUILD_SHARED_LIBS:BOOL=ON<br>
-  BUILD_TESTING:BOOL=OFF<br>
-  Module_vtkImagingOpenGL2:BOOL=ON<br>
-  Module_vtkIOExportOpenGL2:BOOL=ON<br>
-  Module_vtkRenderingLICOpenGL2:BOOL=ON<br>
-  VTK_QT_VERSION:STRING=5<br>
-  VTK_Group_Qt:BOOL=ON<br>
-  Module_vtkGUISupportQt:BOOL=ON<br>
-  Module_vtkGUISupportQtOpenGL:BOOL=ON<br>
-  Module_vtkGUISupportQtSQL:BOOL=ON<br>
-  Module_vtkGUISupportQtWebkit:BOOL=OFF<br>
-  Qt5_DIR:PATH=${Qt5_DIR}<br>
-  Qt5Core_DIR:PATH=${Qt5_DIR}Core<br>
-  Qt5Gui_DIR:PATH=${Qt5_DIR}Gui<br>
-  Qt5OpenGL_DIR:PATH=${Qt5_DIR}OpenGL<br>
-  Qt5Sql_DIR:PATH=${Qt5_DIR}Sql<br>
-  Qt5UiPlugin_DIR:PATH=${Qt5_DIR}UiPlugin<br>
-  Qt5Widgets_DIR:PATH=${Qt5_DIR}Widgets<br>
+  <ul>
+    <li>CMAKE_CXX_MP_FLAG:BOOL=ON<br></li>
+    <li>BUILD_DOCUMENTATION:BOOL=OFF<br></li>
+    <li>BUILD_EXAMPLES:BOOL=OFF<br></li>
+    <li>BUILD_SHARED_LIBS:BOOL=ON<br></li>
+    <li>BUILD_TESTING:BOOL=OFF<br></li>
+    <li>Module_vtkImagingOpenGL2:BOOL=ON<br></li>
+    <li>Module_vtkIOExportOpenGL2:BOOL=ON<br></li>
+    <li>Module_vtkRenderingLICOpenGL2:BOOL=ON<br></li>
+    <li>VTK_QT_VERSION:STRING=5<br></li>
+    <li>VTK_Group_Qt:BOOL=ON<br></li>
+    <li>Module_vtkGUISupportQt:BOOL=ON<br></li>
+    <li>Module_vtkGUISupportQtOpenGL:BOOL=ON<br></li>
+    <li>Module_vtkGUISupportQtSQL:BOOL=ON<br></li>
+    <li>Module_vtkGUISupportQtWebkit:BOOL=OFF<br></li>
+    <li>Qt5_DIR:PATH=${Qt5_DIR}<br></li>
+    <li>Qt5Core_DIR:PATH=${Qt5_DIR}Core<br></li>
+    <li>Qt5Gui_DIR:PATH=${Qt5_DIR}Gui<br></li>
+    <li>Qt5OpenGL_DIR:PATH=${Qt5_DIR}OpenGL<br></li>
+    <li>Qt5Sql_DIR:PATH=${Qt5_DIR}Sql<br></li>
+    <li>Qt5UiPlugin_DIR:PATH=${Qt5_DIR}UiPlugin<br></li>
+    <li>Qt5Widgets_DIR:PATH=${Qt5_DIR}Widgets<br></li>
+  </ul>
 </p>
-<h2><a href="https://github.com/Kitware/ITK">ITK-4.13.0</a></h2><hr>
+<h2><a href="https://github.com/Kitware/ITK">ITK-4.13.0</a></h2>
 <p>
-  CMAKE_CXX_MP_FLAG:BOOL=ON<br>
-  BUILD_DOCUMENTATION:BOOL=OFF<br>
-  BUILD_EXAMPLES:BOOL=OFF<br>
-  BUILD_SHARED_LIBS:BOOL=ON<br>
-  BUILD_TESTING:BOOL=OFF<br>
-  Module_ITKVtkGlue:BOOL=ON<br>
-  VTK_DIR:PATH=${CMAKE_BINARY_DIR}/VTK-build<br>
-  Module_ITKReview:BOOL=ON<br>
+  <ul>
+    <li>CMAKE_CXX_MP_FLAG:BOOL=ON<br></li>
+    <li>BUILD_DOCUMENTATION:BOOL=OFF<br></li>
+    <li>BUILD_EXAMPLES:BOOL=OFF<br></li>
+    <li>BUILD_SHARED_LIBS:BOOL=ON<br></li>
+    <li>BUILD_TESTING:BOOL=OFF<br></li>
+    <li>Module_ITKVtkGlue:BOOL=ON<br></li>
+    <li>VTK_DIR:PATH=${CMAKE_BINARY_DIR}/VTK-build<br></li>
+    <li>Module_ITKReview:BOOL=ON<br></li>
+  </ul>
 </p>
-<h2><a href="https://github.com/commontk/CTK">CTK-524fd8729bbee740392739d22f64784ec81a9804</a></h2><hr>
+<h2><a href="https://github.com/commontk/CTK">CTK-524fd8729bbee740392739d22f64784ec81a9804</a></h2>
 <p>
-  CMAKE_CXX_MP_FLAG:BOOL=ON<br>
-  BUILD_DOCUMENTATION:BOOL=OFF<br>
-  CTK_BUILD_EXAMPLES:BOOL=OFF<br>
-  CTK_BUILD_SHARED_LIBS:BOOL=ON<br>
-  BUILD_TESTING:BOOL=OFF<br>
-  CTK_ENABLE_DICOM:BOOL=ON<br>
-  CTK_LIB_DICOM/Core:BOOL=ON<br>
-  CTK_LIB_DICOM/Widgets:BOOL=ON<br>
-  CTK_QT_VERSION:STRING=5<br>
-  Qt5_DIR:PATH=${Qt5_DIR}<br>
+  <ul>
+    <li>CMAKE_CXX_MP_FLAG:BOOL=ON<br></li>
+    <li>BUILD_DOCUMENTATION:BOOL=OFF<br></li>
+    <li>CTK_BUILD_EXAMPLES:BOOL=OFF<br></li>
+    <li>CTK_BUILD_SHARED_LIBS:BOOL=ON<br></li>
+    <li>BUILD_TESTING:BOOL=OFF<br></li>
+    <li>CTK_ENABLE_DICOM:BOOL=ON<br></li>
+    <li>CTK_LIB_DICOM/Core:BOOL=ON<br></li>
+    <li>CTK_LIB_DICOM/Widgets:BOOL=ON<br></li>
+    <li>CTK_QT_VERSION:STRING=5<br></li>
+    <li>Qt5_DIR:PATH=${Qt5_DIR}<br></li>
+  </ul>
 </p>
-<h2><a href="https://github.com/opencv/opencv">OpenCV-3.3.0</a></h2><hr>
+<h2><a href="https://github.com/opencv/opencv">OpenCV-3.3.0</a></h2>
 <p>
-  CMAKE_CXX_MP_FLAG:BOOL=ON<br>
-  BUILD_DOCS:BOOL=OFF<br>
-  BUILD_EXAMPLES:BOOL=OFF<br>
-  BUILD_TESTS:BOOL=OFF<br>
-  BUILD_SHARED_LIBS:BOOL=ON<br>
-  BUILD_WITH_STATIC_CRT:BOOL=ON<br>
-  BUILD_opencv_java:BOOL=OFF<br>
-  BUILD_opencv_python3:BOOL=OFF<br>
-  WITH_MATLAB:BOOL=OFF<br>
-  WITH_CUDA:BOOL=OFF<br>
+  <ul>
+    <li>CMAKE_CXX_MP_FLAG:BOOL=ON<br></li>
+    <li>BUILD_DOCS:BOOL=OFF<br></li>
+    <li>BUILD_EXAMPLES:BOOL=OFF<br></li>
+    <li>BUILD_TESTS:BOOL=OFF<br></li>
+    <li>BUILD_SHARED_LIBS:BOOL=ON<br></li>
+    <li>BUILD_WITH_STATIC_CRT:BOOL=ON<br></li>
+    <li>BUILD_opencv_java:BOOL=OFF<br></li>
+    <li>BUILD_opencv_python3:BOOL=OFF<br></li>
+    <li>WITH_MATLAB:BOOL=OFF<br></li>
+    <li>WITH_CUDA:BOOL=OFF<br></li>
+  </ul>
 </p>
 
 Build pass on Windows 10 with MSVC 2015. Test on your own on other platforms and compilers.
