@@ -7,19 +7,19 @@ The Qvtk Project is a software designed for medical image assisted surgical robo
 ## Prerequisites
 Known good build dependecies:
 
-<h2><a href="https://git-scm.com/downloads">Git-2.13.3</a></h2>
+<h3><a href="https://git-scm.com/downloads">Git-2.13.3</a></h3>
 <p>
   Following the Git installation wizard to install git binary<br>
 </p>
-<h2><a href="https://cmake.org/download/">CMake-3.9.0</a></h2>
+<h3><a href="https://cmake.org/download/">CMake-3.9.0</a></h3>
 <p>
   Following the CMake installation wizard to install CMake binary<br>
 </p>
-<h2><a href="https://download.qt.io/official_releases/qt/5.10/5.10.1/">Qt-5.10.1</a></h2>
+<h3><a href="https://download.qt.io/official_releases/qt/5.10/5.10.1/">Qt-5.10.1</a></h3>
 <p>
   Following the Qt installation wizard to install Qt binary<br>
 </p>
-<h2><a href="https://github.com/Kitware/VTK">VTK-7.1.1</a></h2>
+<h3><a href="https://github.com/Kitware/VTK">VTK-7.1.1</a></h3>
 <p>
   <ul>
     <li>CMAKE_CXX_MP_FLAG:BOOL=ON<br></li>
@@ -45,7 +45,7 @@ Known good build dependecies:
     <li>Qt5Widgets_DIR:PATH=${Qt5_DIR}Widgets<br></li>
   </ul>
 </p>
-<h2><a href="https://github.com/Kitware/ITK">ITK-4.13.0</a></h2>
+<h3><a href="https://github.com/Kitware/ITK">ITK-4.13.0</a></h3>
 <p>
   <ul>
     <li>CMAKE_CXX_MP_FLAG:BOOL=ON<br></li>
@@ -58,7 +58,7 @@ Known good build dependecies:
     <li>Module_ITKReview:BOOL=ON<br></li>
   </ul>
 </p>
-<h2><a href="https://github.com/commontk/CTK">CTK-524fd8729bbee740392739d22f64784ec81a9804</a></h2>
+<h3><a href="https://github.com/commontk/CTK">CTK-524fd8729bbee740392739d22f64784ec81a9804</a></h3>
 <p>
   <ul>
     <li>CMAKE_CXX_MP_FLAG:BOOL=ON<br></li>
@@ -73,7 +73,7 @@ Known good build dependecies:
     <li>Qt5_DIR:PATH=${Qt5_DIR}<br></li>
   </ul>
 </p>
-<h2><a href="https://github.com/opencv/opencv">OpenCV-3.3.0</a></h2>
+<h3><a href="https://github.com/opencv/opencv">OpenCV-3.3.0</a></h3>
 <p>
   <ul>
     <li>CMAKE_CXX_MP_FLAG:BOOL=ON<br></li>
