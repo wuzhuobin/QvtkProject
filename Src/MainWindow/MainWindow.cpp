@@ -59,7 +59,8 @@ MainWindow::MainWindow(int numOfViewers, QWidget * parent)
 		this, SLOT(slotImportImages()));
 	QObject::connect(this->action_Import_Label, SIGNAL(triggered()),
 		this, SLOT(slotImportLabel()));
-
+	QObject::connect(this->action_Import_Model, SIGNAL(triggered()),
+		this, SLOT(slotImportModel()));
 	// for recent images used
 	this->settings = new QSettings("Setting.ini", QSettings::IniFormat, this);
 	createRecentImageActions();
@@ -77,9 +78,11 @@ Q::vtk::OrthogonalViewer * MainWindow::getViewer(int i)
 
 void MainWindow::slotImportImages(QStringList paths)
 {
-	if (paths.isEmpty()) {
-		paths = QFileDialog::getOpenFileNames(this, "Import Images", QString(), "Images (* *.nii *.nii.gz)");
-	}
+	paths = QFileDialog::getOpenFileNames(
+		this,
+		"Import Images",
+		paths.isEmpty() ? QString() : paths.first(),
+		"Images (* *.nii *.nii.gz)");
 	if (!paths.isEmpty()) {
 		emit signalImportImages(QStringList() << paths.join(';'));
 	}
@@ -115,19 +118,32 @@ void MainWindow::slotRecentImagesFromMedicalImageFinder()
 }
 void MainWindow::slotImportLabel(QString path)
 {
-	if (path.isEmpty()) {
-		path = QFileDialog::getOpenFileName(this, "Import Label", QString(), "Label(*.nii *.nii.gz)");
-	}
+	path = QFileDialog::getOpenFileName(
+		this, 
+		"Import Label",
+		path, 
+		"Label(*.nii *.nii.gz)");
 	if (!path.isEmpty()) {
 		emit signalImportLabel(path);
 	}
+}
+void MainWindow::slotImportModel(QString path)
+{
+	path = QFileDialog::getOpenFileName(
+		this,
+		"Import Model",
+		path,
+		"Stereolithography(*.stl);; VTK PolyData(*.vtk);; VTP PolyData(*.vtp)");
+	if (!path.isEmpty()) {
+		emit signalImportModel(path);
+	}
+	
 }
 void MainWindow::slotImportProject(QString path, bool clean)
 {
 	QString project = QFileDialog::getOpenFileName(this, tr("Import XML"),
 		path, tr("XML files (*.xml)"));
 	if (project.isEmpty()) {
-
 		return;
 	}
 	emit signalImportedProject(project, clean);

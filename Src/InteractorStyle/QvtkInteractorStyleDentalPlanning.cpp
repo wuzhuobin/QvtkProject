@@ -109,16 +109,18 @@ void InteractorStyleDentalPlanning::AddImplant(unsigned int source)
 
 	SYNCHRONAL_CALL(InteractorStyleDentalPlanning, 
 	if (observer->getViewer()->inherits("PlanarViewer")) {
-		PolyDataActor2D* polyDataActor2D = scene->addNewDataByClass<PolyDataActor2D>("WitalImplant2D");
+		PolyDataActor2D* polyDataActor2D = scene->createDataByClassName<PolyDataActor2D>();
 		polyDataActor2D->setRenderDataSet(implant);
 		polyDataActor2D->setPlanarOrientation(observer->getViewer()->GetOrientation());
 		polyDataActor2D->setPlanarOrigin(pos[0], pos[1], pos[2]);
+		scene->addData(polyDataActor2D, "WitalImplant2D");
 		observer->getViewer()->AddProp(polyDataActor2D, observer->getViewer()->GetRenderers()[1]);
 	}
 	else
 	{ 
-		PolyDataActor* polyDataActor = scene->addNewDataByClass<PolyDataActor>("WitalImplant3D");
+		PolyDataActor* polyDataActor = scene->createDataByClassName<PolyDataActor>();
 		polyDataActor->setRenderDataSet(implant);
+		scene->addData(polyDataActor, "WitalImplant3D");
 		observer->getViewer()->AddProp(polyDataActor, observer->getViewer()->GetRenderers()[0]);
 
 	}

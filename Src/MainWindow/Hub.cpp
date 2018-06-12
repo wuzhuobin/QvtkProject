@@ -56,14 +56,16 @@ Hub::Hub(QObject* parent)
 	//connection
 	QObject::connect(this->mainWindow, &MainWindow::signalImportImages, 
 		this, &Hub::slotInitializationImages);
+	QObject::connect(this->mainWindow, &MainWindow::signalImportLabel,
+		this, &Hub::slotInitializationLabel);
+	QObject::connect(this->mainWindow, &MainWindow::signalImportModel,
+		this, &Hub::slotInitializationModel);
 	QObject::connect(this->mainWindow, &MainWindow::signalImportedProject,
 		this, &Hub::slotImport);
 	QObject::connect(this->mainWindow, &MainWindow::signalImportedProjectString,
 		this, &Hub::slotImportString);
 	QObject::connect(this->mainWindow, &MainWindow::signalCommitedProject,
 		this, &Hub::slotCommit);
-	QObject::connect(this->mainWindow, &MainWindow::signalImportLabel,
-		this, &Hub::slotInitializationLabel);
 	QObject::connect(this->mainWindow->action_Clear_Project, &QAction::triggered,
 		this, &Hub::slotClean);
 	QObject::connect(this->mainWindow->action_Exit, &QAction::triggered,
@@ -690,10 +692,10 @@ void Hub::slotInitializationLabel(QString path)
 	//label2->readData();
 	//label2->setRelativePath(QStringList() << label2->getUniqueName() + ".nii.gz");
 	//for (int i = 0; i < 3; ++i) {
-	//	ImageSliceLabel* imageSlice = new ImageSliceLabel;
-	//	imageSlice->setRenderDataSet(label2);
-	//	scene->addData(imageSlice);
-	//	this->mainWindow->getViewer(i)->AddProp(imageSlice);
+	//	ImageSliceLabel* modelSlice = new ImageSliceLabel;
+	//	modelSlice->setRenderDataSet(label2);
+	//	scene->addData(modelSlice);
+	//	this->mainWindow->getViewer(i)->AddProp(modelSlice);
 	//	switch (i)
 	//	{
 	//	case 0:
@@ -711,7 +713,45 @@ void Hub::slotInitializationLabel(QString path)
 	//}
 	this->slotInitialization();
 }
-//#include <QvtkNeuralTube.h>
+
+void Hub::slotInitializationModel(QString path)
+{
+	using namespace Q::vtk;
+	Scene *scene = Scene::getCurrentScene();
+	PolyData *model = scene->createDataByClassName<PolyData>();
+	model->setAbsolutePath(path);
+	model->readData();
+	model->setRelativePath(model->getUniqueName() + ".vtk");
+	model->setColor(1, 0, 0);
+	scene->addData(model);
+	for (int i = 0; i < 3; ++i) {
+		PolyDataActor2D *modelSlice = new PolyDataActor2D;
+		modelSlice->setRenderDataSet(model);
+		scene->addData(modelSlice);
+		this->mainWindow->getViewer(i)->AddProp(modelSlice);
+		switch (i)
+		{
+		case 0:
+			this->mainWindow->getViewer(i)->SetOrientationToAxial();
+			break;
+		case 1:
+			this->mainWindow->getViewer(i)->SetOrientationToCoronal();
+			break;
+		case 2:
+			this->mainWindow->getViewer(i)->SetOrientationToSagital();
+			break;
+		default:
+			break;
+		}
+	}
+
+	PolyDataActor *actor = new PolyDataActor;
+	actor->setRenderDataSet(model);
+	scene->addData(actor);
+	this->mainWindow->getViewer(3)->AddProp(actor);
+	this->slotInitialization();
+}
+
 void Hub::slotTestingAction()
 {
 	//using namespace Q::vtk;

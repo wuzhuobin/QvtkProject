@@ -35,6 +35,7 @@ public Q_SLOTS:
 	void slotImportImagesFromDatabase();
 	void slotRecentImagesFromMedicalImageFinder();
 	void slotImportLabel(QString path = QString());
+	void slotImportModel(QString path = QString());
 	// project things
 	void slotImportProject(QString path = QString(), bool clean = true);
 	void slotImportProjectString(QString xml = QString());
@@ -44,6 +45,7 @@ public Q_SLOTS:
 Q_SIGNALS:
 	void signalImportImages(QStringList paths);
 	void signalImportLabel(QString path);
+	void signalImportModel(QString path);
 	void signalImportedProject(QString path, bool clean);
 	void signalImportedProjectString(QString string);
 	void signalCommitedProject(QString path);

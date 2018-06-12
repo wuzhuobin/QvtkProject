@@ -1,13 +1,12 @@
 #ifndef __SCB_HUB_H__
 #define __SCB_HUB_H__
-
+#pragma once
 // me
 #include "MainWindow.h"
 #include "QvtkStylesSwitchOrthogonalViewer.h"
 #include "QvtkWidgetCollection.h"
 //qt
 #include <QObject>
-
 class Hub final: public QObject
 {
 	Q_OBJECT;
@@ -26,6 +25,7 @@ public slots:
 	//void 
 	void slotInitializationImages(QStringList imagePaths);
 	void slotInitializationLabel(QString path);
+	void slotInitializationModel(QString path);
 	void slotInitializationImport();
 	void slotInitialization();
 	void slotInitializationPolyDataSourceWidget();
@@ -37,7 +37,6 @@ public slots:
 	void slotImportString(QString string);
 	void slotClean();
 	void slotExit();
-
 
 	// interactorstyle
 	void slotInteractorStyleTesting(bool flag);

@@ -54,12 +54,13 @@ void PlanarSeedWidget::setCustomEnable(bool flag)
 		this->SeedWidgetData  = scene->getDataByUniqueName<PolyData>(SCB_PLANAR_SEED_WIDGET_DATA);
 
 		if (!this->SeedWidgetData) {
-			this->SeedWidgetData = scene->addNewDataByClass<PolyData>(SCB_PLANAR_SEED_WIDGET_DATA);
+			this->SeedWidgetData = scene->createDataByClassName<PolyData>();
 			this->SeedWidgetData->setRelativePath(QStringList() << SCB_PLANAR_SEED_WIDGET_DATA + ".vtk" );
 			if (!this->SeedWidgetData->getPolyData()->GetPoints()) {
 				vtkNew<vtkPoints> points;
 				this->SeedWidgetData->getPolyData()->SetPoints(points.GetPointer());
 			}
+			scene->addData(this->SeedWidgetData, SCB_PLANAR_SEED_WIDGET_DATA);
 		}
 
 	}
