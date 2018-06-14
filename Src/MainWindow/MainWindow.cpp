@@ -25,9 +25,14 @@ MainWindow::MainWindow(int numOfViewers, QWidget * parent)
 
 	// dock viewers
 	for (int i = 0; i < numOfViewers - 1; ++i) {
-		this->viewers.setViewer(i, new Q::vtk::PlanarViewer(&this->viewers));
+		Q::vtk::PlanarViewer *planarViewer = new Q::vtk::PlanarViewer(&this->viewers);
+		planarViewer->updateAxesFlagOn();
+		planarViewer->orientationTextFlagOn();
+		this->viewers.setViewer(i, planarViewer);
 	}
-	this->viewers.setViewer(numOfViewers - 1, new Q::vtk::NonPlanarViewer(&this->viewers));
+	Q::vtk::NonPlanarViewer *nonPlanarViewer = new Q::vtk::NonPlanarViewer(&this->viewers);
+	nonPlanarViewer->orientationMarkerWidgetFlagOn();
+	this->viewers.setViewer(numOfViewers - 1, nonPlanarViewer);
 	this->verticalLayoutOrthogonal->insertWidget(0, &this->viewers);
 	this->dockWidgetScene->setWidget(&this->sceneWidget);
 	// interactorstyles
