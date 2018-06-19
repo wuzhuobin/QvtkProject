@@ -9,7 +9,7 @@
 #include "QvtkPolyDataActor.h"
 #include "QvtkImageSurfaceActor.h"
 #include "QvtkImageSlice.h"
-#include "QvtkImageSliceLabel.h"
+#include "QvtkImageSliceColor.h"
 #include "QvtkPolyDataActor2D.h"
 #include "QvtkAnnotationPolyData.h"
 #include "QvtkPolyDataSource.h"

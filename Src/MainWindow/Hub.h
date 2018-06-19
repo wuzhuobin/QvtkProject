@@ -21,6 +21,7 @@ public:
 	Q::vtk::StylesSwitchOrthogonalViewer* styles[4];
 	Q::vtk::WidgetCollection* widgets[4];
 
+	Q_DISABLE_COPY(Hub);
 public slots:
 	//void 
 	void slotInitializationImages(QStringList imagePaths);
@@ -29,6 +30,7 @@ public slots:
 	void slotInitializationImport();
 	void slotInitialization();
 	void slotInitializationPolyDataSourceWidget();
+	void slotInitializationPolyDataSourceNormal();
 	void slotInitializationBiopsyWidget();
 	void slotInitializationPlanarSeedWidges();
 
@@ -44,7 +46,6 @@ public slots:
 	void slotInteractorStyleNavigation(bool flag);
 	void slotInteractorStyleDentalPlanning(bool flag);
 	void slotInteractorStyleSeedPlacer(bool flag);
-
 	// widget
 	void slotAddDistanceWidget();
 	void slotRemoveDistanceWidget();
@@ -53,13 +54,12 @@ public slots:
 	void slotRemoveImplantWidget();
 	void slotAddPolyDataSouceWidget();
 	void slotRemovePolyDataSourceWidget();
+	void slotAddPolyDataSouceNormal();
+	void slotRemovePolyDataSourceNormal();
 	void slotAddBiopsyWidget();
 	void slotRemoveBiopsyWidget();
-
-
 	// testing
 	void slotTestingAction();
-
 
 
 };

@@ -7,6 +7,7 @@
 #include "QvtkPlanarSeedWidget.h"
 #include "QvtkImplantWidget.h"
 #include "QvtkPolyDataSourceWidget.h"
+#include "QvtkPolyDataSourceNormal.h"
 #include "QvtkBiopsyWidget.h"
 // qt
 #include <QList>
@@ -84,6 +85,7 @@ namespace Q {
 			QVTK_SETUP_WIDGETS(PlanarSeedWidgets, PlanarSeedWidget);
 			QVTK_SETUP_WIDGETS(ImplantWidgets, ImplantWidget);
 			QVTK_SETUP_WIDGETS(PolyDataSourceWidgets, PolyDataSourceWidget);
+			QVTK_SETUP_WIDGETS(PolyDataSourceNormals, PolyDataSourceNormal);
 			QVTK_SETUP_WIDGETS(BiopsyWidgets, BiopsyWidget);
 		protected:
 			WidgetCollection() {}
@@ -100,6 +102,7 @@ namespace Q {
 			QList<vtkSmartPointer<PlanarSeedWidget>> PlanarSeedWidgets;
 			QList<vtkSmartPointer<ImplantWidget>> ImplantWidgets;
 			QList<vtkSmartPointer<PolyDataSourceWidget>> PolyDataSourceWidgets;
+			QList<vtkSmartPointer<PolyDataSourceNormal>> PolyDataSourceNormals;
 			QList<vtkSmartPointer<BiopsyWidget>> BiopsyWidgets;
 			OrthogonalViewer* Viewer;
 		private:

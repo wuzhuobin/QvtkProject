@@ -1,6 +1,6 @@
 #ifndef __QVTK_POLY_DATA_SOURCE_WIDGET_H__
 #define __QVTK_POLY_DATA_SOURCE_WIDGET_H__
-
+#pragma once
 // me
 #include "QvtkUniqueUiInteractorObserver.h"
 #include "QvtkWidgetOrthogonalViewer.h"
@@ -69,10 +69,9 @@ protected:
 	Prop* SourceWidgetProp;
 	PolyData* SourceWidgetPolyData;
 	static bool m_unfollowCursorFlag;
-	//AnnotationPolyData* AnnotationPolyData;
 	Ui::PolyDataSourceWidget* ui;
 private:
-
+	Q_DISABLE_COPY(PolyDataSourceWidget);
 };
 
 	}

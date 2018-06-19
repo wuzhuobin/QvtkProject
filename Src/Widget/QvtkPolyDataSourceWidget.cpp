@@ -212,6 +212,5 @@ void PolyDataSourceWidget::FollowCursor()
 			this->Prop3D->GetUserMatrix()->GetElement(2, 3));
 	}
 }
-
 	}
 }

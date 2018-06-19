@@ -3,7 +3,7 @@
 #include "QvtkScene.h"
 #include "QvtkImage.h"
 #include "QvtkImageSlice.h"
-#include "QvtkImageSliceLabel.h"
+#include "QvtkImageSliceColor.h"
 #include "QvtkImageSurfaceActor.h"
 #include "QvtkImageLabel2.h"
 #include "QvtkOrthogonalViewer.h"
@@ -16,8 +16,6 @@
 #include "QvtkPolyDataActor.h"
 #include "QvtkPolyDataActor2D.h"
 #include "QvtkBiopsyData.h"
-
-
 //vtk
 #include <vtkRenderer.h>
 #include <vtkSphereSource.h>
@@ -33,7 +31,6 @@
 #include <vtkProperty.h>
 #include <vtkRendererCollection.h>
 #include <vtkTransform.h>
-
 #include <vtkProperty.h>
 //qt
 #include <QDebug>
@@ -121,6 +118,10 @@ Hub::Hub(QObject* parent)
 	QObject::connect(this->mainWindow->action_PolyData_Source_Widget_Off, &QAction::triggered,
 		this, &Hub::slotRemovePolyDataSourceWidget);
 	scene->registerData(new Q::vtk::Implant);
+	QObject::connect(this->mainWindow->action_PolyData_Source_Normal_On, &QAction::triggered,
+		this, &Hub::slotAddPolyDataSouceNormal);
+	QObject::connect(this->mainWindow->action_PolyData_Source_Normal_Off, &QAction::triggered,
+		this, &Hub::slotRemovePolyDataSourceNormal);
 	QObject::connect(this->mainWindow->action_Biopsy_On, &QAction::triggered,
 		this, &Hub::slotAddBiopsyWidget);
 	QObject::connect(this->mainWindow->action_Biopsy_Off, &QAction::triggered,
@@ -131,6 +132,7 @@ Hub::Hub(QObject* parent)
 		this, &Hub::slotTestingAction);
 
 	this->mainWindow->show();
+	this->mainWindow->action_Navigation_Mode->trigger();
 }
 
 
@@ -199,23 +201,22 @@ void Hub::slotInitializationImport()
 
 void Hub::slotInitialization()
 {
-	this->mainWindow->action_Navigation_Mode->trigger();
 	this->styles[0]->GetNavigation()->CentralizeCursorPosition();
 	this->styles[1]->GetNavigation()->CentralizeCursorPosition();
 	this->styles[2]->GetNavigation()->CentralizeCursorPosition();
 	
 	this->mainWindow->getViewer(0)->ResetCamera(0);
 	this->mainWindow->getViewer(0)->ResetCameraClippingRange(0);
-	this->mainWindow->getViewer(0)->GetCursorActor()->VisibilityOn();
+	//this->mainWindow->getViewer(0)->GetCursorActor()->VisibilityOn();
 	this->mainWindow->getViewer(1)->ResetCamera(0);
 	this->mainWindow->getViewer(1)->ResetCameraClippingRange(0);
-	this->mainWindow->getViewer(1)->GetCursorActor()->VisibilityOn();
+	//this->mainWindow->getViewer(1)->GetCursorActor()->VisibilityOn();
 	this->mainWindow->getViewer(2)->ResetCamera(0);
 	this->mainWindow->getViewer(2)->ResetCameraClippingRange(0);
-	this->mainWindow->getViewer(2)->GetCursorActor()->VisibilityOn();
+	//this->mainWindow->getViewer(2)->GetCursorActor()->VisibilityOn();
 	this->mainWindow->getViewer(3)->ResetCamera(0);
 	this->mainWindow->getViewer(3)->ResetCameraClippingRange(0);
-	this->mainWindow->getViewer(3)->GetCursorActor()->VisibilityOn();
+	//this->mainWindow->getViewer(3)->GetCursorActor()->VisibilityOn();
 	Q::vtk::Viewer::renderAllViewers();
 }
 
@@ -233,6 +234,26 @@ void Hub::slotInitializationPolyDataSourceWidget()
 			if (i == 0 && this->widgets[i]->GetPolyDataSourceWidgets().size() == 1) {
 				this->mainWindow->toolBoxWidget->addItem(this->widgets[0]->GetPolyDataSourceWidgets()[0]->getWidget(),
 					this->widgets[0]->GetPolyDataSourceWidgets()[0]->getWidget()->windowTitle());
+			}
+		}
+
+	}
+}
+
+void Hub::slotInitializationPolyDataSourceNormal()
+{
+	using namespace Q::vtk;
+	Scene* scene = Scene::getCurrentScene();
+	QStringList data = scene->getAllDataByTag("Implant");
+	for (QStringList::iterator it = data.begin(); it != data.end(); ++it) {
+		Implant* implant = scene->getDataByUniqueName<Implant>(*it);
+		for (int i = 0; i < NUM_OF_ORTHOGONAL_VIEWER; ++i) {
+			PolyDataSourceNormal* widget = this->widgets[i]->ProducePolyDataSourceNormals();
+			widget->SetPolyData(implant);
+			this->widgets[i]->SetOneOfPolyDataSourceNormalsEnabled(widget, true);
+			if (i == 0 && this->widgets[i]->GetPolyDataSourceNormals().size() == 1) {
+				this->mainWindow->toolBoxWidget->addItem(this->widgets[0]->GetPolyDataSourceNormals()[0]->getWidget(),
+					this->widgets[0]->GetPolyDataSourceNormals()[0]->getWidget()->windowTitle());
 			}
 		}
 
@@ -551,6 +572,63 @@ void Hub::slotRemovePolyDataSourceWidget()
 
 	for (int i = 0; i < NUM_OF_ORTHOGONAL_VIEWER; i++) {
 		this->widgets[i]->DestroyPolyDataSourceWidgets();
+	}
+
+	if (implant) {
+		scene->removeData(implant);
+	}
+}
+
+void Hub::slotAddPolyDataSouceNormal()
+{
+	using namespace Q::vtk;
+	const double* pos = this->mainWindow->getViewer(0)->GetCursorPosition();
+	Scene* scene = Scene::getCurrentScene();
+	int index = scene->getAllDataByTag("Implant").size() + 1;
+	Implant* implant = scene->createDataByClassName<Implant>();
+	implant->setColor(1, 0, 0);
+	implant->setHoverColor(0, 1, 0);
+	implant->setSelectedColor(0, 0, 1);
+	scene->addData(implant, "ImplantWidget");
+	for (int i = 0; i < NUM_OF_ORTHOGONAL_VIEWER; i++)
+	{
+		PolyDataSourceNormal* widget = this->widgets[i]->ProducePolyDataSourceNormals();
+		widget->SetPolyData(implant);
+		this->widgets[i]->SetOneOfPolyDataSourceNormalsEnabled(widget, true);
+		widget->PlaceWidget(
+			this->mainWindow->getViewer(i)->GetCursorPosition()[0],
+			this->mainWindow->getViewer(i)->GetCursorPosition()[1],
+			this->mainWindow->getViewer(i)->GetCursorPosition()[2]);
+		if (i == 0 && this->widgets[i]->GetPolyDataSourceNormals().size() == 1) {
+			this->mainWindow->toolBoxWidget->addItem(this->widgets[0]->GetPolyDataSourceNormals()[0]->getWidget(),
+				this->widgets[0]->GetPolyDataSourceNormals()[0]->getWidget()->windowTitle());
+		}
+	}
+
+}
+
+void Hub::slotRemovePolyDataSourceNormal()
+{
+	using namespace Q::vtk;
+	Scene* scene = Scene::getCurrentScene();
+	DataSet* implant = nullptr;
+	for (int i = 0; i < NUM_OF_ORTHOGONAL_VIEWER; i++)
+	{
+		if (this->widgets[i]->GetPolyDataSourceNormals().size() <= 0) {
+			continue;
+		}
+		else if (i == 0) {
+			implant = this->widgets[i]->GetPolyDataSourceNormals().last()->GetPolyData();
+			if (this->widgets[i]->GetPolyDataSourceNormals().size() == 1) {
+				int index = this->mainWindow->toolBoxWidget->indexOf(this->widgets[0]->GetPolyDataSourceNormals()[0]->getWidget());
+				this->mainWindow->toolBoxWidget->removeItem(index);
+			}
+		}
+		this->widgets[i]->SetOneOfPolyDataSourceNormalsEnabled(this->widgets[i]->GetPolyDataSourceNormals().back(), false);
+	}
+
+	for (int i = 0; i < NUM_OF_ORTHOGONAL_VIEWER; i++) {
+		this->widgets[i]->DestroyPolyDataSourceNormals();
 	}
 
 	if (implant) {

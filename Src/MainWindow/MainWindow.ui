@@ -206,6 +206,8 @@
     <addaction name="action_Implant_Widget_Off"/>
     <addaction name="action_PolyData_Source_Widget_On"/>
     <addaction name="action_PolyData_Source_Widget_Off"/>
+    <addaction name="action_PolyData_Source_Normal_On"/>
+    <addaction name="action_PolyData_Source_Normal_Off"/>
     <addaction name="action_Biopsy_On"/>
     <addaction name="action_Biopsy_Off"/>
    </widget>
@@ -712,6 +714,16 @@
   <action name="action_Import_Model">
    <property name="text">
     <string>&amp;Import Model</string>
+   </property>
+  </action>
+  <action name="action_PolyData_Source_Normal_On">
+   <property name="text">
+    <string>&amp;PolyData Source Normal On</string>
+   </property>
+  </action>
+  <action name="action_PolyData_Source_Normal_Off">
+   <property name="text">
+    <string>&amp;PolyData Source Normal Off</string>
    </property>
   </action>
  </widget>
