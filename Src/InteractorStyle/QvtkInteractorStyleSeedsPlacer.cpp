@@ -152,7 +152,7 @@ void InteractorStyleSeedsPlacer::setCustomEnable(bool flag)
 	Scene* scene = Scene::getCurrentScene();
 	this->SeedsData = qobject_cast<PolyData*>(scene->getDataByUniqueName(SEEDS_PLACER_DATA));
 	if (!this->SeedsData) {
-		this->SeedsData = qobject_cast<PolyData*>(scene->createDataByClassName("PolyData"));
+		this->SeedsData = qobject_cast<PolyData*>(scene->createDataByClassName("Q::vtk::PolyData"));
 		this->SeedsData->setRelativePath(QStringList() << SEEDS_PLACER_DATA + ".vtp");
 		vtkNew<vtkPoints> points;
 		this->SeedsData->getPolyData()->SetPoints(points.GetPointer());
