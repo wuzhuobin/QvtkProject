@@ -26,6 +26,7 @@ public slots:
 	//void 
 	void slotInitializationImages(QStringList imagePaths);
 	void slotInitializationLabel(QString path);
+	void slotInitializationImagesWithLUT(QStringList	path);
 	void slotInitializationModel(QString path);
 	void slotInitializationImport();
 	void slotInitialization();

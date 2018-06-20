@@ -76,7 +76,7 @@ namespace Q {
 				scene->registerData(new ImageLabel);
 				scene->registerData(new ImageLabel2);
 				scene->registerData(new ImageSlice);
-				//scene->registerData(new ImageSliceLabel);
+				scene->registerData(new ImageSliceColor);
 				scene->registerData(new ImageSurfaceActor);
 				scene->registerData(new PolyData);
 				scene->registerData(new PolyDataActor);
@@ -99,26 +99,12 @@ int main(int argc, char* argv[])
 
 	QApplication app(argc, argv);
 	Q::vtk::SceneConfiguration();
-	//app.setAttribute(Qt::AA_EnableHighDpiScaling);
-
 	QTranslator qtTranslator;
 	qtTranslator.load("lang_" + QLocale::system().name());
 	app.installTranslator(&qtTranslator);
-
-	//QFile styleFile(":/HyperBlue/hyperblue/styles.qss");
-	//if (styleFile.open(QIODevice::ReadOnly)) {
-	//	app.setStyleSheet(styleFile.readAll());
-	//}
 	Hub hub;
 	QCoreApplication::processEvents();
-	////QPixmap pixmap(":/HyperBlue/hyperblue/icon/product-splashScreen.png");
-	//QPixmap pixmap(":/HyperBlue/hyperblue/icon/Orthopedics-splashscreen2.png");
-	//QSplashScreen splash(pixmap);
-	//splash.show();
-	//app.processEvents();
-	
-	//splash.finish(NULL);
-
+	hub.slotInitializationImagesWithLUT(QStringList() << "C:/Users/jieji/Desktop/PlaqueQuant/JackyData/nifti_corrected/CUBE T1 corrected.nii");
 	return app.exec();
 }
 

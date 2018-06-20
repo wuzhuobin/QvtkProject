@@ -44,6 +44,7 @@ public Q_SLOTS:
 
 Q_SIGNALS:
 	void signalImportImages(QStringList paths);
+	void signalImportImagesWithLUT(QStringList paths);
 	void signalImportLabel(QString path);
 	void signalImportModel(QString path);
 	void signalImportedProject(QString path, bool clean);

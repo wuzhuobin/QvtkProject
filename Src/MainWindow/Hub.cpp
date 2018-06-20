@@ -47,13 +47,13 @@ Hub::Hub(QObject* parent)
 
 	for (int i = 0; i < NUM_OF_ORTHOGONAL_VIEWER; ++i) {
 		this->mainWindow->getViewer(i)->SetEnableDepthPeeling(true);
-		this->mainWindow->getViewer(i)->GetCursorActor()->VisibilityOff();
 	}
-
 	//connection
-	QObject::connect(this->mainWindow, &MainWindow::signalImportImages, 
-		this, &Hub::slotInitializationImages);
-	QObject::connect(this->mainWindow, &MainWindow::signalImportLabel,
+	//QObject::connect(this->mainWindow, &MainWindow::signalImportImages, 
+	//	this, &Hub::slotInitializationImages);
+	QObject::connect(this->mainWindow, &MainWindow::signalImportImages,
+		this, &Hub::slotInitializationImagesWithLUT);
+		QObject::connect(this->mainWindow, &MainWindow::signalImportLabel,
 		this, &Hub::slotInitializationLabel);
 	QObject::connect(this->mainWindow, &MainWindow::signalImportModel,
 		this, &Hub::slotInitializationModel);
@@ -67,7 +67,6 @@ Hub::Hub(QObject* parent)
 		this, &Hub::slotClean);
 	QObject::connect(this->mainWindow->action_Exit, &QAction::triggered,
 		this, &Hub::slotExit);
-
 	// interactorstyle
 	for (int i = 0; i < NUM_OF_ORTHOGONAL_VIEWER; ++i) {
 		this->styles[i] = Q::vtk::StylesSwitchOrthogonalViewer::New();
@@ -75,7 +74,6 @@ Hub::Hub(QObject* parent)
 		this->styles[i]->SetDefaultRenderer(this->mainWindow->getViewer(i)->GetRenderers()[0]);
 		this->mainWindow->getViewer(i)->GetInteractor()->SetInteractorStyle(this->styles[i]);
 	}
-
 	QObject::connect(this->mainWindow->action_Testing_Mode, &QAction::toggled,
 		this, &Hub::slotInteractorStyleTesting);
 	QObject::connect(this->mainWindow->action_Window_Level_Mode, &QAction::toggled,
@@ -195,6 +193,7 @@ void Hub::slotInitializationImport()
 
 	this->slotInitialization();
 	this->slotInitializationPolyDataSourceWidget();
+	this->slotInitializationPolyDataSourceNormal();
 	this->slotInitializationBiopsyWidget();
 	this->slotInitializationPlanarSeedWidges();
 }
@@ -789,6 +788,49 @@ void Hub::slotInitializationLabel(QString path)
 	//		break;
 	//	}
 	//}
+	this->slotInitialization();
+}
+
+void Hub::slotInitializationImagesWithLUT(QStringList imagePaths)
+{
+	using namespace Q::vtk;
+	Scene* scene = Scene::getCurrentScene();
+
+	for (QStringList::const_iterator cit = imagePaths.cbegin();
+		cit != imagePaths.cend(); ++cit) {
+
+		Image* image = scene->addNewDataByClass<Image>();
+		image->setAbsolutePath(cit->split(";"));
+		image->readData();
+		image->setRelativePath(QStringList() << image->getUniqueName() + ".nii.gz");
+
+		for (int i = 0; i < 3; ++i) {
+			ImageSliceColor* imageSlice = new ImageSliceColor;
+			imageSlice->setRenderDataSet(image);
+			scene->addData(imageSlice);
+			this->mainWindow->getViewer(i)->AddProp(imageSlice);
+			switch (i)
+			{
+			case 0:
+				this->mainWindow->getViewer(i)->SetOrientationToAxial();
+				break;
+			case 1:
+				this->mainWindow->getViewer(i)->SetOrientationToCoronal();
+				break;
+			case 2:
+				this->mainWindow->getViewer(i)->SetOrientationToSagital();
+				break;
+			default:
+				break;
+			}
+		}
+		Volume* volume = new Volume;
+		volume->setRenderDataSet(image);
+		scene->addData(volume);
+		this->mainWindow->getViewer(3)->AddProp(volume);
+		this->mainWindow->getViewer(3)->SetOrientationToAxial();
+	}
+
 	this->slotInitialization();
 }
 
