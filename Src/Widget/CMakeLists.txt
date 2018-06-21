@@ -157,6 +157,7 @@ set(
 	QvtkData
 	QvtkViewer
 	Data
+	Filter
 )
 
 set(

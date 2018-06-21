@@ -6,7 +6,7 @@
 // vtk
 class vtkPolyDataMapper;
 class vtkActor;
-class vtkLineSource;
+class vtkBrokenLineSource;
 namespace Q {
 	namespace vtk {
 		class PolyDataSourceNormal : public PolyDataSourceWidget {
@@ -19,7 +19,7 @@ namespace Q {
 		protected:
 			PolyDataSourceNormal();
 			virtual ~PolyDataSourceNormal() override;
-			vtkLineSource *lineSource;
+			vtkBrokenLineSource *brokenLine;
 			vtkPolyDataMapper *lineMapper;
 			vtkActor *lineActor;
 		private:

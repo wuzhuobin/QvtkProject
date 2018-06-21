@@ -98,7 +98,10 @@ void PolyDataSourceWidget::DisableFollowCursor(bool flag)
 		return;
 	}
 	m_unfollowCursorFlag = flag;
-	emit static_cast<PolyDataSourceWidget*>(getUniqueThis("Q::vtk::PolyDataSourceWidget"))->DisabledFollowCursor(m_unfollowCursorFlag);
+	PolyDataSourceWidget *uniqueThis = qobject_cast<PolyDataSourceWidget*>(getUniqueThis("Q::vtk::PolyDataSourceWidget"));
+	if (uniqueThis) {
+		emit uniqueThis->DisabledFollowCursor(flag);
+	}
 }
 
 void PolyDataSourceWidget::Render()
