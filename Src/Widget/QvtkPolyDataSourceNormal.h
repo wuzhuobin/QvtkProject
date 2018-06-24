@@ -7,6 +7,7 @@
 class vtkPolyDataMapper;
 class vtkActor;
 class vtkBrokenLineSource;
+class vtkCallbackCommand;
 namespace Q {
 	namespace vtk {
 		class PolyDataSourceNormal : public PolyDataSourceWidget {
@@ -16,12 +17,16 @@ namespace Q {
 			vtkTypeMacro(PolyDataSourceNormal, PolyDataSourceWidget);
 			virtual void PrintSelf(ostream &os, vtkIndent indent) override;
 			virtual void setCustomEnable(bool flag) override;
+		protected slots:
+			void cursorChange(double x, double y, double z);
 		protected:
 			PolyDataSourceNormal();
 			virtual ~PolyDataSourceNormal() override;
+			static void matrixModified(vtkObject* self, unsigned long eid, void* clientdata, void *calldata);
 			vtkBrokenLineSource *brokenLine;
 			vtkPolyDataMapper *lineMapper;
 			vtkActor *lineActor;
+			vtkCallbackCommand *matrixCallback;
 		private:
 			Q_DISABLE_COPY(PolyDataSourceNormal);
 		};
