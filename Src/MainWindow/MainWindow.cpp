@@ -3,10 +3,8 @@
 #include "MedicalImageFinder.h"
 #include "QvtkPlanarViewer.h"
 #include "QvtkNonPlanarViewer.h"
-
 // vtk
 #include <vtkRenderer.h>
-
 // qt
 #include <QFileDialog>
 #include <QSettings>
@@ -14,9 +12,7 @@
 #include <QInputDialog>
 #include <QMessageBox>
 #include <QDebug>
-
 const QString MainWindow::PASSWORD("WUZHUOBIN");
-
 MainWindow::MainWindow(int numOfViewers, QWidget * parent)
 	:QMainWindow(parent),
 	stylesGroup(this)
@@ -32,10 +28,16 @@ MainWindow::MainWindow(int numOfViewers, QWidget * parent)
 	}
 	Q::vtk::NonPlanarViewer *nonPlanarViewer = new Q::vtk::NonPlanarViewer(&this->viewers);
 	nonPlanarViewer->orientationMarkerWidgetFlagOn();
-	nonPlanarViewer->SetEnableCornerAnnotation(true);
+	nonPlanarViewer->setEnableCornerAnnotation(true);
 	this->viewers.setViewer(numOfViewers - 1, nonPlanarViewer);
 	this->verticalLayoutOrthogonal->insertWidget(0, &this->viewers);
 	this->dockWidgetScene->setWidget(&this->sceneWidget);
+	for (int i = 0; i < 10; ++i) {
+		Q::vtk::PlanarViewer *planarViewer = new Q::vtk::PlanarViewer(&this->multiAxial);
+		this->multiAxial.setViewer(i, planarViewer);
+	}
+	this->multiAxial.update();
+	this->verticalLayoutMultiAxial->insertWidget(0, &this->multiAxial);
 	// interactorstyles
 	this->stylesGroup.addAction(this->action_Testing_Mode);
 	this->stylesGroup.addAction(this->action_Navigation_Mode);
@@ -80,6 +82,11 @@ MainWindow::~MainWindow()
 Q::vtk::OrthogonalViewer * MainWindow::getViewer(int i)
 {
 	return this->viewers.getViewers(i);
+}
+
+Q::vtk::OrthogonalViewer * MainWindow::getViewerInMultiAxial(int i)
+{
+	return this->multiAxial.getViewers(i);
 }
 
 void MainWindow::slotImportImages(QStringList paths)

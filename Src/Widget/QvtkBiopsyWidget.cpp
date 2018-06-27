@@ -59,7 +59,7 @@ void BiopsyWidget::setCustomEnable(bool flag)
 		const QList<Prop*>& props = this->getViewer()->GetProps();
 		
 		this->SetProjectionNormal(this->getViewer()->GetOrientation());
-		double* pos = this->getViewer()->GetCursorPosition();
+		const double* pos = this->getViewer()->getCursorPosition();
 		this->SetProjectionPosition(pos[0], pos[1], pos[2]);
 		
 		QObject::connect(this->getViewer(), &OrthogonalViewer::OrientationChanged,
@@ -104,7 +104,6 @@ void BiopsyWidget::setCustomEnable(bool flag)
 void BiopsyWidget::install()
 {
 	UNIQUE_UI_INSTALL(BiopsyWidget);
-
 }
 
 void BiopsyWidget::uninstall()

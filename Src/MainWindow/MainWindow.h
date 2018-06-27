@@ -1,13 +1,11 @@
 #ifndef __MAIN_WINDOW_H__
 #define __MAIN_WINDOW_H__
-
 // me
 #include "QvtkOrthogonalDockViewers.h"
 #include "QvtkSceneWidget.h"
 #include "QvtkOrthogonalViewer.h"
 #include "ui_MainWindow.h"
 #include "ctkDICOMAppWidget2.h"
-
 // qt
 #include <QMainWindow>
 #include <QActionGroup>
@@ -28,6 +26,7 @@ public:
 	virtual ~MainWindow() override;
 
 	Q::vtk::OrthogonalViewer* getViewer(int i);
+	Q::vtk::OrthogonalViewer* getViewerInMultiAxial(int i);
 public Q_SLOTS:
 	// menu file
 	void slotImportImages(QStringList paths = QStringList());
@@ -66,6 +65,7 @@ private:
 	QActionGroup stylesGroup;
 	Q::vtk::SceneWidget sceneWidget;
 	Q::vtk::OrthogonalDockViewers viewers;
+	Q::vtk::OrthogonalDockViewers multiAxial;
 	ctkDICOMAppWidget2 databaseWidget;
 };
 

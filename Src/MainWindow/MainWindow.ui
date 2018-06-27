@@ -82,6 +82,12 @@
         </property>
        </layout>
       </widget>
+      <widget class="QWidget" name="tabMultiAxial">
+       <attribute name="title">
+        <string>Multi-Axial</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="verticalLayoutMultiAxial"/>
+      </widget>
      </widget>
     </item>
    </layout>

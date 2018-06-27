@@ -65,9 +65,9 @@ void ImplantWidget::setCustomEnable(bool flag)
 		//	return;
 		//}
 		//this->ImplantActor->setRenderDataSet(this->Implant);
-		this->ImplantWidgetProp->getProp()->GetUserMatrix()->SetElement(0, 3, this->getViewer()->GetCursorPosition()[0]);
-		this->ImplantWidgetProp->getProp()->GetUserMatrix()->SetElement(1, 3, this->getViewer()->GetCursorPosition()[1]);
-		this->ImplantWidgetProp->getProp()->GetUserMatrix()->SetElement(2, 3, this->getViewer()->GetCursorPosition()[2]);
+		this->ImplantWidgetProp->getProp()->GetUserMatrix()->SetElement(0, 3, this->getViewer()->getCursorPosition()[0]);
+		this->ImplantWidgetProp->getProp()->GetUserMatrix()->SetElement(1, 3, this->getViewer()->getCursorPosition()[1]);
+		this->ImplantWidgetProp->getProp()->GetUserMatrix()->SetElement(2, 3, this->getViewer()->getCursorPosition()[2]);
 		static_cast<vtkAffineRepresentation2D2*>(this->GetRepresentation())->SetUserMatrix(
 			this->ImplantWidgetProp->getProp()->GetUserMatrix());
 		static_cast<vtkAffineRepresentation2D2*>(this->GetRepresentation())->SetOrientation(

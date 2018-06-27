@@ -51,9 +51,9 @@ void PolyDataSourceWidget::setCustomEnable(bool flag)
 			this->getViewer()->AddProp(actor2d, this->getViewer()->GetRenderers()[1]);
 			actor2d->setPlanarOrientation(planarViewer->GetOrientation());
 			actor2d->setPlanarOrigin(
-				planarViewer->GetCursorPosition()[0],
-				planarViewer->GetCursorPosition()[1],
-				planarViewer->GetCursorPosition()[2]);
+				planarViewer->getCursorPosition()[0],
+				planarViewer->getCursorPosition()[1],
+				planarViewer->getCursorPosition()[2]);
 			this->SourceWidgetProp = actor2d;
 		}
 		else {
@@ -109,7 +109,7 @@ void PolyDataSourceWidget::Render()
 	FunctionSet2 f = [&](InteractorObserver* ob) {
 		PolyDataSourceWidget* widget = qobject_cast<PolyDataSourceWidget*>(ob);
 		if (widget && widget->getViewer()) {
-			widget->getViewer()->Render();
+			widget->getViewer()->update();
 		}
 	};
 	synchronalCall(this, f);

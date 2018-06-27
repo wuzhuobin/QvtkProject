@@ -202,12 +202,12 @@ protected:
   //double Origin[4]; //the current origin in world coordinates
   double DisplayOrigin[3]; //the current origin in display coordinates
 
-  enum ORIENTATION
+  typedef enum ORIENTATION
   {
 	  ORIENTATION_YZ = 0,
 	  ORIENTATION_XZ = 1,
 	  ORIENTATION_XY = 2
-  };
+  }ORIENTATION;
   int Orientation;
   double CurrentTranslation[3]; //translation this movement
   double StartWorldPosition[4]; //Start event position converted to world

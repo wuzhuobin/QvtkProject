@@ -97,7 +97,7 @@ void Q::vtk::PolyDataSourceNormal::matrixModified(vtkObject * vtkNotUsed(caller)
 	PolyDataSourceNormal *self = static_cast<PolyDataSourceNormal*>(clientdata);
 	vtkMatrix4x4 *matrix = self->lineActor->GetUserMatrix();
 	int orientation = self->getViewer()->GetOrientation();
-	double *pos = self->getViewer()->GetCursorPosition();
+	const double *pos = self->getViewer()->getCursorPosition();
 	double bounds[6];
 	self->GetInput()->GetBounds(bounds);
 	double _bounds1[4]{ bounds[0], bounds[2], bounds[4], 1 };

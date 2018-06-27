@@ -195,7 +195,7 @@ void InteractorStyleNavigation::SetCursorPosition(double x, double y, double z)
 
 void InteractorStyleNavigation::SetCursorPositionX(double x)
 {
-	const double* pos = this->m_viewer->GetCursorPosition();
+	const double* pos = this->m_viewer->getCursorPosition();
 	//if (pos[0] == x) {
 	//	return;
 	//}
@@ -204,7 +204,7 @@ void InteractorStyleNavigation::SetCursorPositionX(double x)
 
 void InteractorStyleNavigation::SetCursorPositionY(double y)
 {
-	const double* pos = this->m_viewer->GetCursorPosition();
+	const double* pos = this->m_viewer->getCursorPosition();
 	//if (pos[1] == y) {
 	//	return;
 	//}
@@ -213,7 +213,7 @@ void InteractorStyleNavigation::SetCursorPositionY(double y)
 
 void InteractorStyleNavigation::SetCursorPositionZ(double z)
 {
-	const double* pos = this->m_viewer->GetCursorPosition();
+	const double* pos = this->m_viewer->getCursorPosition();
 	//if (pos[2] == z) {
 	//	return;
 	//}

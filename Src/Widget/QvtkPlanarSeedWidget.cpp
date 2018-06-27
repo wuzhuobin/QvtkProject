@@ -37,7 +37,7 @@ void PlanarSeedWidget::setCustomEnable(bool flag)
 		
 		this->EnableLeftClckDropSeed(!this->getUi()->checkBoxNavigation->isChecked());
 		this->SetProjectionNormal(this->getViewer()->GetOrientation());
-		double* pos = this->getViewer()->GetCursorPosition();
+		const double* pos = this->getViewer()->getCursorPosition();
 		this->SetProjectionPosition(pos[0], pos[1], pos[2]);
 		QObject::connect(this->getViewer(), &OrthogonalViewer::OrientationChanged,
 			this, &PlanarSeedWidget::SetProjectionNormal);
@@ -151,7 +151,7 @@ void PlanarSeedWidget::EnableLeftClckDropSeed(bool flag)
 
 void PlanarSeedWidget::DropSeed()
 {
-	double* pos = this->getViewer()->GetCursorPosition();
+	const double* pos = this->getViewer()->getCursorPosition();
 	synchronalCall<PlanarSeedWidget>([&pos](PlanarSeedWidget* style) {
 		style->Superclass::DropSeed(pos);
 		style->Render();

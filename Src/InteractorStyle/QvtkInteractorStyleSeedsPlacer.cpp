@@ -162,9 +162,9 @@ void InteractorStyleSeedsPlacer::setCustomEnable(bool flag)
 
 		SetProjectionNormal(getViewer()->GetOrientation());
 		SetProjectionPosition(
-			this->m_viewer->GetCursorPosition()[0], 
-			this->m_viewer->GetCursorPosition()[1],
-			this->m_viewer->GetCursorPosition()[2]);
+			this->m_viewer->getCursorPosition()[0], 
+			this->m_viewer->getCursorPosition()[1],
+			this->m_viewer->getCursorPosition()[2]);
 
 		GenerateWidgetFromSeedsData();
 		this->SeedsWidget->Render();
@@ -231,9 +231,9 @@ void InteractorStyleSeedsPlacer::EnableNavigation(bool flag)
 
 void InteractorStyleSeedsPlacer::AddOne()
 {
-	double* seed = this->m_viewer->GetCursorPosition();
+	const double* seed = this->m_viewer->getCursorPosition();
 	vtkHandleWidget* newSeed = this->SeedsWidget->CreateNewHandle();
-	newSeed->GetHandleRepresentation()->SetWorldPosition(seed);
+	newSeed->GetHandleRepresentation()->SetWorldPosition(const_cast<double*>(seed));
 	newSeed->SetInteractor(this->Interactor);
 	newSeed->EnabledOn();
 	UpdateSeedsData(seed, seed);
@@ -283,7 +283,7 @@ void InteractorStyleSeedsPlacer::GenerateWidgetFromSeedsData()
 	//ClearSeedsWidget();
 	vtkPoints* seeds = this->SeedsData->getPolyData()->GetPoints();
 
-	const double* pos = this->m_viewer->GetCursorPosition();
+	const double* pos = this->m_viewer->getCursorPosition();
 	int orientation = this->m_viewer->GetOrientation();
 
 	for (vtkIdType id = 0; id < seeds->GetNumberOfPoints(); ++id) {

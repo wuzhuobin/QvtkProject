@@ -89,7 +89,7 @@ void InteractorStyleDentalPlanning::AddImplant(unsigned int source)
 {
 	Scene* scene = Scene::getCurrentScene();
 	
-	double* pos = getViewer()->GetCursorPosition();
+	const double* pos = getViewer()->getCursorPosition();
 
 	Implant* implant = static_cast<Implant*>(scene->addNewDataByTag("Implant", "Wital Implant"));
 	//implant->readData();

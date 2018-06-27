@@ -216,7 +216,7 @@ void Hub::slotInitialization()
 	this->mainWindow->getViewer(3)->ResetCamera(0);
 	this->mainWindow->getViewer(3)->ResetCameraClippingRange(0);
 	//this->mainWindow->getViewer(3)->GetCursorActor()->VisibilityOn();
-	Q::vtk::Viewer::renderAllViewers();
+	Q::vtk::Viewer::updateAllViewers();
 }
 
 void Hub::slotInitializationPolyDataSourceWidget()
@@ -373,7 +373,7 @@ void Hub::slotClean()
 	this->mainWindow->getViewer(2)->GetCursorActor()->VisibilityOff();
 	this->mainWindow->getViewer(3)->RemoveAllProp(this->mainWindow->getViewer(3)->GetRenderers()[0]);
 	this->mainWindow->getViewer(3)->GetCursorActor()->VisibilityOff();
-	Viewer::renderAllViewers();
+	Viewer::updateAllViewers();
 
 	Scene::getCurrentScene()->clear();
 }
@@ -486,7 +486,7 @@ void Hub::slotPlanarSeedWidget(bool flag)
 void Hub::slotAddImplantWidget()
 {
 	using namespace Q::vtk;
-	const double* pos = this->mainWindow->getViewer(0)->GetCursorPosition();
+	const double* pos = this->mainWindow->getViewer(0)->getCursorPosition();
 	Scene* scene = Scene::getCurrentScene();
 	Implant* implant = scene->addNewDataByClass<Implant>("ImplantWidget");
 	implant->setColor(1, 0, 0);
@@ -524,7 +524,7 @@ void Hub::slotRemoveImplantWidget()
 void Hub::slotAddPolyDataSouceWidget()
 {
 	using namespace Q::vtk;
-	const double* pos = this->mainWindow->getViewer(0)->GetCursorPosition();
+	const double* pos = this->mainWindow->getViewer(0)->getCursorPosition();
 	Scene* scene = Scene::getCurrentScene();
 	int index = scene->getAllDataByTag("Implant").size() + 1;
 	Implant* implant = scene->createDataByClassName<Implant>();
@@ -538,9 +538,9 @@ void Hub::slotAddPolyDataSouceWidget()
 		widget->SetPolyData(implant);
 		this->widgets[i]->SetOneOfPolyDataSourceWidgetsEnabled(widget, true);
 		widget->PlaceWidget(
-				this->mainWindow->getViewer(i)->GetCursorPosition()[0],
-				this->mainWindow->getViewer(i)->GetCursorPosition()[1],
-				this->mainWindow->getViewer(i)->GetCursorPosition()[2]);
+				this->mainWindow->getViewer(i)->getCursorPosition()[0],
+				this->mainWindow->getViewer(i)->getCursorPosition()[1],
+				this->mainWindow->getViewer(i)->getCursorPosition()[2]);
 		if (i == 0 && this->widgets[i]->GetPolyDataSourceWidgets().size() == 1) {
 			this->mainWindow->toolBoxWidget->addItem(this->widgets[0]->GetPolyDataSourceWidgets()[0]->getWidget(),
 				this->widgets[0]->GetPolyDataSourceWidgets()[0]->getWidget()->windowTitle());
@@ -581,7 +581,7 @@ void Hub::slotRemovePolyDataSourceWidget()
 void Hub::slotAddPolyDataSouceNormal()
 {
 	using namespace Q::vtk;
-	const double* pos = this->mainWindow->getViewer(0)->GetCursorPosition();
+	const double* pos = this->mainWindow->getViewer(0)->getCursorPosition();
 	Scene* scene = Scene::getCurrentScene();
 	int index = scene->getAllDataByTag("Implant").size() + 1;
 	Implant* implant = scene->createDataByClassName<Implant>();
@@ -595,9 +595,9 @@ void Hub::slotAddPolyDataSouceNormal()
 		widget->SetPolyData(implant);
 		this->widgets[i]->SetOneOfPolyDataSourceNormalsEnabled(widget, true);
 		widget->PlaceWidget(
-			this->mainWindow->getViewer(i)->GetCursorPosition()[0],
-			this->mainWindow->getViewer(i)->GetCursorPosition()[1],
-			this->mainWindow->getViewer(i)->GetCursorPosition()[2]);
+			this->mainWindow->getViewer(i)->getCursorPosition()[0],
+			this->mainWindow->getViewer(i)->getCursorPosition()[1],
+			this->mainWindow->getViewer(i)->getCursorPosition()[2]);
 		if (i == 0 && this->widgets[i]->GetPolyDataSourceNormals().size() == 1) {
 			this->mainWindow->toolBoxWidget->addItem(this->widgets[0]->GetPolyDataSourceNormals()[0]->getWidget(),
 				this->widgets[0]->GetPolyDataSourceNormals()[0]->getWidget()->windowTitle());

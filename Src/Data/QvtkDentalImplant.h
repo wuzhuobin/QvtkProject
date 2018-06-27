@@ -21,19 +21,19 @@ namespace Q {
 			virtual void printSelf() const override;
 			struct ToothPosition
 			{
-				enum ORIENTATION
+				typedef enum ORIENTATION
 				{
 					UPPER = 0,
 					LOWER
-				};
+				}ORIENTATION;
 
-				enum SIDE
+				typedef enum SIDE
 				{
 					LEFT = 0,
 					RIGHT
-				};
+				}SIDE;
 
-				enum INDEX
+				typedef enum INDEX
 				{
 					FIRST = 0,
 					SECOND,
@@ -43,7 +43,7 @@ namespace Q {
 					SIXTH,
 					SEVENTH,
 					EIGTHTH
-				};
+				}INDEX;
 
 				unsigned short index = FIRST;
 				bool orientation = UPPER;

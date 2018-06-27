@@ -66,7 +66,7 @@ protected:
 	virtual void OnRightButtonUp();
 	virtual void OnMouseMove();
 
-	enum WidgetState
+	typedef enum WidgetState
 	{
 		Start = 0,
 		Rotating,
@@ -74,7 +74,7 @@ protected:
 		Spinning,
 		Dollying,
 		UniformScaling,
-	};
+	}WidgetState;
 	unsigned int State;
 
 	vtkPropPicker* PropPicker;
