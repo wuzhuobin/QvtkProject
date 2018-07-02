@@ -58,14 +58,29 @@
 #include <itkOtsuThresholdImageFilter.h>
 
 vtkStandardNewMacro(vtkAMPDEFilter);
+void vtkAMPDEFilter::SetKMeans(const std::vector<double>& k)
+{
+	this->KMeans = k;
+	this->Modified();
+}
+
 vtkAMPDEFilter::vtkAMPDEFilter()
 {
 	this->VolumeTolerance = VTK_DOUBLE_MIN;
 	this->TargetVolume = 0;
+	this->ResampleSize[0] = 100;
+	this->ResampleSize[1] = 100;
+	this->ResampleSize[2] = 100;
+	this->KMeans.push_back(-1000.0);
+	this->KMeans.push_back(600);
+	this->KMeans.push_back(2000);
+	this->KMeans.push_back(4000);
+	this->AluminiumMean = 2;
 }
 
 vtkAMPDEFilter::~vtkAMPDEFilter()
 {
+	this->KMeans.clear();
 }
 
 int vtkAMPDEFilter::RequestData(vtkInformation * request, vtkInformationVector ** inputVector, vtkInformationVector * outputVector)
@@ -206,7 +221,10 @@ int vtkAMPDEFilter::ITK_Calculation(vtkImageData* input, vtkImageData* output)
 		resampleImageFilter->GetInput()->GetLargestPossibleRegion().GetSize();
 	typename ImageType::SizeType outputSize;
 	// downsample size.
-	outputSize.Fill(100);
+	//outputSize.Fill(100);
+	outputSize[0] = this->ResampleSize[0];
+	outputSize[1] = this->ResampleSize[1];
+	outputSize[2] = this->ResampleSize[2];
 	typename ImageType::SpacingType outputSpacing;
 	for (int i = 0; i < DIMENSION; ++i)
 	{
@@ -230,10 +248,9 @@ int vtkAMPDEFilter::ITK_Calculation(vtkImageData* input, vtkImageData* output)
 	typename ScalarImageKmeansImageFilter::Pointer scalarImageKmeansImageFilter =
 		ScalarImageKmeansImageFilter::New();
 	scalarImageKmeansImageFilter->SetInput(resampleImageFilter->GetOutput());
-	scalarImageKmeansImageFilter->AddClassWithInitialMean(-1000);
-	scalarImageKmeansImageFilter->AddClassWithInitialMean(600);
-	scalarImageKmeansImageFilter->AddClassWithInitialMean(2000);
-	scalarImageKmeansImageFilter->AddClassWithInitialMean(4000);
+	for (double mean : this->KMeans) {
+		scalarImageKmeansImageFilter->AddClassWithInitialMean(mean);
+	}
 	scalarImageKmeansImageFilter->UseNonContiguousLabelsOff();
 	scalarImageKmeansImageFilter->Update();
 	//labelWriter->SetInput(scalarImageKmeansImageFilter->GetOutput());
@@ -252,8 +269,8 @@ int vtkAMPDEFilter::ITK_Calculation(vtkImageData* input, vtkImageData* output)
 	typename ThresholdImageFilter::Pointer thresholdImageFilter =
 		ThresholdImageFilter::New();
 	thresholdImageFilter->SetInput(scalarImageKmeansImageFilter->GetOutput());
-	thresholdImageFilter->SetLowerThreshold(2);
-	thresholdImageFilter->SetUpperThreshold(2);
+	thresholdImageFilter->SetLowerThreshold(this->AluminiumMean);
+	thresholdImageFilter->SetUpperThreshold(this->AluminiumMean);
 	thresholdImageFilter->SetOutsideValue(0);
 	thresholdImageFilter->SetInsideValue(1);
 	thresholdImageFilter->Update();
