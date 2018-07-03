@@ -22,7 +22,7 @@ class vtkPassArrays;
 *	tube->readData("..");
 *	SCBPolyDataActor* actor = new SCBPolyDataActor;
 *	actor->setRenderDataSet(tube);
-*	nonPlanarViewer->AddProp(actor);
+*	nonPlanarViewer->addProp(actor);
 *	SCBPolyDataActor2D *actor2D = new SCBPolyDataActor2D;
 *	actor2D->setRenderDataSet(tube);
 *	actor2D->setPlanarOrientation(planarViewer->GetOrientation());
@@ -30,7 +30,7 @@ class vtkPassArrays;
 *		planarViewer->GetCursorPosition()[0],
 *		planarViewer->GetCursorPosition()[1],
 *		planarViewer->GetCursorPosition()[2]);
-*	planarViewer->AddProp(actor2D);
+*	planarViewer->addProp(actor2D);
 * @endcode
 */
 namespace Q {

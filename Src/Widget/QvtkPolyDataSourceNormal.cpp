@@ -36,11 +36,11 @@ void Q::vtk::PolyDataSourceNormal::setCustomEnable(bool flag)
 			if (planarViewer) {
 				planarViewer->GetAnnotationRenderer()->AddActor(this->lineActor);
 				this->lineActor->GetUserMatrix()->AddObserver(vtkCommand::ModifiedEvent, this->matrixCallback);
-				connect(this->getViewer(), &OrthogonalViewer::CursorPositionChanged,
+				connect(this->getViewer(), &OrthogonalViewer::cursorPositionChanged,
 					this, &PolyDataSourceNormal::cursorChange);
 			}
 			else {
-				this->getViewer()->GetRenderers()[0]->AddActor(this->lineActor);
+				this->getViewer()->getRenderers()[0]->AddActor(this->lineActor);
 			}
 		}
 		else
@@ -52,12 +52,12 @@ void Q::vtk::PolyDataSourceNormal::setCustomEnable(bool flag)
 		PlanarViewer *planarViewer = qobject_cast<PlanarViewer*>(this->getViewer());
 		if (planarViewer) {
 			planarViewer->GetAnnotationRenderer()->AddActor(this->lineActor);
-			disconnect(this->getViewer(), &OrthogonalViewer::CursorPositionChanged,
+			disconnect(this->getViewer(), &OrthogonalViewer::cursorPositionChanged,
 				this, &PolyDataSourceNormal::cursorChange);
 			this->lineActor->GetUserMatrix()->RemoveObserver(this->matrixCallback);
 		}
 		else {
-			this->getViewer()->GetRenderers()[0]->AddActor(this->lineActor);
+			this->getViewer()->getRenderers()[0]->AddActor(this->lineActor);
 		}
 		this->lineActor->SetUserMatrix(nullptr);
 	}
@@ -96,7 +96,7 @@ void Q::vtk::PolyDataSourceNormal::matrixModified(vtkObject * vtkNotUsed(caller)
 {
 	PolyDataSourceNormal *self = static_cast<PolyDataSourceNormal*>(clientdata);
 	vtkMatrix4x4 *matrix = self->lineActor->GetUserMatrix();
-	int orientation = self->getViewer()->GetOrientation();
+	int orientation = self->getViewer()->getOrientation();
 	const double *pos = self->getViewer()->getCursorPosition();
 	double bounds[6];
 	self->GetInput()->GetBounds(bounds);

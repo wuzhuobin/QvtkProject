@@ -37,7 +37,7 @@ void InteractorStyleDentalPlanning::setCustomEnable(bool flag)
 	if (flag) {
 
 		if (getViewer()->inherits("PlanarViewer")) {
-			this->AnnotationRenderer = getViewer()->GetRenderers()[1];
+			this->AnnotationRenderer = getViewer()->getRenderers()[1];
 		}
 		else {
 			this->AnnotationRenderer = this->DefaultRenderer;
@@ -111,17 +111,17 @@ void InteractorStyleDentalPlanning::AddImplant(unsigned int source)
 	if (observer->getViewer()->inherits("PlanarViewer")) {
 		PolyDataActor2D* polyDataActor2D = scene->createDataByClassName<PolyDataActor2D>();
 		polyDataActor2D->setRenderDataSet(implant);
-		polyDataActor2D->setPlanarOrientation(observer->getViewer()->GetOrientation());
+		polyDataActor2D->setPlanarOrientation(observer->getViewer()->getOrientation());
 		polyDataActor2D->setPlanarOrigin(pos[0], pos[1], pos[2]);
 		scene->addData(polyDataActor2D, "WitalImplant2D");
-		observer->getViewer()->AddProp(polyDataActor2D, observer->getViewer()->GetRenderers()[1]);
+		observer->getViewer()->addProp(polyDataActor2D, observer->getViewer()->getRenderers()[1]);
 	}
 	else
 	{ 
 		PolyDataActor* polyDataActor = scene->createDataByClassName<PolyDataActor>();
 		polyDataActor->setRenderDataSet(implant);
 		scene->addData(polyDataActor, "WitalImplant3D");
-		observer->getViewer()->AddProp(polyDataActor, observer->getViewer()->GetRenderers()[0]);
+		observer->getViewer()->addProp(polyDataActor, observer->getViewer()->getRenderers()[0]);
 
 	}
 
@@ -145,16 +145,16 @@ void InteractorStyleDentalPlanning::AddImplant(unsigned int source)
 	//	PolyDataActor* actor = static_cast<PolyDataActor*>(scene->addNewDataByTag("PolyDataActor"));
 	//	actor->setRenderDataSet(implant);
 	//	actor->getActor()->GetProperty()->SetOpacity(0.2);
-	//	dentalPlanning->getViewer()->AddProp(actor);
+	//	dentalPlanning->getViewer()->addProp(actor);
 
 	//	PolyDataActor2D* polyDataActor2D = static_cast<PolyDataActor2D*>(scene->addNewDataByTag("PolyDataActor2D"));
 	//	polyDataActor2D->setRenderDataSet(implant);
 	//	polyDataActor2D->setPlanarOrientation(dentalPlanning->getViewer()->GetOrientation());
 	//	polyDataActor2D->getActor()->GetProperty()->SetColor(1, 0, 0);
-	//	dentalPlanning->getViewer()->AddProp(polyDataActor2D, 
-	//		dentalPlanning->getViewer()->GetRenderers()[1]);
-	//	getViewer()->ResetCamera(0);
-	//	getViewer()->ResetCameraClippingRange(0);
+	//	dentalPlanning->getViewer()->addProp(polyDataActor2D, 
+	//		dentalPlanning->getViewer()->getRenderers()[1]);
+	//	getViewer()->resetCamera(0);
+	//	getViewer()->resetCameraClippingRange(0);
 	//	dentalPlanning->Interactor->Render();
 	//}
 
@@ -630,10 +630,10 @@ void InteractorStyleDentalPlanning::SetCursorPosition(double x, double y, double
 	//SYNCHRONAL_CALL(InteractorStyleDentalPlanning, 
 	//	if (style->getViewer()->inherits("PlanarViewer"))
 	//	{
-	//		style->getViewer()->SetCursorPosition(x, y, z);
+	//		style->getViewer()->setCursorPosition(x, y, z);
 	//	}
 	//);
-	this->getViewer()->SetCursorPosition(x, y, z);
+	this->getViewer()->setCursorPosition(x, y, z);
 }
 
 
@@ -806,7 +806,7 @@ void InteractorStyleDentalPlanning::DeleteImplant()
 	foreach(Prop* prop, *SelectingImplant->getReferenceProps()) {
 
 		SYNCHRONAL_CALL(InteractorStyleDentalPlanning,
-			observer->getViewer()->RemoveProp(prop);
+			observer->getViewer()->removeProp(prop);
 			scene->removeData(prop);
 			observer->Interactor->Render();
 		);

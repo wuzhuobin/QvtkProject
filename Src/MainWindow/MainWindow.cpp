@@ -3,6 +3,7 @@
 #include "MedicalImageFinder.h"
 #include "QvtkPlanarViewer.h"
 #include "QvtkNonPlanarViewer.h"
+#include "QvtkMultiAxialDialog.h"
 // vtk
 #include <vtkRenderer.h>
 // qt
@@ -18,7 +19,6 @@ MainWindow::MainWindow(int numOfViewers, QWidget * parent)
 	stylesGroup(this)
 {
 	this->setupUi(this);
-
 	// dock viewers
 	for (int i = 0; i < numOfViewers - 1; ++i) {
 		Q::vtk::PlanarViewer *planarViewer = new Q::vtk::PlanarViewer(&this->viewers);
@@ -29,15 +29,10 @@ MainWindow::MainWindow(int numOfViewers, QWidget * parent)
 	Q::vtk::NonPlanarViewer *nonPlanarViewer = new Q::vtk::NonPlanarViewer(&this->viewers);
 	nonPlanarViewer->orientationMarkerWidgetFlagOn();
 	nonPlanarViewer->setEnableCornerAnnotation(true);
+	nonPlanarViewer->setCursorSyncFlag(false);
 	this->viewers.setViewer(numOfViewers - 1, nonPlanarViewer);
 	this->verticalLayoutOrthogonal->insertWidget(0, &this->viewers);
 	this->dockWidgetScene->setWidget(&this->sceneWidget);
-	for (int i = 0; i < 10; ++i) {
-		Q::vtk::PlanarViewer *planarViewer = new Q::vtk::PlanarViewer(&this->multiAxial);
-		this->multiAxial.setViewer(i, planarViewer);
-	}
-	this->multiAxial.update();
-	this->verticalLayoutMultiAxial->insertWidget(0, &this->multiAxial);
 	// interactorstyles
 	this->stylesGroup.addAction(this->action_Testing_Mode);
 	this->stylesGroup.addAction(this->action_Navigation_Mode);
@@ -46,9 +41,7 @@ MainWindow::MainWindow(int numOfViewers, QWidget * parent)
 	this->stylesGroup.addAction(this->action_Seed_Placer);
 	this->stylesGroup.addAction(this->action_Micron_Tracker_Navigation);
 	this->stylesGroup.setExclusive(true);
-
 	// connection
-	// menu file
 	QObject::connect(this->action_Import_Images_From_Medical_Image_Finder, SIGNAL(triggered()),
 		this, SLOT(slotImportImagesFromMedicalImageFinder()));
 	QObject::connect(this->action_Import_Images_From_Database, &QAction::triggered,
@@ -69,10 +62,11 @@ MainWindow::MainWindow(int numOfViewers, QWidget * parent)
 		this, SLOT(slotImportLabel()));
 	QObject::connect(this->action_Import_Model, SIGNAL(triggered()),
 		this, SLOT(slotImportModel()));
+	QObject::connect(this->action_Multi_Axial, &QAction::triggered,
+		this, &MainWindow::slotMultiAxial);
 	// for recent images used
 	this->settings = new QSettings("Setting.ini", QSettings::IniFormat, this);
 	createRecentImageActions();
-
 }
 
 MainWindow::~MainWindow()
@@ -82,11 +76,6 @@ MainWindow::~MainWindow()
 Q::vtk::OrthogonalViewer * MainWindow::getViewer(int i)
 {
 	return this->viewers.getViewers(i);
-}
-
-Q::vtk::OrthogonalViewer * MainWindow::getViewerInMultiAxial(int i)
-{
-	return this->multiAxial.getViewers(i);
 }
 
 void MainWindow::slotImportImages(QStringList paths)
@@ -183,6 +172,11 @@ void MainWindow::slotCommitProject(QString path)
         return;
     }
     emit signalCommitedProject(project);
+}
+
+void MainWindow::slotMultiAxial()
+{
+	Q::vtk::MultiAxialDialog(this).exec();
 }
 
 void MainWindow::closeEvent(QCloseEvent* closeEvent)

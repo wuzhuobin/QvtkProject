@@ -5,7 +5,6 @@
 #include "QvtkInteractorStyleNavigation.h"
 #include "QvtkOrthogonalViewer.h"
 #include "ui_QvtkInteractorStyleSeedsPlacer.h"
-
 // vtk 
 #include <vtkSeedWidget.h>
 #include <vtkSeedRepresentation.h>
@@ -17,7 +16,7 @@
 #include <vtkWidgetCallbackMapper.h>
 #include <vtkWidgetEvent.h>
 #include <vtkCallbackCommand.h>
-
+#include <vtkPlane.h>
 // qt
 #include <QDebug>
 
@@ -101,7 +100,7 @@ void InteractorStyleSeedsPlacer::SetCursorPosition(double x, double y, double z)
 	this->ui->doubleSpinBoxX->blockSignals(true);
 	this->ui->doubleSpinBoxY->blockSignals(true);
 	this->ui->doubleSpinBoxZ->blockSignals(true);
-	this->m_viewer->SetCursorPosition(x, y, z);
+	this->m_viewer->setCursorPosition(x, y, z);
 
 	if (x < this->ui->doubleSpinBoxX->minimum()) {
 		this->ui->doubleSpinBoxX->setMinimum(x);
@@ -137,7 +136,26 @@ void InteractorStyleSeedsPlacer::SetCursorPosition(double x, double y, double z)
 
 void InteractorStyleSeedsPlacer::SetProjectionNormal(int normal)
 {
-	this->PointPlacer->SetProjectionNormal(normal);
+	switch (normal)
+	{
+	case OrthogonalViewer::ORIENTATION_YZ:
+	case OrthogonalViewer::ORIENTATION_XZ:
+	case OrthogonalViewer::ORIENTATION_XY:
+		this->PointPlacer->SetProjectionNormal(normal);
+	case OrthogonalViewer::SAGITAL:
+	case OrthogonalViewer::CORONAL:
+	case OrthogonalViewer::AXIAL: {
+		this->getViewer()->getCurrentPlaneNormal();
+		this->PointPlacer->SetProjectionNormalToOblique();
+		this->PointPlacer->GetObliquePlane()->SetNormal(
+			this->getViewer()->getCurrentPlaneNormal()[0],
+			this->getViewer()->getCurrentPlaneNormal()[1], 
+			this->getViewer()->getCurrentPlaneNormal()[2]);
+		//this->PointPlacer->GetObliquePlane()->SetOrigin(this->getViewer()->getCursorPosition());
+	}
+	default:
+		break;
+	}
 }
 
 void InteractorStyleSeedsPlacer::PrintSelf(ostream & os, vtkIndent indent)
@@ -160,7 +178,7 @@ void InteractorStyleSeedsPlacer::setCustomEnable(bool flag)
 	}
 	if (flag) {
 
-		SetProjectionNormal(getViewer()->GetOrientation());
+		SetProjectionNormal(getViewer()->getOrientation());
 		SetProjectionPosition(
 			this->m_viewer->getCursorPosition()[0], 
 			this->m_viewer->getCursorPosition()[1],
@@ -171,7 +189,7 @@ void InteractorStyleSeedsPlacer::setCustomEnable(bool flag)
 
 		connect(this->m_viewer, &OrthogonalViewer::OrientationChanged,
 			this, &InteractorStyleSeedsPlacer::SetProjectionNormal);
-		connect(this->m_viewer, &OrthogonalViewer::CursorPositionChanged,
+		connect(this->m_viewer, &OrthogonalViewer::cursorPositionChanged,
 			this, &InteractorStyleSeedsPlacer::SetProjectionPosition);
 		EnableNavigation(this->NavigationFlag);
 	}
@@ -181,7 +199,7 @@ void InteractorStyleSeedsPlacer::setCustomEnable(bool flag)
 		this->SeedsWidget->Render();
 		disconnect(this->m_viewer, &OrthogonalViewer::OrientationChanged,
 			this, &InteractorStyleSeedsPlacer::SetProjectionNormal);
-		disconnect(this->m_viewer, &OrthogonalViewer::CursorPositionChanged,
+		disconnect(this->m_viewer, &OrthogonalViewer::cursorPositionChanged,
 			this, &InteractorStyleSeedsPlacer::SetProjectionPosition);
 	}
 }
@@ -212,6 +230,9 @@ void InteractorStyleSeedsPlacer::SetProjectionPosition(double x, double y, doubl
 		break;
 	case vtkBoundedPlanePointPlacer::ZAxis:
 		this->PointPlacer->SetProjectionPosition(z);
+		break;
+	case vtkBoundedPlanePointPlacer::Oblique:
+		this->PointPlacer->GetObliquePlane()->SetOrigin(x, y, z);
 		break;
 	default:
 		break;
@@ -284,7 +305,7 @@ void InteractorStyleSeedsPlacer::GenerateWidgetFromSeedsData()
 	vtkPoints* seeds = this->SeedsData->getPolyData()->GetPoints();
 
 	const double* pos = this->m_viewer->getCursorPosition();
-	int orientation = this->m_viewer->GetOrientation();
+	int orientation = this->m_viewer->getOrientation();
 
 	for (vtkIdType id = 0; id < seeds->GetNumberOfPoints(); ++id) {
 		double* seed = seeds->GetPoint(id);
@@ -343,9 +364,10 @@ InteractorStyleSeedsPlacer::InteractorStyleSeedsPlacer()
 	this->DisplayThickness = 0.5;
 	this->NavigationFlag = false;
 
+	vtkNew<vtkPlane> plane;
 	vtkNew<vtkBoundedPlanePointPlacer> pointPlacer;
 	this->PointPlacer = pointPlacer.GetPointer();
-
+	this->PointPlacer->SetObliquePlane(plane);
 	vtkNew<vtkPointHandleRepresentation3D> handleRep;
 	handleRep->SetPointPlacer(this->PointPlacer);
 

@@ -82,12 +82,6 @@
         </property>
        </layout>
       </widget>
-      <widget class="QWidget" name="tabMultiAxial">
-       <attribute name="title">
-        <string>Multi-Axial</string>
-       </attribute>
-       <layout class="QVBoxLayout" name="verticalLayoutMultiAxial"/>
-      </widget>
      </widget>
     </item>
    </layout>
@@ -194,6 +188,7 @@
     <addaction name="actionCoronal"/>
     <addaction name="actionThreeD"/>
     <addaction name="actionFourViews"/>
+    <addaction name="action_Multi_Axial"/>
    </widget>
    <widget class="QMenu" name="menuWindow">
     <property name="title">
@@ -736,6 +731,11 @@
   <action name="action_Import_Image_With_LUT">
    <property name="text">
     <string>&amp;Import Image With LUT</string>
+   </property>
+  </action>
+  <action name="action_Multi_Axial">
+   <property name="text">
+    <string>&amp;Multi Axial</string>
    </property>
   </action>
  </widget>

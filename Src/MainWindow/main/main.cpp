@@ -104,7 +104,7 @@ int main(int argc, char* argv[])
 	app.installTranslator(&qtTranslator);
 	Hub hub;
 	QCoreApplication::processEvents();
-	hub.slotInitializationImagesWithLUT(QStringList() << "C:/Users/jieji/Desktop/PlaqueQuant/JackyData/nifti_corrected/CUBE T1 corrected.nii");
+	hub.slotInitializationImagesWithLUT(QStringList() << "C:/Users/jieji/Desktop/spine.nii.gz");
 	return app.exec();
 }
 

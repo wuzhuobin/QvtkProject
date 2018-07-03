@@ -1,6 +1,6 @@
 #ifndef __QVTK_INTERACTOR_STYLE_SEEDS_PLACER_H__
 #define __QVTK_INTERACTOR_STYLE_SEEDS_PLACER_H__
-
+#pragma once
 #include "QvtkInteractorStyleNavigation.h"
 namespace Q {
 	namespace vtk {

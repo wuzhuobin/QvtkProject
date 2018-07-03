@@ -42,18 +42,16 @@ Hub::Hub(QObject* parent)
 {
 	self = this;
     this->mainWindow = new MainWindow(NUM_OF_ORTHOGONAL_VIEWER);
-
 	Q::vtk::Scene* scene = Q::vtk::Scene::getCurrentScene();
-
 	for (int i = 0; i < NUM_OF_ORTHOGONAL_VIEWER; ++i) {
-		this->mainWindow->getViewer(i)->SetEnableDepthPeeling(true);
+		this->mainWindow->getViewer(i)->setEnableDepthPeeling(true);
 	}
 	//connection
 	//QObject::connect(this->mainWindow, &MainWindow::signalImportImages, 
 	//	this, &Hub::slotInitializationImages);
 	QObject::connect(this->mainWindow, &MainWindow::signalImportImages,
 		this, &Hub::slotInitializationImagesWithLUT);
-		QObject::connect(this->mainWindow, &MainWindow::signalImportLabel,
+	QObject::connect(this->mainWindow, &MainWindow::signalImportLabel,
 		this, &Hub::slotInitializationLabel);
 	QObject::connect(this->mainWindow, &MainWindow::signalImportModel,
 		this, &Hub::slotInitializationModel);
@@ -71,8 +69,8 @@ Hub::Hub(QObject* parent)
 	for (int i = 0; i < NUM_OF_ORTHOGONAL_VIEWER; ++i) {
 		this->styles[i] = Q::vtk::StylesSwitchOrthogonalViewer::New();
 		this->styles[i]->SetViewer(this->mainWindow->getViewer(i));
-		this->styles[i]->SetDefaultRenderer(this->mainWindow->getViewer(i)->GetRenderers()[0]);
-		this->mainWindow->getViewer(i)->GetInteractor()->SetInteractorStyle(this->styles[i]);
+		this->styles[i]->SetDefaultRenderer(this->mainWindow->getViewer(i)->getRenderers()[0]);
+		this->mainWindow->getViewer(i)->getInteractor()->SetInteractorStyle(this->styles[i]);
 	}
 	QObject::connect(this->mainWindow->action_Testing_Mode, &QAction::toggled,
 		this, &Hub::slotInteractorStyleTesting);
@@ -93,8 +91,8 @@ Hub::Hub(QObject* parent)
 	for (int i = 0; i < NUM_OF_ORTHOGONAL_VIEWER; ++i) {
 		this->widgets[i] = Q::vtk::WidgetCollection::New();
 		this->widgets[i]->SetViewer(this->mainWindow->getViewer(i));
-		this->widgets[i]->SetDefaultRenderer(this->mainWindow->getViewer(i)->GetRenderers()[0]);
-		this->widgets[i]->SetInteractor(this->mainWindow->getViewer(i)->GetInteractor());
+		this->widgets[i]->SetDefaultRenderer(this->mainWindow->getViewer(i)->getRenderers()[0]);
+		this->widgets[i]->SetInteractor(this->mainWindow->getViewer(i)->getInteractor());
 		this->widgets[i]->ProducePlanarSeedWidgets();
 		this->widgets[i]->GetPlanarSeedWidgets()[0]->getWidget()->setEnabled(false);
 	}
@@ -124,7 +122,7 @@ Hub::Hub(QObject* parent)
 		this, &Hub::slotAddBiopsyWidget);
 	QObject::connect(this->mainWindow->action_Biopsy_Off, &QAction::triggered,
 		this, &Hub::slotRemoveBiopsyWidget);
-	scene->registerData(new Q::vtk::BiopsyData);
+	scene->registerData(new Q::vtk::BiopsyData, Q::vtk::BiopsyWidget::TAG);
 
 	QObject::connect(this->mainWindow->action_Testing_Action, &QAction::triggered,
 		this, &Hub::slotTestingAction);
@@ -153,10 +151,10 @@ Hub::~Hub()
 void Hub::slotInitializationImport()
 {
 	using namespace Q::vtk;
-	this->mainWindow->getViewer(0)->GetCursorActor()->VisibilityOn();
-	this->mainWindow->getViewer(1)->GetCursorActor()->VisibilityOn();
-	this->mainWindow->getViewer(2)->GetCursorActor()->VisibilityOn();
-	this->mainWindow->getViewer(3)->GetCursorActor()->VisibilityOn();
+	this->mainWindow->getViewer(0)->getCursorActor()->VisibilityOn();
+	this->mainWindow->getViewer(1)->getCursorActor()->VisibilityOn();
+	this->mainWindow->getViewer(2)->getCursorActor()->VisibilityOn();
+	this->mainWindow->getViewer(3)->getCursorActor()->VisibilityOn();
 
 	Scene* scene = Scene::getCurrentScene();
 	QStringList props = scene->getAllDataByClassName("Q::vtk::Prop");
@@ -167,8 +165,8 @@ void Hub::slotInitializationImport()
 		long long id = prop->getViewerID();
 		int layer = prop->getLayer();
 		if (id > -1 && id < NUM_OF_ORTHOGONAL_VIEWER) {
-			this->mainWindow->getViewer(id)->AddProp(prop,
-				this->mainWindow->getViewer(id)->GetRenderers()[layer]);
+			this->mainWindow->getViewer(id)->addProp(prop,
+				this->mainWindow->getViewer(id)->getRenderers()[layer]);
 		}
 	}
 
@@ -177,13 +175,13 @@ void Hub::slotInitializationImport()
 		switch (i)
 		{
 		case 0:
-			this->mainWindow->getViewer(i)->SetOrientationToAxial();
+			this->mainWindow->getViewer(i)->setOrientationToAxial();
 			break;
 		case 1:
-			this->mainWindow->getViewer(i)->SetOrientationToCoronal();
+			this->mainWindow->getViewer(i)->setOrientationToCoronal();
 			break;
 		case 2:
-			this->mainWindow->getViewer(i)->SetOrientationToSagital();
+			this->mainWindow->getViewer(i)->setOrientationToSagital();
 			break;
 		default:
 			break;
@@ -204,18 +202,14 @@ void Hub::slotInitialization()
 	this->styles[1]->GetNavigation()->CentralizeCursorPosition();
 	this->styles[2]->GetNavigation()->CentralizeCursorPosition();
 	
-	this->mainWindow->getViewer(0)->ResetCamera(0);
-	this->mainWindow->getViewer(0)->ResetCameraClippingRange(0);
-	//this->mainWindow->getViewer(0)->GetCursorActor()->VisibilityOn();
-	this->mainWindow->getViewer(1)->ResetCamera(0);
-	this->mainWindow->getViewer(1)->ResetCameraClippingRange(0);
-	//this->mainWindow->getViewer(1)->GetCursorActor()->VisibilityOn();
-	this->mainWindow->getViewer(2)->ResetCamera(0);
-	this->mainWindow->getViewer(2)->ResetCameraClippingRange(0);
-	//this->mainWindow->getViewer(2)->GetCursorActor()->VisibilityOn();
-	this->mainWindow->getViewer(3)->ResetCamera(0);
-	this->mainWindow->getViewer(3)->ResetCameraClippingRange(0);
-	//this->mainWindow->getViewer(3)->GetCursorActor()->VisibilityOn();
+	this->mainWindow->getViewer(0)->resetCamera(0);
+	this->mainWindow->getViewer(0)->resetCameraClippingRange(0);
+	this->mainWindow->getViewer(1)->resetCamera(0);
+	this->mainWindow->getViewer(1)->resetCameraClippingRange(0);
+	this->mainWindow->getViewer(2)->resetCamera(0);
+	this->mainWindow->getViewer(2)->resetCameraClippingRange(0);
+	this->mainWindow->getViewer(3)->resetCamera(0);
+	this->mainWindow->getViewer(3)->resetCameraClippingRange(0);
 	Q::vtk::Viewer::updateAllViewers();
 }
 
@@ -263,10 +257,10 @@ void Hub::slotInitializationBiopsyWidget()
 {
 	using namespace Q::vtk;
 	Scene* scene = Scene::getCurrentScene();
-	QStringList data = scene->getAllDataByTag("BiopsyData");
+	QStringList data = scene->getAllDataByTag(BiopsyWidget::TAG);
 	vtkWidgetSet2* widgetSet = nullptr;
 	for (QStringList::iterator it = data.begin(); it != data.end(); ++it) {
-		BiopsyData* biopsydata = scene->getDataByUniqueName<BiopsyData>(*it);
+		PolyData* biopsydata = scene->getDataByUniqueName<PolyData>(*it);
 		for (int i = 0; i < NUM_OF_ORTHOGONAL_VIEWER; ++i) {
 			BiopsyWidget* widget = this->widgets[i]->ProduceBiopsyWidgets();
 			widget->SetBiopsyData(biopsydata);
@@ -362,17 +356,13 @@ void Hub::slotClean()
 		this->slotRemoveBiopsyWidget();
 	}
 
-	this->mainWindow->getViewer(0)->RemoveAllProp(this->mainWindow->getViewer(0)->GetRenderers()[0]);
-	this->mainWindow->getViewer(0)->RemoveAllProp(this->mainWindow->getViewer(0)->GetRenderers()[1]);
-	this->mainWindow->getViewer(0)->GetCursorActor()->VisibilityOff();
-	this->mainWindow->getViewer(1)->RemoveAllProp(this->mainWindow->getViewer(1)->GetRenderers()[0]);
-	this->mainWindow->getViewer(1)->RemoveAllProp(this->mainWindow->getViewer(1)->GetRenderers()[1]);
-	this->mainWindow->getViewer(1)->GetCursorActor()->VisibilityOff();
-	this->mainWindow->getViewer(2)->RemoveAllProp(this->mainWindow->getViewer(2)->GetRenderers()[0]);
-	this->mainWindow->getViewer(2)->RemoveAllProp(this->mainWindow->getViewer(2)->GetRenderers()[1]);
-	this->mainWindow->getViewer(2)->GetCursorActor()->VisibilityOff();
-	this->mainWindow->getViewer(3)->RemoveAllProp(this->mainWindow->getViewer(3)->GetRenderers()[0]);
-	this->mainWindow->getViewer(3)->GetCursorActor()->VisibilityOff();
+	this->mainWindow->getViewer(0)->removeAllProp(this->mainWindow->getViewer(0)->getRenderers()[0]);
+	this->mainWindow->getViewer(0)->removeAllProp(this->mainWindow->getViewer(0)->getRenderers()[1]);
+	this->mainWindow->getViewer(1)->removeAllProp(this->mainWindow->getViewer(1)->getRenderers()[0]);
+	this->mainWindow->getViewer(1)->removeAllProp(this->mainWindow->getViewer(1)->getRenderers()[1]);
+	this->mainWindow->getViewer(2)->removeAllProp(this->mainWindow->getViewer(2)->getRenderers()[0]);
+	this->mainWindow->getViewer(2)->removeAllProp(this->mainWindow->getViewer(2)->getRenderers()[1]);
+	this->mainWindow->getViewer(3)->removeAllProp(this->mainWindow->getViewer(3)->getRenderers()[0]);
 	Viewer::updateAllViewers();
 
 	Scene::getCurrentScene()->clear();
@@ -640,7 +630,7 @@ void Hub::slotAddBiopsyWidget()
 	using namespace Q::vtk;
 	vtkWidgetSet2* widgetSet = nullptr;
 	Scene* scene = Scene::getCurrentScene();
-    BiopsyData* biopsyData = qobject_cast<BiopsyData*>(scene->addNewDataByTag("BiopsyData"));
+	PolyData *biopsyData = qobject_cast<PolyData*>(scene->addNewDataByTag(BiopsyWidget::TAG));
 	biopsyData->setRelativePath(QStringList() << biopsyData->getUniqueName() + ".vtk");
 
 	
@@ -703,17 +693,17 @@ void Hub::slotInitializationImages(QStringList imagePaths)
 			ImageSlice* imageSlice = new ImageSlice;
 			imageSlice->setRenderDataSet(image);
 			scene->addData(imageSlice);
-			this->mainWindow->getViewer(i)->AddProp(imageSlice);
+			this->mainWindow->getViewer(i)->addProp(imageSlice);
 			switch (i)
 			{
 			case 0:
-				this->mainWindow->getViewer(i)->SetOrientationToAxial();
+				this->mainWindow->getViewer(i)->setOrientationToAxial();
 				break;
 			case 1:
-				this->mainWindow->getViewer(i)->SetOrientationToCoronal();
+				this->mainWindow->getViewer(i)->setOrientationToCoronal();
 				break;
 			case 2:
-				this->mainWindow->getViewer(i)->SetOrientationToSagital();
+				this->mainWindow->getViewer(i)->setOrientationToSagital();
 				break;
 			default:
 				break;
@@ -722,8 +712,8 @@ void Hub::slotInitializationImages(QStringList imagePaths)
 		Volume* volume = new Volume;
 		volume->setRenderDataSet(image);
 		scene->addData(volume);
-		this->mainWindow->getViewer(3)->AddProp(volume);
-		this->mainWindow->getViewer(3)->SetOrientationToAxial();
+		this->mainWindow->getViewer(3)->addProp(volume);
+		this->mainWindow->getViewer(3)->setOrientationToAxial();
 	}
 
 	this->slotInitialization();
@@ -743,17 +733,17 @@ void Hub::slotInitializationLabel(QString path)
 		ImageSlice* imageSlice = new ImageSlice;
 		imageSlice->setRenderDataSet(label);
 		scene->addData(imageSlice);
-		this->mainWindow->getViewer(i)->AddProp(imageSlice);
+		this->mainWindow->getViewer(i)->addProp(imageSlice);
 		switch (i)
 		{
 		case 0:
-			this->mainWindow->getViewer(i)->SetOrientationToAxial();
+			this->mainWindow->getViewer(i)->setOrientationToAxial();
 			break;
 		case 1:
-			this->mainWindow->getViewer(i)->SetOrientationToCoronal();
+			this->mainWindow->getViewer(i)->setOrientationToCoronal();
 			break;
 		case 2:
-			this->mainWindow->getViewer(i)->SetOrientationToSagital();
+			this->mainWindow->getViewer(i)->setOrientationToSagital();
 			break;
 		default:
 			break;
@@ -763,7 +753,7 @@ void Hub::slotInitializationLabel(QString path)
 	ImageSurfaceActor *actor = new ImageSurfaceActor;
 	actor->setRenderDataSet(label);
 	scene->addData(actor);
-	this->mainWindow->getViewer(3)->AddProp(actor);
+	this->mainWindow->getViewer(3)->addProp(actor);
 	//Image *label2 = scene->addNewDataByClass<Image>("LabelSlice");
 	//label2->setAbsolutePath(QStringList() << path);
 	//label2->readData();
@@ -772,17 +762,17 @@ void Hub::slotInitializationLabel(QString path)
 	//	ImageSliceLabel* modelSlice = new ImageSliceLabel;
 	//	modelSlice->setRenderDataSet(label2);
 	//	scene->addData(modelSlice);
-	//	this->mainWindow->getViewer(i)->AddProp(modelSlice);
+	//	this->mainWindow->getViewer(i)->addProp(modelSlice);
 	//	switch (i)
 	//	{
 	//	case 0:
-	//		this->mainWindow->getViewer(i)->SetOrientationToAxial();
+	//		this->mainWindow->getViewer(i)->setOrientationToAxial();
 	//		break;
 	//	case 1:
-	//		this->mainWindow->getViewer(i)->SetOrientationToCoronal();
+	//		this->mainWindow->getViewer(i)->setOrientationToCoronal();
 	//		break;
 	//	case 2:
-	//		this->mainWindow->getViewer(i)->SetOrientationToSagital();
+	//		this->mainWindow->getViewer(i)->setOrientationToSagital();
 	//		break;
 	//	default:
 	//		break;
@@ -808,17 +798,17 @@ void Hub::slotInitializationImagesWithLUT(QStringList imagePaths)
 			ImageSliceColor* imageSlice = new ImageSliceColor;
 			imageSlice->setRenderDataSet(image);
 			scene->addData(imageSlice);
-			this->mainWindow->getViewer(i)->AddProp(imageSlice);
+			this->mainWindow->getViewer(i)->addProp(imageSlice);
 			switch (i)
 			{
 			case 0:
-				this->mainWindow->getViewer(i)->SetOrientationToAxial();
+				this->mainWindow->getViewer(i)->setOrientationToAxial();
 				break;
 			case 1:
-				this->mainWindow->getViewer(i)->SetOrientationToCoronal();
+				this->mainWindow->getViewer(i)->setOrientationToCoronal();
 				break;
 			case 2:
-				this->mainWindow->getViewer(i)->SetOrientationToSagital();
+				this->mainWindow->getViewer(i)->setOrientationToSagital();
 				break;
 			default:
 				break;
@@ -827,8 +817,8 @@ void Hub::slotInitializationImagesWithLUT(QStringList imagePaths)
 		Volume* volume = new Volume;
 		volume->setRenderDataSet(image);
 		scene->addData(volume);
-		this->mainWindow->getViewer(3)->AddProp(volume);
-		this->mainWindow->getViewer(3)->SetOrientationToAxial();
+		this->mainWindow->getViewer(3)->addProp(volume);
+		this->mainWindow->getViewer(3)->setOrientationToAxial();
 	}
 
 	this->slotInitialization();
@@ -848,17 +838,17 @@ void Hub::slotInitializationModel(QString path)
 		PolyDataActor2D *modelSlice = new PolyDataActor2D;
 		modelSlice->setRenderDataSet(model);
 		scene->addData(modelSlice);
-		this->mainWindow->getViewer(i)->AddProp(modelSlice);
+		this->mainWindow->getViewer(i)->addProp(modelSlice);
 		switch (i)
 		{
 		case 0:
-			this->mainWindow->getViewer(i)->SetOrientationToAxial();
+			this->mainWindow->getViewer(i)->setOrientationToAxial();
 			break;
 		case 1:
-			this->mainWindow->getViewer(i)->SetOrientationToCoronal();
+			this->mainWindow->getViewer(i)->setOrientationToCoronal();
 			break;
 		case 2:
-			this->mainWindow->getViewer(i)->SetOrientationToSagital();
+			this->mainWindow->getViewer(i)->setOrientationToSagital();
 			break;
 		default:
 			break;
@@ -868,7 +858,7 @@ void Hub::slotInitializationModel(QString path)
 	PolyDataActor *actor = new PolyDataActor;
 	actor->setRenderDataSet(model);
 	scene->addData(actor);
-	this->mainWindow->getViewer(3)->AddProp(actor);
+	this->mainWindow->getViewer(3)->addProp(actor);
 	this->slotInitialization();
 }
 
@@ -885,7 +875,7 @@ void Hub::slotTestingAction()
 
 	//PolyDataActor *tubeActor = new PolyDataActor;
 	//tubeActor->setRenderDataSet(tube);
-	//this->mainWindow->getViewer(3)->AddProp(tubeActor);
+	//this->mainWindow->getViewer(3)->addProp(tubeActor);
 
 	//Implant* implant = new Implant;
 	//implant->setColor(1, 0, 0);
@@ -895,5 +885,5 @@ void Hub::slotTestingAction()
 
 	//PolyDataActor *implantActor = new PolyDataActor;
 	//implantActor->setRenderDataSet(implant);
-	//this->mainWindow->getViewer(3)->AddProp(implantActor);
+	//this->mainWindow->getViewer(3)->addProp(implantActor);
 }

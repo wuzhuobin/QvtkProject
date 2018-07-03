@@ -14,7 +14,7 @@ namespace Q {
 		{
 			typedef QList<QMetaObject::Connection> ConnectionList;
 			ConnectionList connections;
-			QList<Q::vtk::Prop*> props = this->getViewer()->GetProps();
+			QList<Q::vtk::Prop*> props = this->getViewer()->getProps();
 			for (QList<Prop*>::const_iterator cit = props.cbegin();
 				cit != props.cend(); ++cit) {
 					// there is a connection for picked, when picked event, the picked Image pointer will be saved to 

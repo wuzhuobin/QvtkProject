@@ -48,8 +48,8 @@ void PolyDataSourceWidget::setCustomEnable(bool flag)
 		}
 		if (planarViewer) {
 			PolyDataActor2D* actor2d = new PolyDataActor2D;
-			this->getViewer()->AddProp(actor2d, this->getViewer()->GetRenderers()[1]);
-			actor2d->setPlanarOrientation(planarViewer->GetOrientation());
+			this->getViewer()->addProp(actor2d, this->getViewer()->getRenderers()[1]);
+			actor2d->setPlanarNormal(this->getViewer()->getCurrentPlaneNormal());
 			actor2d->setPlanarOrigin(
 				planarViewer->getCursorPosition()[0],
 				planarViewer->getCursorPosition()[1],
@@ -58,9 +58,9 @@ void PolyDataSourceWidget::setCustomEnable(bool flag)
 		}
 		else {
 			PolyDataActor* actor = new PolyDataActor;
-			this->getViewer()->AddProp(actor);
+			this->getViewer()->addProp(actor);
 			this->SourceWidgetProp = actor;
-			//this->getViewer()->AddProp(this->SourceWidgetProp);
+			//this->getViewer()->addProp(this->SourceWidgetProp);
 		}
 		this->SourceWidgetProp->setRenderDataSet(this->SourceWidgetPolyData);
 
@@ -74,7 +74,7 @@ void PolyDataSourceWidget::setCustomEnable(bool flag)
 		this->SetInputData(nullptr);
 
 		this->SourceWidgetProp->setRenderDataSet(nullptr);
-		this->getViewer()->RemoveProp(this->SourceWidgetProp);
+		this->getViewer()->removeProp(this->SourceWidgetProp);
 		delete this->SourceWidgetProp;
 		this->SourceWidgetProp = nullptr;
 		this->SourceWidgetPolyData = nullptr;
@@ -209,7 +209,7 @@ void PolyDataSourceWidget::Hover(bool flag)
 void PolyDataSourceWidget::FollowCursor()
 {
 	if (!m_unfollowCursorFlag) {
-		this->getViewer()->SetCursorPosition(
+		this->getViewer()->setCursorPosition(
 			this->Prop3D->GetUserMatrix()->GetElement(0, 3),
 			this->Prop3D->GetUserMatrix()->GetElement(1, 3),
 			this->Prop3D->GetUserMatrix()->GetElement(2, 3));

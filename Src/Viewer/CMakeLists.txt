@@ -154,6 +154,7 @@ set(
 	${SYSTEM_LIBRARIES}
 	#OTHERS
 	#...
+	QvtkViewer
 )
 
 set(

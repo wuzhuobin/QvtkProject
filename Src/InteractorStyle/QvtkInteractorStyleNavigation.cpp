@@ -33,11 +33,11 @@ void InteractorStyleNavigation::setCustomEnable(bool flag)
 {
 	UniqueUiInteractorObserver::setCustomEnable(flag);
 	if (flag) {
-		connect(this->m_viewer, &OrthogonalViewer::CursorPositionChanged,
+		connect(this->m_viewer, &OrthogonalViewer::cursorPositionChanged,
 			this, &InteractorStyleNavigation::SetCursorPosition);
 	}
 	else {
-		disconnect(this->m_viewer, &OrthogonalViewer::CursorPositionChanged,
+		disconnect(this->m_viewer, &OrthogonalViewer::cursorPositionChanged,
 			this, &InteractorStyleNavigation::SetCursorPosition);
 	}
 }
@@ -99,7 +99,7 @@ void InteractorStyleNavigation::SetCursorPosition(double x, double y, double z)
 	this->ui->doubleSpinBoxX->blockSignals(true);
 	this->ui->doubleSpinBoxY->blockSignals(true);
 	this->ui->doubleSpinBoxZ->blockSignals(true);
-	this->m_viewer->SetCursorPosition(x, y, z);
+	this->m_viewer->setCursorPosition(x, y, z);
 
 	//double origin[3] = { x, y, z };
 	//Scene* scene = Scene::getCurrentScene();
@@ -325,15 +325,15 @@ int InteractorStyleNavigation::tryPick(double xyz[3])
 //int InteractorStyleNavigation::tryPick(double xyz[3])
 //{
 //	this->SetCurrentRenderer(this->GetDefaultRenderer());
-//	int ret = this->GetInteractor()->GetPicker()->Pick(
-//		this->GetInteractor()->GetEventPosition()[0],
-//		this->GetInteractor()->GetEventPosition()[1],
+//	int ret = this->getInteractor()->GetPicker()->Pick(
+//		this->getInteractor()->GetEventPosition()[0],
+//		this->getInteractor()->GetEventPosition()[1],
 //		0,  // always zero.
 //		this->GetCurrentRenderer());
 //	if (!ret) {
 //		return this->VolumePicker->Pick(
-//			this->GetInteractor()->GetEventPosition()[0],
-//			this->GetInteractor()->GetEventPosition()[1],
+//			this->getInteractor()->GetEventPosition()[0],
+//			this->getInteractor()->GetEventPosition()[1],
 //			0,  // always zero.
 //			this->GetCurrentRenderer());
 //	}

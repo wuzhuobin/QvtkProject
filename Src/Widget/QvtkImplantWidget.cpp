@@ -71,14 +71,14 @@ void ImplantWidget::setCustomEnable(bool flag)
 		static_cast<vtkAffineRepresentation2D2*>(this->GetRepresentation())->SetUserMatrix(
 			this->ImplantWidgetProp->getProp()->GetUserMatrix());
 		static_cast<vtkAffineRepresentation2D2*>(this->GetRepresentation())->SetOrientation(
-			this->getViewer()->GetOrientation());
+			this->getViewer()->getOrientation());
 		connect(this->getViewer(), &OrthogonalViewer::OrientationChanged,
 			this, [&](int orientation) {
 			static_cast<vtkAffineRepresentation2D2*>(this->GetRepresentation())->SetOrientation(orientation);
 		});
 
 
-		this->getViewer()->AddProp(this->ImplantWidgetProp);
+		this->getViewer()->addProp(this->ImplantWidgetProp);
 		//this->GetAffineRepresentation()->PlaceWidget();
 
 		//static_cast<vtkAffineRepresentation2D*>(
@@ -91,7 +91,7 @@ void ImplantWidget::setCustomEnable(bool flag)
 	}
 	else
 	{
-		this->getViewer()->RemoveProp(this->ImplantWidgetProp);
+		this->getViewer()->removeProp(this->ImplantWidgetProp);
 	}
 }
 

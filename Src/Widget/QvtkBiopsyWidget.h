@@ -8,7 +8,7 @@ class vtkWidgetSet2;
 namespace Q {
 	namespace vtk {
 		class Prop;
-		class BiopsyData;
+		class PolyData;
 		namespace Ui { class BiopsyWidget; }
 	}
 }
@@ -27,7 +27,8 @@ class BiopsyWidget :
 	Q_OBJECT;
 public:
 	static const QString RADIUS;
-
+	static const QString NORMAL;
+	static const QString TAG;
 	static BiopsyWidget* New();
 	vtkTypeMacro(BiopsyWidget, vtkLineWidget2);
 	virtual void PrintSelf(ostream& os, vtkIndent indent) override;
@@ -45,7 +46,7 @@ public slots:
 
 	void SetWidgetSet(vtkWidgetSet2* widgetSet);
 
-	void SetBiopsyData(BiopsyData* data);
+	void SetBiopsyData(PolyData* data);
 
 
 protected:
@@ -67,8 +68,10 @@ protected:
 
 	vtkBoundedPlanePointPlacer* m_pointPlacer;
 	vtkWidgetSet2* WidgetSet;
-	BiopsyData* m_biopsyData;
+	PolyData* m_biopsyData;
 };
+
+
 	}
 }
 #endif // !__QVTK_BIOPSY_WIDGET_H__

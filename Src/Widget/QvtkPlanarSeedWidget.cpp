@@ -18,7 +18,8 @@
 #include <vtkPolyData.h>
 #include <vtkSeedRepresentation.h>
 #include <vtkRenderWindowInteractor.h>
-
+#include <vtkBoundedPlanePointPlacer.h>
+#include <vtkPlane.h>
 // qt
 #include <QDebug>
 namespace Q {
@@ -36,12 +37,12 @@ void PlanarSeedWidget::setCustomEnable(bool flag)
 	if (flag) {
 		
 		this->EnableLeftClckDropSeed(!this->getUi()->checkBoxNavigation->isChecked());
-		this->SetProjectionNormal(this->getViewer()->GetOrientation());
+		this->SetProjectionNormal(this->getViewer()->getOrientation());
 		const double* pos = this->getViewer()->getCursorPosition();
 		this->SetProjectionPosition(pos[0], pos[1], pos[2]);
 		QObject::connect(this->getViewer(), &OrthogonalViewer::OrientationChanged,
 			this, &PlanarSeedWidget::SetProjectionNormal);
-		QObject::connect(this->getViewer(), &OrthogonalViewer::CursorPositionChanged,
+		QObject::connect(this->getViewer(), &OrthogonalViewer::cursorPositionChanged,
 			this, &PlanarSeedWidget::SetProjectionPosition);
 		//	[this](double x, double y, double z) {
 		//	SYNCHRONAL_CALL(
@@ -69,7 +70,7 @@ void PlanarSeedWidget::setCustomEnable(bool flag)
 
 		QObject::disconnect(this->getViewer(), &OrthogonalViewer::OrientationChanged,
 			this, &PlanarSeedWidget::SetProjectionNormal);
-		QObject::disconnect(this->getViewer(), &OrthogonalViewer::CursorPositionChanged,
+		QObject::disconnect(this->getViewer(), &OrthogonalViewer::cursorPositionChanged,
 			this, &PlanarSeedWidget::SetProjectionPosition);
 		// do not clean data
 		Superclass::CleanAllSeed();
@@ -156,9 +157,6 @@ void PlanarSeedWidget::DropSeed()
 		style->Superclass::DropSeed(pos);
 		style->Render();
 	});
-	//SYNCHRONAL_CALL(PlanarSeedWidget,
-
-	//);
 	UpdateListWidgetSeed();
 }
 
@@ -233,7 +231,7 @@ int PlanarSeedWidget::IndexSize()
 
 void PlanarSeedWidget::EnabledHandleInRange(vtkHandleWidget * handle)
 {
-	if (this->getViewer()->inherits("PlanarViewer")) {
+	if (this->getViewer()->inherits("Q::vtk::PlanarViewer")) {
 		vtkPlanarSeedWidget::EnabledHandleInRange(handle);
 	}
 	else {
@@ -315,14 +313,40 @@ void PlanarSeedWidget::SetFocalSeed(int i)
 	}
 	double pos[3];
 	this->GetSeedRepresentation()->GetSeedWorldPosition(i, pos);
-	this->getViewer()->SetCursorPosition(pos);
+	this->getViewer()->setCursorPosition(pos);
 	this->Render();
+}
+
+void PlanarSeedWidget::SetProjectionNormal(int normal)
+{
+	vtkBoundedPlanePointPlacer* placer = static_cast<vtkBoundedPlanePointPlacer*>(
+		this->GetSeedRepresentation()->GetHandleRepresentation()->GetPointPlacer());
+	switch (normal)
+	{
+	case OrthogonalViewer::ORIENTATION_YZ:
+	case OrthogonalViewer::ORIENTATION_XZ:
+	case OrthogonalViewer::ORIENTATION_XY:
+		placer->SetProjectionNormal(normal);
+	case OrthogonalViewer::SAGITAL:
+	case OrthogonalViewer::CORONAL:
+	case OrthogonalViewer::AXIAL: {
+		this->getViewer()->getCurrentPlaneNormal();
+		placer->SetProjectionNormalToOblique();
+		placer->GetObliquePlane()->SetNormal(
+			this->getViewer()->getCurrentPlaneNormal()[0],
+			this->getViewer()->getCurrentPlaneNormal()[1], 
+			this->getViewer()->getCurrentPlaneNormal()[2]);
+		//this->PointPlacer->GetObliquePlane()->SetOrigin(this->getViewer()->getCursorPosition());
+	}
+	default:
+		break;
+	}
 }
 
 void PlanarSeedWidget::SetProjectionPosition(double x, double y, double z)
 {		
 	SYNCHRONAL_CALL(
-		PlanarSeedWidget,
+		Q::vtk::PlanarSeedWidget,
 		observer->vtkPlanarSeedWidget::SetProjectionPosition(x, y, z);
 	)
 }

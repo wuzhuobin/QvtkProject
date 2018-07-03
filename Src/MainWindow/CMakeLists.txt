@@ -164,6 +164,7 @@ set(
 	Filter
 	InteractorStyle
 	Widget
+	Viewer
 )
 
 set(

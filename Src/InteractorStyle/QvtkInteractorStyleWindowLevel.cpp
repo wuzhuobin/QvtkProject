@@ -161,7 +161,7 @@ DataSet * InteractorStyleWindowLevel::findPokedDataSet()
 {
 	typedef QList<QMetaObject::Connection> ConnectionList;
 	ConnectionList connections;
-	QList<Q::vtk::Prop*> props = this->getViewer()->GetProps();
+	QList<Q::vtk::Prop*> props = this->getViewer()->getProps();
 	for (QList<Prop*>::const_iterator cit = props.cbegin();
 		cit != props.cend(); ++cit) {
 		ImageSlice* slice = qobject_cast<ImageSlice*>(*cit);
@@ -204,7 +204,7 @@ Image * InteractorStyleWindowLevel::FindPokedImage()
 
 	//InteractorStyleWindowLevel::pokedImage = qobject_cast<Image*>(this->findPokedDataSet());
 
-	//QList<Prop*> lists = this->getViewer()->GetProps();
+	//QList<Prop*> lists = this->getViewer()->getProps();
 	//if (!InteractorStyleWindowLevel::pokedImage) {
 	//	for (QList<Prop*>::const_iterator cit = lists.cbegin(); cit != lists.cend(); ++cit) {
 	//		ImageSlice* slice = qobject_cast<ImageSlice*>(*cit);
