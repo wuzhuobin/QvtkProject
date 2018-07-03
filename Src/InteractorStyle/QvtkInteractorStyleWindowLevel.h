@@ -1,6 +1,6 @@
 #ifndef __SCB_INTERACTOR_STYLE_WINDOW_LEVEL_H__
 #define __SCB_INTERACTOR_STYLE_WINDOW_LEVEL_H__
-#pragma once;
+#pragma once
 // me
 #include "QvtkInteractorStyleOrthogonalViewer.h"
 #include "vtkInteractorStyleWindowLevel.h"
