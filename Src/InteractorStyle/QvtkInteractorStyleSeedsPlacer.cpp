@@ -349,7 +349,7 @@ InteractorStyleSeedsPlacer::InteractorStyleSeedsPlacer()
 	vtkNew<vtkPlane> plane;
 	vtkNew<vtkBoundedPlanePointPlacer> pointPlacer;
 	this->PointPlacer = pointPlacer.GetPointer();
-	this->PointPlacer->SetObliquePlane(plane);
+	this->PointPlacer->SetObliquePlane(plane.GetPointer());
 	vtkNew<vtkPointHandleRepresentation3D> handleRep;
 	handleRep->SetPointPlacer(this->PointPlacer);
 
