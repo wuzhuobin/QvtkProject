@@ -35,20 +35,6 @@ public:
 			vtkWidgetEvent::Completed,
 			this, [](vtkAbstractWidget* widget) {});
 	}
-
-	//class SCBInteractorStyleSeedsPlacerWidgetCallback : public vtkCallbackCommand
-	//{
-	//	public:
-	//		vtkTypeMacro(SCBInteractorStyleSeedsPlacerWidgetCallback, vtkCallbackCommand);
-	//		static SCBInteractorStyleSeedsPlacerWidgetCallback* New() { return new SCBInteractorStyleSeedsPlacerWidgetCallback; }
-	//		SCBInteractorStyleSeedsPlacerWidget* self;
-	//		virtual void Execute(vtkObject *caller, unsigned long event,
-	//			void *callData) {
-
-	//		}
-
-	//};
-
 };
 
 const QString InteractorStyleSeedsPlacer::SEEDS_PLACER_DATA("SEEDS_FOR_SEEDS_PLACER");
@@ -138,22 +124,25 @@ void InteractorStyleSeedsPlacer::SetProjectionNormal(int normal)
 {
 	switch (normal)
 	{
-	case OrthogonalViewer::ORIENTATION_YZ:
-	case OrthogonalViewer::ORIENTATION_XZ:
-	case OrthogonalViewer::ORIENTATION_XY:
+	case vtkBoundedPlanePointPlacer::XAxis:
+	case vtkBoundedPlanePointPlacer::YAxis:
+	case vtkBoundedPlanePointPlacer::ZAxis:
 		this->PointPlacer->SetProjectionNormal(normal);
-	case OrthogonalViewer::SAGITAL:
-	case OrthogonalViewer::CORONAL:
-	case OrthogonalViewer::AXIAL: {
+		break;
+	case vtkBoundedPlanePointPlacer::Oblique: 
+	default:{
 		this->getViewer()->getCurrentPlaneNormal();
 		this->PointPlacer->SetProjectionNormalToOblique();
 		this->PointPlacer->GetObliquePlane()->SetNormal(
 			this->getViewer()->getCurrentPlaneNormal()[0],
 			this->getViewer()->getCurrentPlaneNormal()[1], 
 			this->getViewer()->getCurrentPlaneNormal()[2]);
+		this->PointPlacer->GetObliquePlane()->SetOrigin(
+					this->getViewer()->getCursorPosition()[0],
+					this->getViewer()->getCursorPosition()[1],
+					this->getViewer()->getCursorPosition()[2]);
 		//this->PointPlacer->GetObliquePlane()->SetOrigin(this->getViewer()->getCursorPosition());
 	}
-	default:
 		break;
 	}
 }
@@ -309,22 +298,15 @@ void InteractorStyleSeedsPlacer::GenerateWidgetFromSeedsData()
 
 	for (vtkIdType id = 0; id < seeds->GetNumberOfPoints(); ++id) {
 		double* seed = seeds->GetPoint(id);
-
-
-		if (this->getViewer()->inherits("PlanarViewer")) {
+		if (this->getViewer()->inherits("Q::vtk::PlanarViewer")) {
 			if (qAbs(pos[orientation] - seed[orientation]) > this->DisplayThickness) {
 				continue;
-
 			}
 		}
-
 		vtkHandleWidget* newSeed = this->SeedsWidget->CreateNewHandle();
 		newSeed->GetHandleRepresentation()->SetWorldPosition(seed);
 		newSeed->EnabledOn();
-
 	}
-
-
 }
 
 void InteractorStyleSeedsPlacer::SaveWidgetToSeedData()

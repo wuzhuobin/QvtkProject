@@ -24,332 +24,310 @@
 #include <QDebug>
 namespace Q {
 	namespace vtk {
-vtkStandardNewMacro(PlanarSeedWidget);
-const QString PlanarSeedWidget::SCB_PLANAR_SEED_WIDGET_DATA("SCB_PLANAR_SEED_WIDGET_DATA");
-void PlanarSeedWidget::PrintSelf(ostream & os, vtkIndent indent)
-{
-	Superclass::PrintSelf(os, indent);
-}
-
-void PlanarSeedWidget::setCustomEnable(bool flag)
-{
-	UniqueUiInteractorObserver::setCustomEnable(flag);
-	if (flag) {
-		
-		this->EnableLeftClckDropSeed(!this->getUi()->checkBoxNavigation->isChecked());
-		this->SetProjectionNormal(this->getViewer()->getOrientation());
-		const double* pos = this->getViewer()->getCursorPosition();
-		this->SetProjectionPosition(pos[0], pos[1], pos[2]);
-		QObject::connect(this->getViewer(), &OrthogonalViewer::OrientationChanged,
-			this, &PlanarSeedWidget::SetProjectionNormal);
-		QObject::connect(this->getViewer(), &OrthogonalViewer::cursorPositionChanged,
-			this, &PlanarSeedWidget::SetProjectionPosition);
-		//	[this](double x, double y, double z) {
-		//	SYNCHRONAL_CALL(
-		//		PlanarSeedWidget,
-		//		style->SetProjectionPosition(x, y, z);
-		//	)
-		//});
-
-		Scene* scene = Scene::getCurrentScene();
-		this->SeedWidgetData  = scene->getDataByUniqueName<PolyData>(SCB_PLANAR_SEED_WIDGET_DATA);
-
-		if (!this->SeedWidgetData) {
-			this->SeedWidgetData = scene->createDataByClassName<PolyData>();
-			this->SeedWidgetData->setRelativePath(QStringList() << SCB_PLANAR_SEED_WIDGET_DATA + ".vtk" );
-			if (!this->SeedWidgetData->getPolyData()->GetPoints()) {
-				vtkNew<vtkPoints> points;
-				this->SeedWidgetData->getPolyData()->SetPoints(points.GetPointer());
-			}
-			scene->addData(this->SeedWidgetData, SCB_PLANAR_SEED_WIDGET_DATA);
+		vtkStandardNewMacro(PlanarSeedWidget);
+		const QString PlanarSeedWidget::SCB_PLANAR_SEED_WIDGET_DATA("SCB_PLANAR_SEED_WIDGET_DATA");
+		void PlanarSeedWidget::PrintSelf(ostream & os, vtkIndent indent)
+		{
+			Superclass::PrintSelf(os, indent);
 		}
 
-	}
-	else {
-		this->SeedWidgetData = nullptr;
+		void PlanarSeedWidget::setCustomEnable(bool flag)
+		{
+			UniqueUiInteractorObserver::setCustomEnable(flag);
+			if (flag) {
 
-		QObject::disconnect(this->getViewer(), &OrthogonalViewer::OrientationChanged,
-			this, &PlanarSeedWidget::SetProjectionNormal);
-		QObject::disconnect(this->getViewer(), &OrthogonalViewer::cursorPositionChanged,
-			this, &PlanarSeedWidget::SetProjectionPosition);
-		// do not clean data
-		Superclass::CleanAllSeed();
-	}
-	
-}
+				this->EnableLeftClckDropSeed(!this->getUi()->checkBoxNavigation->isChecked());
+				this->SetProjectionNormal(this->getViewer()->getOrientation());
+				const double* pos = this->getViewer()->getCursorPosition();
+				this->SetProjectionPosition(pos[0], pos[1], pos[2]);
+				QObject::connect(this->getViewer(), &OrthogonalViewer::OrientationChanged,
+					this, &PlanarSeedWidget::SetProjectionNormal);
+				QObject::connect(this->getViewer(), &OrthogonalViewer::cursorPositionChanged,
+					this, &PlanarSeedWidget::SetProjectionPosition);
+				Scene* scene = Scene::getCurrentScene();
+				this->SeedWidgetData = scene->getDataByUniqueName<PolyData>(SCB_PLANAR_SEED_WIDGET_DATA);
+				if (!this->SeedWidgetData) {
+					this->SeedWidgetData = scene->createDataByClassName<PolyData>();
+					this->SeedWidgetData->setRelativePath(QStringList() << SCB_PLANAR_SEED_WIDGET_DATA + ".vtk");
+					if (!this->SeedWidgetData->getPolyData()->GetPoints()) {
+						vtkNew<vtkPoints> points;
+						this->SeedWidgetData->getPolyData()->SetPoints(points.GetPointer());
+					}
+					scene->addData(this->SeedWidgetData, SCB_PLANAR_SEED_WIDGET_DATA);
+				}
 
-void PlanarSeedWidget::install()
-{
-	UNIQUE_UI_INSTALL(PlanarSeedWidget);
-	connect(this->getUi()->checkBoxNavigation, &QCheckBox::stateChanged,
-		this, [this](int state) {
-		EnableLeftClckDropSeed(!state);
-	});
+			}
+			else {
+				this->SeedWidgetData = nullptr;
+				QObject::disconnect(this->getViewer(), &OrthogonalViewer::OrientationChanged,
+					this, &PlanarSeedWidget::SetProjectionNormal);
+				QObject::disconnect(this->getViewer(), &OrthogonalViewer::cursorPositionChanged,
+					this, &PlanarSeedWidget::SetProjectionPosition);
+				// do not clean data
+				Superclass::CleanAllSeed();
+			}
+		}
+
+		void PlanarSeedWidget::install()
+		{
+			UNIQUE_UI_INSTALL(PlanarSeedWidget);
+			connect(this->getUi()->checkBoxNavigation, &QCheckBox::stateChanged,
+				this, [this](int state) {
+				EnableLeftClckDropSeed(!state);
+			});
 
 
-	this->SetWidgetSet(static_cast<PlanarSeedWidget*>(getUniqueThis())->GetWidgetSet());
-	this->GetWidgetSet()->AddWidget(this);
-}
+			this->SetWidgetSet(static_cast<PlanarSeedWidget*>(getUniqueThis())->GetWidgetSet());
+			this->GetWidgetSet()->AddWidget(this);
+		}
 
-void PlanarSeedWidget::uninstall()
-{
-	UNIQUE_UI_UNINSTALL();
-}
+		void PlanarSeedWidget::uninstall()
+		{
+			UNIQUE_UI_UNINSTALL();
+		}
 
-void PlanarSeedWidget::SetEnabled(int i)
-{
-	vtkPlanarSeedWidget::SetEnabled(i);
-	if (i) {
-		this->LoadSeedFromPolyData(this->SeedWidgetData->getPolyData());
-		this->UpdateListWidgetSeed();
-	}
-}
+		void PlanarSeedWidget::SetEnabled(int i)
+		{
+			vtkPlanarSeedWidget::SetEnabled(i);
+			if (i) {
+				this->LoadSeedFromPolyData(this->SeedWidgetData->getPolyData());
+				this->UpdateListWidgetSeed();
+			}
+		}
 
-PlanarSeedWidget::PlanarSeedWidget()
-{
-	this->SeedWidgetData = nullptr;
-	// using a NULL function to replace CompletedAction(vtkAbstractWidget *w) {};
-	this->CallbackMapper->SetCallbackMethod(vtkCommand::RightButtonPressEvent,
-		vtkWidgetEvent::Completed,
-		this, [](vtkAbstractWidget* widget) {});
-	
-}
+		PlanarSeedWidget::PlanarSeedWidget()
+		{
+			this->SeedWidgetData = nullptr;
+			// using a NULL function to replace CompletedAction(vtkAbstractWidget *w) {};
+			this->CallbackMapper->SetCallbackMethod(vtkCommand::RightButtonPressEvent,
+				vtkWidgetEvent::Completed,
+				this, [](vtkAbstractWidget* widget) {});
 
-PlanarSeedWidget::~PlanarSeedWidget()
-{
-}
+		}
 
-void PlanarSeedWidget::uniqueInstall()
-{
-	vtkNew<vtkWidgetSet2> widgetSet;
-	static_cast<PlanarSeedWidget*>(this->getUniqueThis())->SetWidgetSet(widgetSet.GetPointer());
+		PlanarSeedWidget::~PlanarSeedWidget()
+		{
+		}
 
-	this->SeedWidgetData = nullptr;
+		void PlanarSeedWidget::uniqueInstall()
+		{
+			vtkNew<vtkWidgetSet2> widgetSet;
+			static_cast<PlanarSeedWidget*>(this->getUniqueThis())->SetWidgetSet(widgetSet.GetPointer());
 
-	//connect(this, &PlanarSeedWidget::SeedUpdated,
-	//	this, &PlanarSeedWidget::UpdateListWidgetSeed);	
-	connect(this->getUi()->listWidgetSeeds, &QListWidget::currentRowChanged,
-		this, &PlanarSeedWidget::SetFocalSeed);
-	connect(this->getUi()->pushButtonDeleteOne, &QPushButton::clicked,
-		this, static_cast<void(PlanarSeedWidget::*)() > (&PlanarSeedWidget::DeleteSeed));
-	connect(this->getUi()->pushButtonAddOne, &QPushButton::clicked,
-		this, &PlanarSeedWidget::DropSeed);
-	connect(this->getUi()->pushButtonDeleteAll, &QPushButton::clicked,
-		this, &PlanarSeedWidget::CleanAllSeed);
-}
+			this->SeedWidgetData = nullptr;
+			connect(this->getUi()->listWidgetSeeds, &QListWidget::currentRowChanged,
+				this, &PlanarSeedWidget::SetFocalSeed);
+			connect(this->getUi()->pushButtonDeleteOne, &QPushButton::clicked,
+				this, static_cast<void(PlanarSeedWidget::*)()> (&PlanarSeedWidget::DeleteSeed));
+			connect(this->getUi()->pushButtonAddOne, &QPushButton::clicked,
+				this, &PlanarSeedWidget::DropSeed);
+			connect(this->getUi()->pushButtonDeleteAll, &QPushButton::clicked,
+				this, &PlanarSeedWidget::CleanAllSeed);
+		}
 
-void PlanarSeedWidget::EnableLeftClckDropSeed(bool flag)
-{
-	if (flag)
-	{
-		this->RestartInteraction();
-	}
-	else
-	{
-		this->CompleteInteraction();
-	}
-}
+		void PlanarSeedWidget::EnableLeftClckDropSeed(bool flag)
+		{
+			if (flag)
+			{
+				this->RestartInteraction();
+			}
+			else
+			{
+				this->CompleteInteraction();
+			}
+		}
 
-void PlanarSeedWidget::DropSeed()
-{
-	const double* pos = this->getViewer()->getCursorPosition();
-	synchronalCall<PlanarSeedWidget>([&pos](PlanarSeedWidget* style) {
-		style->Superclass::DropSeed(pos);
-		style->Render();
-	});
-	UpdateListWidgetSeed();
-}
+		void PlanarSeedWidget::DropSeed()
+		{
+			const double* pos = this->getViewer()->getCursorPosition();
+			synchronalCall<PlanarSeedWidget>([&pos](PlanarSeedWidget* style) {
+				style->Superclass::DropSeed(pos);
+				style->Render();
+			});
+			UpdateListWidgetSeed();
+		}
 
-void PlanarSeedWidget::AddPointAction(vtkPlanarSeedWidget * dispatcher)
-{
-	Superclass::AddPointAction(dispatcher);
-	if (this != dispatcher) {
-		return;
-	}
-	if (this->WidgetState == vtkSeedWidget::PlacingSeeds) {
-		UpdateListWidgetSeed();
-	}
-}
+		void PlanarSeedWidget::AddPointAction(vtkPlanarSeedWidget * dispatcher)
+		{
+			Superclass::AddPointAction(dispatcher);
+			if (this != dispatcher) {
+				return;
+			}
+			if (this->WidgetState == vtkSeedWidget::PlacingSeeds) {
+				UpdateListWidgetSeed();
+			}
+		}
 
-void PlanarSeedWidget::MoveAction(vtkPlanarSeedWidget * dispatcher)
-{
-	Superclass::MoveAction(dispatcher);
-	if (this != dispatcher) {
-		return;
-	}
-	int X = dispatcher->GetInteractor()->GetEventPosition()[0];
-	int Y = dispatcher->GetInteractor()->GetEventPosition()[1];
-	int state = dispatcher->GetSeedRepresentation()->ComputeInteractionState(X, Y);
-	if (state != vtkSeedRepresentation::NearSeed)
-	{
-		return;
-	}
-	UpdateListWidgetSeed();
-}
+		void PlanarSeedWidget::MoveAction(vtkPlanarSeedWidget * dispatcher)
+		{
+			Superclass::MoveAction(dispatcher);
+			if (this != dispatcher) {
+				return;
+			}
+			int X = dispatcher->GetInteractor()->GetEventPosition()[0];
+			int Y = dispatcher->GetInteractor()->GetEventPosition()[1];
+			int state = dispatcher->GetSeedRepresentation()->ComputeInteractionState(X, Y);
+			if (state != vtkSeedRepresentation::NearSeed)
+			{
+				return;
+			}
+			UpdateListWidgetSeed();
+		}
 
-void PlanarSeedWidget::DeleteAction(vtkPlanarSeedWidget * dispatcher)
-{
-	Superclass::DeleteAction(dispatcher);
-	if (this != dispatcher) {
-		return;
-	}
-	// Do nothing if outside
-	if (this->WidgetState != vtkSeedWidget::PlacingSeeds)
-	{
-		return;
-	}
-	UpdateListWidgetSeed();
-}
+		void PlanarSeedWidget::DeleteAction(vtkPlanarSeedWidget * dispatcher)
+		{
+			Superclass::DeleteAction(dispatcher);
+			if (this != dispatcher) {
+				return;
+			}
+			// Do nothing if outside
+			if (this->WidgetState != vtkSeedWidget::PlacingSeeds)
+			{
+				return;
+			}
+			UpdateListWidgetSeed();
+		}
 
-void PlanarSeedWidget::AddIndex(unsigned int i)
-{
-	if (this->m_seedIndex.contains(i)) {
-		this->RemoveIndex(i);
-	}
-	this->m_seedIndex.push_back(i);
-}
+		void PlanarSeedWidget::AddIndex(unsigned int i)
+		{
+			if (this->m_seedIndex.contains(i)) {
+				this->RemoveIndex(i);
+			}
+			this->m_seedIndex.push_back(i);
+		}
 
-int PlanarSeedWidget::GetIndex(unsigned int i)
-{
-	return this->m_seedIndex.indexOf(i);
-}
+		int PlanarSeedWidget::GetIndex(unsigned int i)
+		{
+			return this->m_seedIndex.indexOf(i);
+		}
 
-int PlanarSeedWidget::RemoveIndex(unsigned int i)
-{
-	int index = this->m_seedIndex.indexOf(i);
-	if (index < 0) {
-		return index;
-	}
-	this->m_seedIndex.removeAt(index);
-	return index;
-}
+		int PlanarSeedWidget::RemoveIndex(unsigned int i)
+		{
+			int index = this->m_seedIndex.indexOf(i);
+			if (index < 0) {
+				return index;
+			}
+			this->m_seedIndex.removeAt(index);
+			return index;
+		}
 
-int PlanarSeedWidget::IndexSize()
-{
-	return this->m_seedIndex.size();
-}
+		int PlanarSeedWidget::IndexSize()
+		{
+			return this->m_seedIndex.size();
+		}
 
-void PlanarSeedWidget::EnabledHandleInRange(vtkHandleWidget * handle)
-{
-	if (this->getViewer()->inherits("Q::vtk::PlanarViewer")) {
-		vtkPlanarSeedWidget::EnabledHandleInRange(handle);
-	}
-	else {
-		handle->EnabledOn();
-	}
-}
+		void PlanarSeedWidget::EnabledHandleInRange(vtkHandleWidget * handle)
+		{
+			if (this->getViewer()->inherits("Q::vtk::PlanarViewer")) {
+				vtkPlanarSeedWidget::EnabledHandleInRange(handle);
+			}
+			else {
+				handle->EnabledOn();
+			}
+		}
 
-void PlanarSeedWidget::UpdateListWidgetSeed()
-{
-	this->ui->listWidgetSeeds->clear();
-	vtkNew<vtkPoints> points;
-	for (vtkIdType id = 0; id < this->GetSeedRepresentation()->GetNumberOfSeeds(); ++id) {
-		double pos[3];
-		this->GetSeedRepresentation()->GetSeedWorldPosition(id, pos);
-		points->InsertNextPoint(pos);
-		this->ui->listWidgetSeeds->addItem(
-			ItemTranslate(id, pos)
-		);
+		void PlanarSeedWidget::UpdateListWidgetSeed()
+		{
+			this->ui->listWidgetSeeds->clear();
+			vtkNew<vtkPoints> points;
+			for (vtkIdType id = 0; id < this->GetSeedRepresentation()->GetNumberOfSeeds(); ++id) {
+				double pos[3];
+				this->GetSeedRepresentation()->GetSeedWorldPosition(id, pos);
+				points->InsertNextPoint(pos);
+				this->ui->listWidgetSeeds->addItem(
+					ItemTranslate(id, pos)
+				);
 
-	}
+			}
 
-	this->SeedWidgetData->getPolyData()->SetPoints(points.GetPointer());
-}
+			this->SeedWidgetData->getPolyData()->SetPoints(points.GetPointer());
+		}
 
-QString PlanarSeedWidget::ItemTranslate(vtkIdType id, const double pos[3])
-{
-	return QString(
-		"Id:" + QString::number(id) + ", " +
-		"X:" + QString::number(pos[0]) + ", " +
-		"Y:" + QString::number(pos[1]) + ", " +
-		"Z:" + QString::number(pos[2])
-	);
-}
+		QString PlanarSeedWidget::ItemTranslate(vtkIdType id, const double pos[3])
+		{
+			return QString(
+				"Id:" + QString::number(id) + ", " +
+				"X:" + QString::number(pos[0]) + ", " +
+				"Y:" + QString::number(pos[1]) + ", " +
+				"Z:" + QString::number(pos[2])
+			);
+		}
 
-void PlanarSeedWidget::DeleteSeed()
-{
-	int row = this->ui->listWidgetSeeds->currentRow();
-	if (row < 0) {
-		qWarning() << "No item is selected in listWidgetSeeds. ";
-		return;
-	}
-	this->DeleteSeed(row);
-	//SYNCHRONAL_CALL(
-	//	PlanarSeedWidget,
-	//	style->DeleteSeed(row));
+		void PlanarSeedWidget::DeleteSeed()
+		{
+			int row = this->ui->listWidgetSeeds->currentRow();
+			if (row < 0) {
+				qWarning() << "No item is selected in listWidgetSeeds. ";
+				return;
+			}
+			this->DeleteSeed(row);
+		}
 
-}
+		void PlanarSeedWidget::DeleteSeed(int i)
+		{
 
-void PlanarSeedWidget::DeleteSeed(int i)
-{
-	//SYNCHRONAL_CALL(
-	//	PlanarSeedWidget, 
-	//	style->Superclass::DeleteSeed(i);
-	//style->Render();
-	//);
-	PlanarSeedWidget::synchronalCall(this, [&i](InteractorObserver *observer) {
-		PlanarSeedWidget *widget = static_cast<PlanarSeedWidget*>(observer);
-		widget->vtkPlanarSeedWidget::DeleteSeed(i);
-		widget->Render(); });
-	UpdateListWidgetSeed();
-}
+			PlanarSeedWidget::synchronalCall(this, [&i](InteractorObserver *observer) {
+				PlanarSeedWidget *widget = static_cast<PlanarSeedWidget*>(observer);
+				widget->vtkPlanarSeedWidget::DeleteSeed(i);
+				widget->Render(); });
+			UpdateListWidgetSeed();
+		}
 
-void PlanarSeedWidget::CleanAllSeed()
-{
-	SYNCHRONAL_CALL( 
-		PlanarSeedWidget, 
-		observer->Superclass::CleanAllSeed();
-	observer->Render();
-	);
-	UpdateListWidgetSeed();
-}
+		void PlanarSeedWidget::CleanAllSeed()
+		{
+			SYNCHRONAL_CALL(
+				PlanarSeedWidget,
+				observer->Superclass::CleanAllSeed();
+			observer->Render();
+			);
+			UpdateListWidgetSeed();
+		}
 
-void PlanarSeedWidget::SetFocalSeed(int i)
-{
-	if (i < 0 || i >= this->GetSeedRepresentation()->GetNumberOfSeeds()) {
-		qWarning() << "The focal seed does not exist. ";
-		qWarning() << "Could not set cursor position. ";
-		return;
-	}
-	double pos[3];
-	this->GetSeedRepresentation()->GetSeedWorldPosition(i, pos);
-	this->getViewer()->setCursorPosition(pos);
-	this->Render();
-}
+		void PlanarSeedWidget::SetFocalSeed(int i)
+		{
+			if (i < 0 || i >= this->GetSeedRepresentation()->GetNumberOfSeeds()) {
+				qWarning() << "The focal seed does not exist. ";
+				qWarning() << "Could not set cursor position. ";
+				return;
+			}
+			double pos[3];
+			this->GetSeedRepresentation()->GetSeedWorldPosition(i, pos);
+			this->getViewer()->setCursorPosition(pos);
+			this->Render();
+		}
 
-void PlanarSeedWidget::SetProjectionNormal(int normal)
-{
-	vtkBoundedPlanePointPlacer* placer = static_cast<vtkBoundedPlanePointPlacer*>(
-		this->GetSeedRepresentation()->GetHandleRepresentation()->GetPointPlacer());
-	switch (normal)
-	{
-	case OrthogonalViewer::ORIENTATION_YZ:
-	case OrthogonalViewer::ORIENTATION_XZ:
-	case OrthogonalViewer::ORIENTATION_XY:
-		placer->SetProjectionNormal(normal);
-	case OrthogonalViewer::SAGITAL:
-	case OrthogonalViewer::CORONAL:
-	case OrthogonalViewer::AXIAL: {
-		this->getViewer()->getCurrentPlaneNormal();
-		placer->SetProjectionNormalToOblique();
-		placer->GetObliquePlane()->SetNormal(
-			this->getViewer()->getCurrentPlaneNormal()[0],
-			this->getViewer()->getCurrentPlaneNormal()[1], 
-			this->getViewer()->getCurrentPlaneNormal()[2]);
-		//this->PointPlacer->GetObliquePlane()->SetOrigin(this->getViewer()->getCursorPosition());
-	}
-	default:
-		break;
-	}
-}
+		void PlanarSeedWidget::SetProjectionNormal(int normal)
+		{
+			vtkBoundedPlanePointPlacer* placer = static_cast<vtkBoundedPlanePointPlacer*>(
+				this->GetSeedRepresentation()->GetHandleRepresentation()->GetPointPlacer());
+			vtkPlanarSeedWidget::SetProjectionNormal(normal);
+			switch (normal)
+			{
+			case vtkBoundedPlanePointPlacer::XAxis:
+			case vtkBoundedPlanePointPlacer::YAxis:
+			case vtkBoundedPlanePointPlacer::ZAxis:
+				break;
+			case vtkBoundedPlanePointPlacer::Oblique:
+			default: {
+				placer->GetObliquePlane()->SetOrigin(
+					this->getViewer()->getCursorPosition()[0],
+					this->getViewer()->getCursorPosition()[1],
+					this->getViewer()->getCursorPosition()[2]);
+				break;
+			}
+			}
+			for (int i = 0; i < this->GetSeedRepresentation()->GetNumberOfSeeds(); ++i) {
+				EnabledHandleInRange(this->GetSeed(i));
+			}
+		}
 
-void PlanarSeedWidget::SetProjectionPosition(double x, double y, double z)
-{		
-	SYNCHRONAL_CALL(
-		Q::vtk::PlanarSeedWidget,
-		observer->vtkPlanarSeedWidget::SetProjectionPosition(x, y, z);
-	)
-}
+		void PlanarSeedWidget::SetProjectionPosition(double x, double y, double z)
+		{
+			SYNCHRONAL_CALL(
+				Q::vtk::PlanarSeedWidget,
+				observer->vtkPlanarSeedWidget::SetProjectionPosition(x, y, z);
+			)
+		}
 
 	}
 }

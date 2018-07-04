@@ -8,7 +8,6 @@ namespace Q {
 		class PolyData;
 	}
 }
-
 // vtk
 class vtkSeedWidget;
 class vtkBoundedPlanePointPlacer;
@@ -24,28 +23,21 @@ public:
 	static InteractorStyleSeedsPlacer* New();
 	vtkTypeMacro(InteractorStyleSeedsPlacer, InteractorStyleNavigation);
 	virtual void PrintSelf(ostream& os, vtkIndent indent) override;
-
 	virtual void setCustomEnable(bool flag) override;
 	virtual void install() override;
 	virtual void uninstall() override;
 	virtual void SetInteractor(vtkRenderWindowInteractor* interactor);
-
-	//virtual void OnChar() override;
-
 	Ui::InteractorStyleSeedsPlacer* getUi() { return this->ui; }
 public slots:
 	virtual void SetCursorPosition(double x, double y, double z) override;
 	virtual void SetProjectionNormal(int normal);
 	virtual void SetProjectionPosition(double x, double y, double z);
-
 	virtual void EnableNavigation(bool flag);
-
 	virtual void AddOne();
 	virtual void FocalOne(int id);
 	virtual void DeleteOne();
 	virtual void DeleteOne(int id);
 	virtual void DeleteAll();
-
 	virtual void SaveWidgetToSeedData();
 	virtual void SynRefresh();
 	/**
@@ -58,28 +50,17 @@ public slots:
 	 *			If newPos is nullptr, the point of oldPos will be removed. 
 	 */
 	virtual void UpdateSeedsData(const double* oldPos, const double* newPos);
-
-
 protected:
 	InteractorStyleSeedsPlacer();
 	virtual ~InteractorStyleSeedsPlacer() override;
-
-
 	virtual void uniqueInstall() override;
-	//virtual void uniqueEnable() override;
-	//virtual void uniqueDisable() override;
-
 	virtual void GenerateWidgetFromSeedsData();
 	virtual void ClearSeedsWidget();
 	static QString ItemTranslate(vtkIdType id, const double pos[3]);
-
 	double DisplayThickness;
-
 	bool NavigationFlag;
-
 	vtkSeedWidget* SeedsWidget;
 	vtkBoundedPlanePointPlacer* PointPlacer;
-
 	PolyData* SeedsData;
 	Ui::InteractorStyleSeedsPlacer* ui;
 };
