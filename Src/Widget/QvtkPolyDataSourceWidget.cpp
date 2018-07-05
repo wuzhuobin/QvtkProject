@@ -168,10 +168,9 @@ void PolyDataSourceWidget::Select(bool flag)
 	if (annotationPolyData) {
 		if (flag && 
 			annotationPolyData->getAnnotationStatus() != AnnotationPolyData::SELECTED) {
-			SYNCHRONAL_CALL(
-				PolyDataSourceWidget,
-				observer->Select(false);
-			);
+			FunctionSet2 f = [](InteractorObserver *observer) {
+				static_cast<PolyDataSourceWidget*>(observer)->Select(false); };
+			synchronalCall(this, f);
 			annotationPolyData->setAnnotationStatusToSelected();
 		}
 		else if(!flag && 

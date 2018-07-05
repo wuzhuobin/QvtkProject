@@ -275,11 +275,14 @@ namespace Q {
 
 		void PlanarSeedWidget::CleanAllSeed()
 		{
-			SYNCHRONAL_CALL(
-				PlanarSeedWidget,
-				observer->Superclass::CleanAllSeed();
-			observer->Render();
-			);
+			FunctionSet1 f = [](InteractorObserver *observer) {
+				PlanarSeedWidget *widget = qobject_cast<PlanarSeedWidget*>(observer);
+				if (widget) {
+					widget->vtkPlanarSeedWidget::CleanAllSeed();
+					widget->Render();
+				}
+			};
+			synchronalCall(this, f);
 			UpdateListWidgetSeed();
 		}
 
@@ -309,6 +312,9 @@ namespace Q {
 				break;
 			case vtkBoundedPlanePointPlacer::Oblique:
 			default: {
+				double normal[3];
+				this->getViewer()->getCurrentPlaneNormal(normal);
+				placer->GetObliquePlane()->SetNormal(normal);
 				placer->GetObliquePlane()->SetOrigin(
 					this->getViewer()->getCursorPosition()[0],
 					this->getViewer()->getCursorPosition()[1],

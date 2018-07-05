@@ -266,15 +266,6 @@ void InteractorStyleNavigation::SetCameraScale(double scale)
 		style->vtkInteractorStyleNavigation::SetCameraScale(scale);
 	};
 	this->synchronalCall(this, functionSet);
-	//int i = 0;
-	//SYNCHRONAL_CALL(
-	//	InteractorStyleNavigation,
-	//	style->SetCurrentRenderer(style->GetDefaultRenderer());
-	//	style->vtkInteractorStyleNavigation::SetCameraScale(scale);
-	//	++i;
-	//	)
-	//	qDebug() << "number of i : " << i;
-
 }
 
 InteractorStyleNavigation::InteractorStyleNavigation()

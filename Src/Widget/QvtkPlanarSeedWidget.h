@@ -56,6 +56,7 @@ protected:
 	PolyData* SeedWidgetData;
 	QList<unsigned int> m_seedIndex;
 	Ui::PlanarSeedWidget* ui;
+
 };
 
 	}

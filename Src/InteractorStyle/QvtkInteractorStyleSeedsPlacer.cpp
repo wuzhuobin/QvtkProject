@@ -293,13 +293,26 @@ void InteractorStyleSeedsPlacer::GenerateWidgetFromSeedsData()
 	//ClearSeedsWidget();
 	vtkPoints* seeds = this->SeedsData->getPolyData()->GetPoints();
 
-	const double* pos = this->m_viewer->getCursorPosition();
+	const double *pos = this->m_viewer->getCursorPosition();
 	int orientation = this->m_viewer->getOrientation();
 
 	for (vtkIdType id = 0; id < seeds->GetNumberOfPoints(); ++id) {
 		double* seed = seeds->GetPoint(id);
 		if (this->getViewer()->inherits("Q::vtk::PlanarViewer")) {
-			if (qAbs(pos[orientation] - seed[orientation]) > this->DisplayThickness) {
+			double distance = 0.0;
+			switch (this->PointPlacer->GetProjectionNormal())
+			{
+			case vtkBoundedPlanePointPlacer::XAxis:
+			case vtkBoundedPlanePointPlacer::YAxis:
+			case vtkBoundedPlanePointPlacer::ZAxis:
+				distance = qAbs(pos[orientation] - seed[orientation]);
+				break;
+			case vtkBoundedPlanePointPlacer::Oblique:
+			default:
+				distance = this->PointPlacer->GetObliquePlane()->DistanceToPlane(seed);
+				break;
+			}
+			if (distance > this->DisplayThickness) {
 				continue;
 			}
 		}
@@ -324,7 +337,7 @@ void InteractorStyleSeedsPlacer::SaveWidgetToSeedData()
 void InteractorStyleSeedsPlacer::SynRefresh()
 {
 	SYNCHRONAL_CALL(
-		InteractorStyleSeedsPlacer,
+		Q::vtk::InteractorStyleSeedsPlacer,
 		observer->ClearSeedsWidget();
 	observer->GenerateWidgetFromSeedsData();
 	observer->SeedsWidget->Render();

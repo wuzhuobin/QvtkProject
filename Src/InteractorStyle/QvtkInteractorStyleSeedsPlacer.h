@@ -28,7 +28,7 @@ public:
 	virtual void uninstall() override;
 	virtual void SetInteractor(vtkRenderWindowInteractor* interactor);
 	Ui::InteractorStyleSeedsPlacer* getUi() { return this->ui; }
-public slots:
+public Q_SLOTS:
 	virtual void SetCursorPosition(double x, double y, double z) override;
 	virtual void SetProjectionNormal(int normal);
 	virtual void SetProjectionPosition(double x, double y, double z);

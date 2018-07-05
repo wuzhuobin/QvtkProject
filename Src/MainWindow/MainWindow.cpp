@@ -29,7 +29,6 @@ MainWindow::MainWindow(int numOfViewers, QWidget * parent)
 	Q::vtk::NonPlanarViewer *nonPlanarViewer = new Q::vtk::NonPlanarViewer(&this->viewers);
 	nonPlanarViewer->orientationMarkerWidgetFlagOn();
 	nonPlanarViewer->setEnableCornerAnnotation(true);
-	nonPlanarViewer->setCursorSyncFlag(false);
 	this->viewers.setViewer(numOfViewers - 1, nonPlanarViewer);
 	this->verticalLayoutOrthogonal->insertWidget(0, &this->viewers);
 	this->dockWidgetScene->setWidget(&this->sceneWidget);

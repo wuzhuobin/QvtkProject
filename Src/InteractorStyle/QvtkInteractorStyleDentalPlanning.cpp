@@ -107,7 +107,7 @@ void InteractorStyleDentalPlanning::AddImplant(unsigned int source)
 	implant->getUserMatrix()->SetElement(1, 3, pos[1]);
 	implant->getUserMatrix()->SetElement(2, 3, pos[2]);
 
-	SYNCHRONAL_CALL(InteractorStyleDentalPlanning, 
+	SYNCHRONAL_CALL(Q::vtk::InteractorStyleDentalPlanning, 
 	if (observer->getViewer()->inherits("PlanarViewer")) {
 		PolyDataActor2D* polyDataActor2D = scene->createDataByClassName<PolyDataActor2D>();
 		polyDataActor2D->setRenderDataSet(implant);
@@ -174,7 +174,7 @@ void InteractorStyleDentalPlanning::OnMouseMove()
 		this->InvokeEvent(vtkCommand::InteractionEvent, NULL);
 		break;
 	case VTKIS_DOLLY:
-		SYNCHRONAL_CALL(InteractorStyleDentalPlanning,
+		SYNCHRONAL_CALL(Q::vtk::InteractorStyleDentalPlanning,
 			observer->DefaultRenderer->GetActiveCamera()->SetParallelScale(this->CurrentRenderer->GetActiveCamera()->GetParallelScale()););
 		break;
 	case VTKIS_NONE:
@@ -185,7 +185,7 @@ void InteractorStyleDentalPlanning::OnMouseMove()
 		break;
 	}
 	if (this->State != VTKIS_NONE) {
-		SYNCHRONAL_CALL(InteractorStyleDentalPlanning,
+		SYNCHRONAL_CALL(Q::vtk::InteractorStyleDentalPlanning,
 			observer->Interactor->Render());
 	}
 }
@@ -200,7 +200,7 @@ void InteractorStyleDentalPlanning::OnLeftButtonDown()
 	this->FindPickedActor(x, y);
 	// doing select
 	this->Select();
-	SYNCHRONAL_CALL(InteractorStyleDentalPlanning,
+	SYNCHRONAL_CALL(Q::vtk::InteractorStyleDentalPlanning,
 		observer->Interactor->Render());
 	// using default renderer to have correct clipping range. 
 
@@ -289,7 +289,7 @@ void InteractorStyleDentalPlanning::OnMiddleButtonDown()
 	this->FindPickedActor(x, y);
 	// doing select
 	this->Select();
-	SYNCHRONAL_CALL(InteractorStyleDentalPlanning,
+	SYNCHRONAL_CALL(Q::vtk::InteractorStyleDentalPlanning,
 		observer->Interactor->Render());
 	this->GrabFocus(this->EventCallbackCommand);
 
@@ -343,7 +343,7 @@ void InteractorStyleDentalPlanning::OnRightButtonDown()
 	this->FindPickedActor(x, y);
 	// doing select
 	this->Select();
-	SYNCHRONAL_CALL(InteractorStyleDentalPlanning,
+	SYNCHRONAL_CALL(Q::vtk::InteractorStyleDentalPlanning,
 		observer->Interactor->Render());
 	this->GrabFocus(this->EventCallbackCommand);
 
@@ -627,7 +627,7 @@ void InteractorStyleDentalPlanning::uniqueInstall()
 void InteractorStyleDentalPlanning::SetCursorPosition(double x, double y, double z)
 {
 	// for NonPlanarViewer.
-	//SYNCHRONAL_CALL(InteractorStyleDentalPlanning, 
+	//SYNCHRONAL_CALL(Q::vtk::InteractorStyleDentalPlanning, 
 	//	if (style->getViewer()->inherits("PlanarViewer"))
 	//	{
 	//		style->getViewer()->setCursorPosition(x, y, z);
@@ -733,7 +733,7 @@ void InteractorStyleDentalPlanning::Hover()
 	if (HoveringImplant) {
 		if (HoveringImplant != SelectingImplant) {
 			HoveringImplant->setAnnotationStatusToNone();
-			SYNCHRONAL_CALL(InteractorStyleDentalPlanning,
+			SYNCHRONAL_CALL(Q::vtk::InteractorStyleDentalPlanning,
 				observer->Interactor->Render());
 		}
 
@@ -745,7 +745,7 @@ void InteractorStyleDentalPlanning::Hover()
 
 		if (HoveringImplant != SelectingImplant) {
 			HoveringImplant->setAnnotationStatusToHover();
-			SYNCHRONAL_CALL(InteractorStyleDentalPlanning,
+			SYNCHRONAL_CALL(Q::vtk::InteractorStyleDentalPlanning,
 				observer->Interactor->Render());
 		}
 	}
@@ -805,7 +805,7 @@ void InteractorStyleDentalPlanning::DeleteImplant()
 	Scene* scene = Scene::getCurrentScene();
 	foreach(Prop* prop, *SelectingImplant->getReferenceProps()) {
 
-		SYNCHRONAL_CALL(InteractorStyleDentalPlanning,
+		SYNCHRONAL_CALL(Q::vtk::InteractorStyleDentalPlanning,
 			observer->getViewer()->removeProp(prop);
 			scene->removeData(prop);
 			observer->Interactor->Render();
