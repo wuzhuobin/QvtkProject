@@ -1,0 +1,106 @@
+if(MSVC)
+    if(${BUILD_LOCAL})
+        find_path(
+            TBB_SRC
+            NAMES
+            Makefile
+        )
+        if(NOT EXISTS ${TBB_SRC}/Makefile)
+            message(FATAL_ERROR "Cannot find TBB Source Path")
+        endif()
+        ExternalProject_Add(
+            TBB
+            TMP_DIR
+            ${CMAKE_BINARY_DIR}/tmp
+            STAMP_DIR
+            ${CMAKE_BINARY_DIR}/stamp
+            DOWNLOAD_DIR
+            ${CMAKE_BINARY_DIR}
+            SOURCE_DIR
+            ${CMAKE_BINARY_DIR}/TBB
+            BINARY_DIR
+            ${CMAKE_BINARY_DIR}/TBB-build
+            INSTALL_DIR
+            ${CMAKE_BINARY_DIR}/TBB-install
+            DOWNLOAD_COMMAND 
+            ${CMAKE_COMMAND} -E copy_directory ${TBB_SRC} ${CMAKE_BINARY_DIR}/TBB
+            CONFIGURE_COMMAND
+            ""
+            BUILD_COMMAND
+            "${CMAKE_MAKE_PROGRAM}"
+            "/m"
+            "/p:Configuration=Release"
+            "/p:Platform=X64"
+            "${C"
+            INSTALL_COMMAND
+            ""
+        )
+    else()
+    endif(
+else()
+    if(${BUILD_LOCAL})
+        find_path(
+            TBB_SRC
+            NAMES
+            Makefile
+        )
+        if(NOT EXISTS ${TBB_SRC}/Makefile)
+            message(FATAL_ERROR "Cannot find TBB Source Path")
+        endif()
+        ExternalProject_Add(
+            TBB
+            TMP_DIR
+            ${CMAKE_BINARY_DIR}/tmp
+            STAMP_DIR
+            ${CMAKE_BINARY_DIR}/stamp
+            DOWNLOAD_DIR
+            ${CMAKE_BINARY_DIR}
+            SOURCE_DIR
+            ${CMAKE_BINARY_DIR}/TBB
+            BINARY_DIR
+            ${CMAKE_BINARY_DIR}/TBB-build
+            INSTALL_DIR
+            ${CMAKE_BINARY_DIR}/TBB-install
+            DOWNLOAD_COMMAND 
+            ${CMAKE_COMMAND} -E copy_directory ${TBB_SRC} ${CMAKE_BINARY_DIR}/TBB
+            CONFIGURE_COMMAND
+            ""
+            BUILD_COMMAND
+            "${CMAKE_MAKE_PROGRAM}"
+            "-j"
+            "-C"
+            "${CMAKE_BINARY_DIR}/TBB"
+            INSTALL_COMMAND
+            ""
+        )
+    else()
+        ExternalProject_Add(
+            TBB
+            TMP_DIR
+            ${CMAKE_BINARY_DIR}/tmp
+            STAMP_DIR
+            ${CMAKE_BINARY_DIR}/stamp
+            DOWNLOAD_DIR
+            ${CMAKE_BINARY_DIR}
+            SOURCE_DIR
+            ${CMAKE_BINARY_DIR}/TBB
+            BINARY_DIR
+            ${CMAKE_BINARY_DIR}/TBB-build
+            INSTALL_DIR
+            ${CMAKE_BINARY_DIR}/TBB-install
+            GIT_REPOSITORY
+            "https://github.com/01org/tbb.git"
+            GIT_TAG
+            "2018_U5"
+            CONFIGURE_COMMAND
+            ""
+            BUILD_COMMAND
+            "${CMAKE_MAKE_PROGRAM}"
+            "-j"
+            "-C"
+            "${CMAKE_BINARY_DIR}/TBB"
+            INSTALL_COMMAND
+            ""
+        )
+    endif()
+endif()

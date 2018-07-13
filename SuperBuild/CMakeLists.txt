@@ -104,6 +104,7 @@ include(External_VTK.cmake)
 include(External_ITK.cmake)
 include(External_CTK.cmake)
 include(External_OpenCV.cmake)
+include(External_TBB.cmake)
 
 ExternalProject_Add(
 	${CMAKE_PROJECT_NAME}
