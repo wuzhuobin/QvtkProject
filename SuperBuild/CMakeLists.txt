@@ -99,12 +99,16 @@ if(NOT ${BUILD_SHARED_LIBS})
 	message(SEND_ERROR "Please check BUILD_SHARED_LIBS. ")
 	message(SEND_ERROR "CTK ERROR: INSTALL(EXPORT) given unknown export CTKExports. ")
 endif()
+option(BUILD_TBB "Build TBB" OFF)
+set(VTK_SMP_IMPLEMENTATION_TYPE Sequential)
+if(${BUILD_TBB})
+	include(External_TBB.cmake)
+endif()
 include(ExternalProject)
 include(External_VTK.cmake)
 include(External_ITK.cmake)
 include(External_CTK.cmake)
 include(External_OpenCV.cmake)
-include(External_TBB.cmake)
 
 ExternalProject_Add(
 	${CMAKE_PROJECT_NAME}
