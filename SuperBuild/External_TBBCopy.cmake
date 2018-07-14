@@ -1,0 +1,33 @@
+file(
+    GLOB
+    VS2013_FILES
+    ${TBB}/build/vs2013/x64/*
+)
+file(
+    COPY
+    ${VS2013_FILES}
+    DESTINATION
+    ${TBB_BUILD}/bin
+)
+file(
+    GLOB_RECURSE
+    LINUX_DEBUG_FILES
+    ${TBB}/linux_*_debug/*
+)
+file(
+    COPY
+    ${LINUX_DEBUG_FILES}
+    DESTINATION
+    ${TBB_BUILD}/bin/Debug
+)
+file(
+    GLOB_RECURSE
+    LINUX_RELEASE_FILES
+    ${TBB}/linux_*_release/*
+)
+file(
+    COPY
+    ${LINUX_RELEASE_FILES}
+    DESTINATION
+    ${TBB_BUILD}/bin/Release
+)

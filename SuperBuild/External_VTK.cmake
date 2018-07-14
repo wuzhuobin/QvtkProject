@@ -95,7 +95,10 @@ else()
         -DQt5OpenGL_DIR:PATH=${Qt5_DIR}OpenGL
         -DQt5Sql_DIR:PATH=${Qt5_DIR}Sql
         -DQt5UiPlugin_DIR:PATH=${Qt5_DIR}UiPlugin
-        -DQt5Widgets_DIR:PATH=${Qt5_DIR}Widgets
+		-DQt5Widgets_DIR:PATH=${Qt5_DIR}Widgets
+		# -DVTK_SMP_IMPLEMENTATION_TYPE:STRING=TBB
+		# -DTBB_INCLUDE_DIR:PATH=${CMAKE_BINARY_DIR}/TBB/include
+		# -DTBB_LIBRARY_DEBUG:PATH=${CMAKE_BINARY_DIR}/TBB/
     )
 
 endif()

@@ -27,16 +27,76 @@ if(MSVC)
             CONFIGURE_COMMAND
             ""
             BUILD_COMMAND
-            "${CMAKE_MAKE_PROGRAM}"
-            "/m"
-            "/p:Configuration=Release"
-            "/p:Platform=X64"
-            "${C"
+            ""
             INSTALL_COMMAND
             ""
         )
     else()
-    endif(
+        ExternalProject_Add(
+            TBB
+            TMP_DIR
+            ${CMAKE_BINARY_DIR}/tmp
+            STAMP_DIR
+            ${CMAKE_BINARY_DIR}/stamp
+            DOWNLOAD_DIR
+            ${CMAKE_BINARY_DIR}
+            SOURCE_DIR
+            ${CMAKE_BINARY_DIR}/TBB
+            BINARY_DIR
+            ${CMAKE_BINARY_DIR}/TBB-build
+            INSTALL_DIR
+            ${CMAKE_BINARY_DIR}/TBB-install
+            GIT_REPOSITORY
+            "https://github.com/01org/tbb.git"
+            GIT_TAG
+            "2018_U5"
+            CONFIGURE_COMMAND
+            ""
+            BUILD_COMMAND
+            ""
+            INSTALL_COMMAND
+            ""
+        )
+    endif()
+    ExternalProject_Add_Step(
+        TBB
+        release_build
+        COMMAND
+        "${CMAKE_MAKE_PROGRAM}"
+        "/m"
+        "/p:Configuration=Release"
+        "/p:Platform=X64"
+        "/p:PlatformToolset=v140"
+        "${CMAKE_BINARY_DIR}/TBB/build/vs2013/makefile.sln"
+        DEPENDEES
+        build
+    )
+    ExternalProject_Add_Step(
+        TBB
+        debug_build
+        COMMAND
+        "${CMAKE_MAKE_PROGRAM}"
+        "/m"
+        "/p:Configuration=Debug"
+        "/p:Platform=X64"
+        "/p:PlatformToolset=v140"
+        "${CMAKE_BINARY_DIR}/TBB/build/vs2013/makefile.sln"
+        DEPENDEES
+        build
+    )
+    ExternalProject_Add_Step(
+        TBB
+        build_copy
+        COMMAND
+        ${CMAKE_COMMAND}
+        -DTBB:PATH=${CMAKE_BINARY_DIR}/TBB
+        -DTBB_BUILD:PATH=${CMAKE_BINARY_DIR}/TBB-build
+        -P
+        ${CMAKE_CURRENT_SOURCE_DIR}/External_TBBCopy.cmake
+        DEPENDEES 
+        debug_build
+        release_build
+    )
 else()
     if(${BUILD_LOCAL})
         find_path(
