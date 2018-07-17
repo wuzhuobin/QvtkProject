@@ -100,16 +100,15 @@ if(NOT ${BUILD_SHARED_LIBS})
 	message(SEND_ERROR "CTK ERROR: INSTALL(EXPORT) given unknown export CTKExports. ")
 endif()
 option(BUILD_TBB "Build TBB" OFF)
+include(ExternalProject)
 set(VTK_SMP_IMPLEMENTATION_TYPE Sequential)
 if(${BUILD_TBB})
 	include(External_TBB.cmake)
 endif()
-include(ExternalProject)
 include(External_VTK.cmake)
 include(External_ITK.cmake)
 include(External_CTK.cmake)
 include(External_OpenCV.cmake)
-
 ExternalProject_Add(
 	${CMAKE_PROJECT_NAME}
 	DEPENDS
@@ -139,5 +138,4 @@ ExternalProject_Add(
 	-DBUILD_TESTING:BOOL=${BUILD_TESTING}
 	-DCMAKE_PREFIX_PATH:PATH=${Qt5_DIR}/..;${CMAKE_BINARY_DIR}
 )
-
-MESSAGE(STATUS "Building submodule ${PROJECT_NAME} finished!")
+message(STATUS "Building submodule ${PROJECT_NAME} finished!")
