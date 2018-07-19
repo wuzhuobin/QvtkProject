@@ -86,7 +86,7 @@ void Q::vtk::MultiAxialDialog::updateAxialViewer()
 		prop->setRenderDataSet(image);
 		viewer->setAxialViewPlaneNormal(normal);
 		viewer->setOrientationToAxial();
-		viewer->setEnableCornerAnnotation(true);
+		viewer->setCursorAnnotation(true);
 		viewer->setSliceThickness(3);
 		viewer->resetCamera(0);
 		viewer->resetCameraClippingRange(0);
