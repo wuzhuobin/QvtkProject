@@ -84,6 +84,19 @@ if(MSVC)
         DEPENDEES
         build
     )
+    ExternalProject_Add_Step(
+        TBB
+        build_copy
+        COMMAND
+        ${CMAKE_COMMAND}
+        -DTBB:PATH=${CMAKE_BINARY_DIR}/TBB
+        -DTBB_BUILD:PATH=${CMAKE_BINARY_DIR}/TBB-build
+        -P
+        ${CMAKE_CURRENT_SOURCE_DIR}/External_TBBCopy.cmake
+        DEPENDEES 
+        debug_build
+        release_build
+    )
     set(TBB_LIBRARY_DEBUG ${CMAKE_BINARY_DIR}/TBB-build/bin/Debug/tbb_debug.lib)
     set(TBB_LIBRARY_RELEASE ${CMAKE_BINARY_DIR}/TBB-build/bin/Release/tbb.lib)
     set(TBB_MALLOC_LIBRARY_DEBUG ${CMAKE_BINARY_DIR}/TBB-build/bin/Debug/tbbmalloc_debug.lib)
@@ -156,20 +169,27 @@ else()
             ""
         )
     endif()
+    ExternalProject_Add_Step(
+        TBB
+        build_copy
+        COMMAND
+        ${CMAKE_COMMAND}
+        -DTBB:PATH=${CMAKE_BINARY_DIR}/TBB
+        -DTBB_BUILD:PATH=${CMAKE_BINARY_DIR}/TBB-build
+        -P
+        ${CMAKE_CURRENT_SOURCE_DIR}/External_TBBCopy.cmake
+        DEPENDEES 
+        build
+    )
+    set(TBB_LIBRARY_DEBUG ${CMAKE_BINARY_DIR}/TBB-build/bin/Debug/libtbb_debug.so)
+    set(TBB_LIBRARY_RELEASE ${CMAKE_BINARY_DIR}/TBB-build/bin/Release/libtbb.so)
+    set(TBB_MALLOC_LIBRARY_DEBUG ${CMAKE_BINARY_DIR}/TBB-build/bin/Debug/libtbbmalloc_debug.so)
+    set(TBB_MALLOC_LIBRARY_RELEASE ${CMAKE_BINARY_DIR}/TBB-build/bin/Release/libtbbmalloc.so)
+    set(TBB_MALLOC_PROXY_LIBRARY_DEBUG  ${CMAKE_BINARY_DIR}/TBB-build/bin/Debug/libtbbmalloc_proxy_debug.so)
+    set(TBB_MALLOC_PROXY_LIBRARY_RELEASE ${CMAKE_BINARY_DIR}/TBB-build/bin/Release/libtbbmalloc_proxy.so)
+
 endif()
-ExternalProject_Add_Step(
-    TBB
-    build_copy
-    COMMAND
-    ${CMAKE_COMMAND}
-    -DTBB:PATH=${CMAKE_BINARY_DIR}/TBB
-    -DTBB_BUILD:PATH=${CMAKE_BINARY_DIR}/TBB-build
-    -P
-    ${CMAKE_CURRENT_SOURCE_DIR}/External_TBBCopy.cmake
-    DEPENDEES 
-    debug_build
-    release_build
-)
+
 add_custom_target(
 	TBB_bin
 	ALL

@@ -12,22 +12,22 @@ file(
 file(
     GLOB_RECURSE
     LINUX_DEBUG_FILES
-    ${TBB}/linux_*_debug/*
+    ${TBB}/build/linux_*_debug/*
 )
 file(
     COPY
     ${LINUX_DEBUG_FILES}
     DESTINATION
-    ${TBB_BUILD}/bin/Debug
+    ${TBB_BUILD}/bin
 )
 file(
     GLOB_RECURSE
     LINUX_RELEASE_FILES
-    ${TBB}/linux_*_release/*
+    ${TBB}/build/linux_*_release/*
 )
 file(
     COPY
     ${LINUX_RELEASE_FILES}
     DESTINATION
-    ${TBB_BUILD}/bin/Release
+    ${TBB_BUILD}/bin
 )
