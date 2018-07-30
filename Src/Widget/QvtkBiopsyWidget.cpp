@@ -154,7 +154,7 @@ namespace Q {
 			case OrthogonalViewer::ORIENTATION_XY:
 				this->m_pointPlacer->SetProjectionNormal(normal);
 				break;
-			case OrthogonalViewer::SAGITAL:
+			case OrthogonalViewer::SAGITTAL:
 			case OrthogonalViewer::CORONAL:
 			case OrthogonalViewer::AXIAL:
 			default: {

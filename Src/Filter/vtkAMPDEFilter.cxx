@@ -430,4 +430,16 @@ int vtkAMPDEFilter::FillInputPortInformation(int port, vtkInformation * info)
 void vtkAMPDEFilter::PrintSelf(ostream & os, vtkIndent indent)
 {
 	Superclass::PrintSelf(os, indent);
+	os << indent << "VolumeTolerance: " << this->VolumeTolerance << '\n';
+	os << indent << "TargetVolume: " << this->TargetVolume << '\n';
+	os << indent << "ResampleSize: " <<
+		this->ResampleSize[0] << ' ' <<
+		this->ResampleSize[1] << ' ' <<
+		this->ResampleSize[2] << ' ' << '\n';
+	os << indent << "KMeans: ";
+	for (double v : this->KMeans) {
+		os << v << ' ';
+	}
+	os << '\n';
+	os << indent << "AluminiumMean: " << this->AluminiumMean;
 }

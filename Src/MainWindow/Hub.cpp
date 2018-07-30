@@ -181,7 +181,7 @@ void Hub::slotInitializationImport()
 			this->mainWindow->getViewer(i)->setOrientationToCoronal();
 			break;
 		case 2:
-			this->mainWindow->getViewer(i)->setOrientationToSagital();
+			this->mainWindow->getViewer(i)->setOrientationToSagittal();
 			break;
 		default:
 			break;
@@ -703,7 +703,7 @@ void Hub::slotInitializationImages(QStringList imagePaths)
 				this->mainWindow->getViewer(i)->setOrientationToCoronal();
 				break;
 			case 2:
-				this->mainWindow->getViewer(i)->setOrientationToSagital();
+				this->mainWindow->getViewer(i)->setOrientationToSagittal();
 				break;
 			default:
 				break;
@@ -743,7 +743,7 @@ void Hub::slotInitializationLabel(QString path)
 			this->mainWindow->getViewer(i)->setOrientationToCoronal();
 			break;
 		case 2:
-			this->mainWindow->getViewer(i)->setOrientationToSagital();
+			this->mainWindow->getViewer(i)->setOrientationToSagittal();
 			break;
 		default:
 			break;
@@ -772,7 +772,7 @@ void Hub::slotInitializationLabel(QString path)
 	//		this->mainWindow->getViewer(i)->setOrientationToCoronal();
 	//		break;
 	//	case 2:
-	//		this->mainWindow->getViewer(i)->setOrientationToSagital();
+	//		this->mainWindow->getViewer(i)->setOrientationToSagittal();
 	//		break;
 	//	default:
 	//		break;
@@ -808,7 +808,7 @@ void Hub::slotInitializationImagesWithLUT(QStringList imagePaths)
 				this->mainWindow->getViewer(i)->setOrientationToCoronal();
 				break;
 			case 2:
-				this->mainWindow->getViewer(i)->setOrientationToSagital();
+				this->mainWindow->getViewer(i)->setOrientationToSagittal();
 				break;
 			default:
 				break;
@@ -848,7 +848,7 @@ void Hub::slotInitializationModel(QString path)
 			this->mainWindow->getViewer(i)->setOrientationToCoronal();
 			break;
 		case 2:
-			this->mainWindow->getViewer(i)->setOrientationToSagital();
+			this->mainWindow->getViewer(i)->setOrientationToSagittal();
 			break;
 		default:
 			break;
