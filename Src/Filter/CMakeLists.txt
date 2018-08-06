@@ -107,9 +107,10 @@ find_package(Qt5Widgets REQUIRED)
 # 	WINDOWS_RESOURCES
 # 	# PATH
 # )
-
-
-
+option(BUILD_TESTING "Build Testing" OFF)
+if(BUILD_TESTING)
+    include(CMakeListsTesting.cmake)
+endif(BUILD_TESTING)
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #  
 # # # # # # # # # # # # # # # # # LIBRARIES # # # # # # # # # # # # # # # # # #  
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #  

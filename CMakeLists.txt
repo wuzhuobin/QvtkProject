@@ -120,7 +120,7 @@ endif(BUILD_EXAMPLE)
 
 option(BUILD_TESTING "Build Testing" OFF)
 if(BUILD_TESTING)
-    # add_subdirectory(Testing)
+	include(CTest)	
 endif(BUILD_TESTING)
 
 option(BUILD_DOCUMENTATION "Build Documentation" OFF)

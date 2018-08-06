@@ -3,7 +3,7 @@
 #include "QvtkPolyDataSource.h"
 #include "QvtkOrthogonalViewer.h"
 #include "QvtkPlanarViewer.h"
-#include "vtkBrokenLineFilter.h"
+#include "vtkBrokenLineSource.h"
 // vtk
 #include <vtkActor.h>
 #include <vtkPolyDataMapper.h>

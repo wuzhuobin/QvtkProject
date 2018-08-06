@@ -130,6 +130,10 @@ add_subdirectory(MainWindow)
 add_subdirectory(ThirdParty)
 add_subdirectory(Viewer)
 add_subdirectory(Widget)
+option(BUILD_TESTING "Build Testing" OFF)
+if(BUILD_TESTING)
+	include(CTest)
+endif(BUILD_TESTING)
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #  
 # # # # # # # # # # # # # # # # # LIBRARIES # # # # # # # # # # # # # # # # # #  

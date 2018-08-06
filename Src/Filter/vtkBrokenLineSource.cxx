@@ -1,5 +1,5 @@
 // me
-#include "vtkBrokenLineFilter.h"
+#include "vtkBrokenLineSource.h"
 // vtk
 #include <vtkObjectFactory.h>
 #include <vtkInformation.h>
