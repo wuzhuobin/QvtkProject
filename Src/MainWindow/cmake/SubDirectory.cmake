@@ -1,0 +1,2 @@
+add_subdirectory(ctkDicomAppWidget2)
+add_subdirectory(MedicalImageFinder)

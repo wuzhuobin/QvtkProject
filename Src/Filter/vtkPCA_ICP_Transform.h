@@ -8,7 +8,7 @@
 class vtkMatrix4x4;
 class vtkPolyData;
 
-class vtkPCA_ICP_Transform : public vtkIterativeClosestPointTransform
+class FILTER_EXPORT vtkPCA_ICP_Transform : public vtkIterativeClosestPointTransform
 {
 public:
 	static vtkPCA_ICP_Transform* New();
