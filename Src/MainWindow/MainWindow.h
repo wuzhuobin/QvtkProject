@@ -1,6 +1,7 @@
 #ifndef __MAIN_WINDOW_H__
 #define __MAIN_WINDOW_H__
 // me
+#include "mainwindow_export.h"
 #include "QvtkOrthogonalDockViewers.h"
 #include "QvtkSceneWidget.h"
 #include "QvtkOrthogonalViewer.h"
@@ -13,7 +14,7 @@ namespace Ui {
 	class MainWindow;
 }
 class QSettings;
-class  MainWindow final:
+class MAINWINDOW_EXPORT MainWindow final:
 	public QMainWindow,
 	public Ui::MainWindow
 {

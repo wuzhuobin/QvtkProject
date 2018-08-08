@@ -2,12 +2,13 @@
 #define __SCB_HUB_H__
 #pragma once
 // me
+#include "mainwindow_export.h"
 #include "MainWindow.h"
 #include "QvtkStylesSwitchOrthogonalViewer.h"
 #include "QvtkWidgetCollection.h"
 //qt
 #include <QObject>
-class Hub final: public QObject
+class MAINWINDOW_EXPORT Hub final: public QObject
 {
 	Q_OBJECT;
 public:
