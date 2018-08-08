@@ -1,11 +1,12 @@
 #ifndef __QVTK_DENTAL_NERVE_SOURCE_H
 #define __QVTK_DENTAL_NERVE_SOURCE_H
-
+#pragma once;
+#include "data_export.h"
 #include "QvtkAnnotationPolyData.h"
 namespace Q {
 	namespace vtk {
 
-class DentalNerveSource : public AnnotationPolyData
+class DATA_EXPORT DentalNerveSource : public AnnotationPolyData
 {
 	Q_OBJECT;
 	Q_VTK_DATA_H(

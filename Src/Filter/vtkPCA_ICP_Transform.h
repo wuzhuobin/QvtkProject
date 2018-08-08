@@ -1,8 +1,10 @@
 #ifndef __VTK_PCA_ICP_TRANSFORM_H__
 #define __VTK_PCA_ICP_TRANSFORM_H__
-
-#include "vtkIterativeClosestPointTransform.h"
-
+#pragma once;
+// me 
+#include "filter_export.h"
+// vtk
+#include <vtkIterativeClosestPointTransform.h>
 class vtkMatrix4x4;
 class vtkPolyData;
 

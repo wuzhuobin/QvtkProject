@@ -20,10 +20,11 @@
 
 #ifndef VTKMRFKMEANSIMAGESEGMENTATIONFILTER_H
 #define VTKMRFKMEANSIMAGESEGMENTATIONFILTER_H
-
+#pragma once;
+// me 
+#include "filter_export.h"
 // vtk
 #include "vtkImageAlgorithm.h"
-
 /**
 * @class	vtkMrfKmeansImageSegmentatioinFilter
 * @brief	For Sucabot Dental, automatic segmentation of teeth boy.
@@ -35,7 +36,7 @@
 
 class vtkDoubleArray;
 
-class vtkMrfKmeansImageSegmentationFilter : public vtkImageAlgorithm
+class FILTER_EXPORT vtkMrfKmeansImageSegmentationFilter : public vtkImageAlgorithm
 {
 public:
 	/**

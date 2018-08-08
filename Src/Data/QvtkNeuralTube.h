@@ -2,6 +2,7 @@
 #define __QVTK_NEURAL_TUBE_H__
 #pragma once 
 // me 
+#include "data_export.h"
 #include "QvtkPolyData.h"
 // vtk
 class vtkTubeFilter;
@@ -35,8 +36,7 @@ class vtkPassArrays;
 */
 namespace Q {
 	namespace vtk {
-
-class NeuralTube : public PolyData {
+class DATA_EXPORT NeuralTube : public PolyData {
 	Q_OBJECT;
 	Q_PROPERTY(
 		double	tubeRadius

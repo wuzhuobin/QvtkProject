@@ -1,7 +1,8 @@
 #ifndef __QVTK_IMPLANT_WIDGET_H__
 #define __QVTK_IMPLANT_WIDGET_H__
-
+#pragma once
 // me
+#include "widget_export.h"
 #include "QvtkNoUiInteractorObserver.h"
 #include "QvtkWidgetOrthogonalViewer.h"
 namespace Q{
@@ -10,13 +11,11 @@ namespace Q{
 		class ImplantWidgetCameraCallback;
 	}
 }
-
 // vtk 
 #include <vtkAffineWidget.h>
 namespace Q {
 	namespace vtk {
-
-class ImplantWidget :
+class WIDGET_EXPORT ImplantWidget :
 	public NoUiInteractorObserver,
 	public WidgetOrthogonalViewer,
 	public vtkAffineWidget

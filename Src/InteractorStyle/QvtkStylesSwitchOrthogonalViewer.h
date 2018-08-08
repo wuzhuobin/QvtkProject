@@ -1,33 +1,19 @@
-/*
-Author:		Wong, Matthew Lun
-Date:		16th, June 2016
-Occupation:	Chinese University of Hong Kong,
-Department of Imaging and Inteventional Radiology,
-Junior Research Assistant
-This class is based on vtkvtkInteractorStyleGeneralSwitchBase, written to allow easy
-switching between 2D interactors.
-Wong Matthew Lun
-Copyright (C) 2016
-*/
-
-
 #ifndef __QVTK_STYLES_SWITCH_ORTHOGONAL_VIEWER_H__
 #define __QVTK_STYLES_SWITCH_ORTHOGONAL_VIEWER_H__
-
 // me
+#include "interactorstyle_export.h"
 #include "vtkInteractorStyleGeneralSwitchBase.h"
 #include "QvtkInteractorStyleWindowLevel.h"
 #include "QvtkInteractorStyleNavigation.h"
 #include "QvtkInteractorStyleDentalPlanning.h"
 #include "QvtkInteractorStyleSeedsPlacer.h"
-
 #define NEW_SCB_INTERACTOR_STYLE(NAME, CLASS) \
 NEW_INTERACTOR_STYLE(NAME, CLASS) \
 allOrthogonalViewrerStyles.push_back(NAME);
 namespace Q {
 	namespace vtk {
 		class OrthogonalViewer;
-		class StylesSwitchOrthogonalViewer :
+		class INTERACTORSTYLE_NO_EXPORT StylesSwitchOrthogonalViewer :
 			public vtkInteractorStyleGeneralSwitchBase,
 			public InteractorStyleOrthogonalViewer
 

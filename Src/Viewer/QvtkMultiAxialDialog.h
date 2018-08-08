@@ -1,9 +1,10 @@
 #ifndef __QVTK_MULTI_AXIAL_DIALOG_H__
 #define __QVTK_MULTI_AXIAL_DIALOG_H__
 #pragma once
+// me
+#include "viewer_export.h"
 // qt
 #include <QDialog>
-// me
 namespace Q {
 	namespace vtk {
 		class PlanarViewer;
@@ -14,8 +15,7 @@ namespace Q {
 }
 namespace Q {
 	namespace vtk {
-
-		class MultiAxialDialog : public QDialog
+		class VIEWER_EXPORT MultiAxialDialog : public QDialog
 		{
 			Q_OBJECT
 

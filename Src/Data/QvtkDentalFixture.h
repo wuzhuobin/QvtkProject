@@ -1,10 +1,10 @@
 #ifndef __QVTK_DENTAL_FIXTURE_H__
 #define __QVTK_DENTAL_FIXTURE_H__
-
+#pragma once;
 #include "QvtkDentalImplant.h"
 namespace Q {
 	namespace vtk {
-		class DentalFixture : public DentalImplant
+		class DATA_EXPORT DentalFixture : public DentalImplant
 		{
 			Q_OBJECT;
 			Q_VTK_DATA_H(

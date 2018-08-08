@@ -14,7 +14,8 @@
 
 #ifndef __vtkImageBimodalAnalysis_h
 #define __vtkImageBimodalAnalysis_h
-
+#pragma once;
+#include "filter_export.h"
 // VTK includes
 #include <vtkImageAlgorithm.h>
 
@@ -28,7 +29,7 @@
 /// \warning
 /// FIXME: only works on output floating point
 /// FIXME: should use vtkTemplateMacro
-class vtkImageBimodalAnalysis : public vtkImageAlgorithm
+class FILTER_EXPORT vtkImageBimodalAnalysis : public vtkImageAlgorithm
 {
 public:
   static vtkImageBimodalAnalysis *New();

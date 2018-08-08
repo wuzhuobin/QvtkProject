@@ -1,6 +1,8 @@
 #ifndef __QVTK_INTERACTOR_STYLE_SEEDS_PLACER_H__
 #define __QVTK_INTERACTOR_STYLE_SEEDS_PLACER_H__
 #pragma once
+// me 
+#include "interactorstyle_export.h"
 #include "QvtkInteractorStyleNavigation.h"
 namespace Q {
 	namespace vtk {
@@ -15,7 +17,7 @@ class vtkBoundedPlanePointPlacer;
 namespace Q {
 	namespace vtk {
 
-class InteractorStyleSeedsPlacer : public InteractorStyleNavigation
+class INTERACTORSTYLE_EXPORT InteractorStyleSeedsPlacer : public InteractorStyleNavigation
 {
 	Q_OBJECT;
 public:

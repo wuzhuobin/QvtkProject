@@ -1,9 +1,11 @@
 #ifndef  __vtkLandmarkTransformRMS_h
 #define __vtkLandmarkTransformRMS_h
-
+#pragma once;
+// me 
+#include "filter_export.h"
+// vtk
 #include <vtkLandmarkTransform.h>
-
-class vtkLandmarkTransformRMS :public vtkLandmarkTransform
+class FILTER_EXPORT vtkLandmarkTransformRMS :public vtkLandmarkTransform
 {
 public:
 	static vtkLandmarkTransformRMS* New();

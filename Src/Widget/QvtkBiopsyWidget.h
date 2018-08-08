@@ -2,6 +2,7 @@
 #define __QVTK_BIOPSY_WIDGET_H__
 #pragma once
 // me 
+#include "widget_export.h"
 #include "QvtkWidgetOrthogonalViewer.h"
 #include "QvtkUniqueUiInteractorObserver.h"
 class vtkWidgetSet2;
@@ -19,7 +20,7 @@ class vtkBoundedPlanePointPlacer;
 namespace Q {
 	namespace vtk {
 
-class BiopsyWidget :
+class WIDGET_EXPORT BiopsyWidget :
 	public UniqueUiInteractorObserver,
 	public WidgetOrthogonalViewer,
 	public vtkLineWidget2

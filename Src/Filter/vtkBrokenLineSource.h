@@ -1,8 +1,11 @@
 #ifndef __VTK_BROKEN_LINE_SOURCE_H__
 #define __VTK_BROKEN_LINE_SOURCE_H__
 #pragma once
+// me 
+#include "filter_export.h"
+// vtk 
 #include <vtkLineSource.h>
-class vtkBrokenLineSource : public vtkLineSource
+class FILTER_EXPORT vtkBrokenLineSource : public vtkLineSource
 {
 public:
 	static vtkBrokenLineSource *New();

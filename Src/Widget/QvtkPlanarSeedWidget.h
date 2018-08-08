@@ -2,6 +2,7 @@
 #define __QVTK_PLANAR_SEED_WIDGET_H__
 #pragma once
 //me
+#include "widget_export.h"
 #include "vtkPlanarSeedWidget.h"
 #include "QvtkUniqueUiInteractorObserver.h"
 #include "QvtkWidgetOrthogonalViewer.h"
@@ -9,7 +10,7 @@ namespace Q {
 	namespace vtk {
 namespace Ui { class PlanarSeedWidget; }
 class PolyData;
-class PlanarSeedWidget :
+class WIDGET_EXPORT PlanarSeedWidget :
 	public UniqueUiInteractorObserver, 
 	public WidgetOrthogonalViewer, 
 	public vtkPlanarSeedWidget

@@ -1,12 +1,12 @@
 #ifndef __QVTK_IMPLANT_H__
 #define __QVTK_IMPLANT_H__
-
+#pragma once;
 // me
+#include "data_export.h"
 #include "QvtkAnnotationPolyData.h"
 namespace Q {
 	namespace vtk {
-
-		class Implant : public AnnotationPolyData
+		class DATA_EXPORT Implant : public AnnotationPolyData
 		{
 			Q_OBJECT;
 			Q_VTK_DATA_H(

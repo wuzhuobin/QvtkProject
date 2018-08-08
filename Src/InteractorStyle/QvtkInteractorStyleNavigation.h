@@ -2,6 +2,7 @@
 #define __QVTK_INTERACTOR_STYLE_NAVIGATION_H__
 #pragma once
 // me 
+#include "interactorstyle_export.h"
 #include "QvtkInteractorStyleOrthogonalViewer.h"
 #include "vtkInteractorStyleNavigation.h"
 #include "QvtkUniqueUiInteractorObserver.h"
@@ -17,7 +18,7 @@ class vtkVolumePicker;
 class vtkPropPicker;
 namespace Q {
 	namespace vtk {
-		class InteractorStyleNavigation :
+		class INTERACTORSTYLE_EXPORT InteractorStyleNavigation :
 			public UniqueUiInteractorObserver,
 			public InteractorStyleOrthogonalViewer,
 			public vtkInteractorStyleNavigation

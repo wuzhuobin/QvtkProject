@@ -19,11 +19,12 @@
  */
 #ifndef __VTK_AMPDE_FILTER_H__
 #define __VTK_AMPDE_FILTER_H__
-
+#pragma once;
+// me 
+#include "filter_export.h"
 // vtk
 #include <vtkPolyDataAlgorithm.h>
 class vtkImageData;
-
 /**
  * @class	vtkAMPDEFilter
  * @brief	For doing Aluminium-Poly-Data-Extraction, automatic extract a aluminium marker mesh to do ICP
@@ -75,7 +76,7 @@ class vtkImageData;
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
  */
 
-class vtkAMPDEFilter : public vtkPolyDataAlgorithm
+class FILTER_EXPORT vtkAMPDEFilter : public vtkPolyDataAlgorithm
 {
 public:
 	/**

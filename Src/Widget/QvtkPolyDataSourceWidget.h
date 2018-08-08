@@ -2,6 +2,7 @@
 #define __QVTK_POLY_DATA_SOURCE_WIDGET_H__
 #pragma once
 // me
+#include "widget_export.h"
 #include "QvtkUniqueUiInteractorObserver.h"
 #include "QvtkWidgetOrthogonalViewer.h"
 #include "vtkPolyDataWidget.h"
@@ -17,7 +18,7 @@ namespace Q {
 class vtkPropPicker;
 namespace Q {
 	namespace vtk {
-class PolyDataSourceWidget :
+class WIDGET_EXPORT PolyDataSourceWidget :
 	public UniqueUiInteractorObserver,
 	public WidgetOrthogonalViewer,
 	public vtkPolyDataWidget

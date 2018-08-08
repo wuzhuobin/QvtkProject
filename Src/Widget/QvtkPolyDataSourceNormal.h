@@ -2,6 +2,7 @@
 #define __QVTK_POLY_DATA_SOURCE_NORMAL_H__
 #pragma once
 // me
+#include "widget_export.h"
 #include "QvtkPolyDataSourceWidget.h"
 // vtk
 class vtkPolyDataMapper;
@@ -10,7 +11,7 @@ class vtkBrokenLineSource;
 class vtkCallbackCommand;
 namespace Q {
 	namespace vtk {
-		class PolyDataSourceNormal : public PolyDataSourceWidget {
+		class WIDGET_EXPORT PolyDataSourceNormal : public PolyDataSourceWidget {
 			Q_OBJECT;
 		public:
 			static PolyDataSourceNormal *New();

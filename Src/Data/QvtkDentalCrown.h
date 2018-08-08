@@ -1,13 +1,11 @@
 #ifndef __QVTK_DENTAL_CROWN_H__
 #define __QVTK_DENTAL_CROWN_H__ 
-
+#pragma once;
 // me
 #include "QvtkDentalImplant.h"
 namespace Q {
 	namespace vtk {
-
-
-		class DentalCrown : public DentalImplant
+		class DATA_EXPORT DentalCrown : public DentalImplant
 		{
 			Q_OBJECT;
 			Q_VTK_DATA_H(DentalCrown);

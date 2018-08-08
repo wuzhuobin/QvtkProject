@@ -2,6 +2,7 @@
 #define __QVTK_INTERACTOR_STYLE_ORTHOGONAL_VIEWER_H__
 #pragma once
 // me
+#include "interactorstyle_export.h"
 namespace Q {
 	namespace vtk {
 		class OrthogonalViewer;
@@ -10,7 +11,7 @@ namespace Q {
 }
 namespace Q {
 	namespace vtk {
-		class InteractorStyleOrthogonalViewer
+		class INTERACTORSTYLE_EXPORT InteractorStyleOrthogonalViewer
 		{
 		public:
 			virtual void setViewer(OrthogonalViewer* viewer) { this->m_viewer = viewer; }

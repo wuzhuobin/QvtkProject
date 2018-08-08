@@ -1,6 +1,6 @@
 #ifndef IMAGEREGISTRATION_H
 #define IMAGEREGISTRATION_H
-
+#include "filter_export.h"
 #include <QObject>
 
 #include <itkImage.h>
@@ -8,7 +8,7 @@
 #include <itkVersorRigid3DTransform.h>
 #include <itkAffineTransform.h>
 
-class ImageRegistration : public QObject
+class FILTER_EXPORT ImageRegistration : public QObject
 {
 	Q_OBJECT
 

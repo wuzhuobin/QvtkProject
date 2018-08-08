@@ -2,6 +2,7 @@
 #define __SCB_INTERACTOR_STYLE_WINDOW_LEVEL_H__
 #pragma once
 // me
+#include "interactorstyle_export.h"
 #include "QvtkInteractorStyleOrthogonalViewer.h"
 #include "vtkInteractorStyleWindowLevel.h"
 #include "QvtkUniqueUiInteractorObserver.h"
@@ -13,8 +14,7 @@ namespace Q {
 }
 namespace Q {
 	namespace vtk {
-		class InteractorStyleWindowLevel :
-			public UniqueUiInteractorObserver,
+		class INTERACTORSTYLE_EXPORT InteractorStyleWindowLevel : public UniqueUiInteractorObserver,
 			public InteractorStyleOrthogonalViewer,
 			public vtkInteractorStyleWindowLevel
 		{

@@ -2,6 +2,7 @@
 #define __QVTK_WIDGET_COLLECTION_H__
 #pragma once
 // me
+#include "widget_export.h"
 #include "vtkWidgetCollectionBase.h"
 #include "vtkPlanarSeedWidget.h"
 #include "QvtkPlanarSeedWidget.h"
@@ -75,7 +76,7 @@ QVTK_GET_WIDGETS(NAME, CLASS) \
 QVTK_SET_ONE_OF_WIDGETS_ENABLED(NAME, CLASS)
 namespace Q {
 	namespace vtk {
-		class /*WIDGET_EXPORT*/ WidgetCollection : public vtkWidgetCollectionBase
+		class WIDGET_NO_EXPORT WidgetCollection : public vtkWidgetCollectionBase
 		{
 		public:
 			static WidgetCollection* New() { return new WidgetCollection; }

@@ -1,7 +1,9 @@
 #ifndef __QVTK_BIOPSY_DATA_H__
 #define __QVTK_BIOPSY_DATA_H__
 #pragma once
+// me
 #include "QvtkPolyData.h"
+#include "data_export.h"
 namespace Q {
 	namespace vtk {
 
@@ -34,7 +36,7 @@ namespace Q {
 //			double m_radius;
 //
 //		};
-class BiopsyData : public PolyData
+class DATA_EXPORT BiopsyData : public PolyData
 {
 	Q_OBJECT;
 	Q_VTK_DATA_H(BiopsyData);

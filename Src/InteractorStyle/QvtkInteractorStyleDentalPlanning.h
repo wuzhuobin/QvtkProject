@@ -1,8 +1,8 @@
 #ifndef __QVTK_INTERACTOR_STYLE_DENTAL_PLANNING_H__
 #define __QVTK_INTERACTOR_STYLE_DENTAL_PLANNING_H__
-
-
+#pragma once
 // me
+#include "interactorstyle_export.h"
 #include "QvtkInteractorStyleOrthogonalViewer.h"
 #include "QvtkUniqueUiInteractorObserver.h"
 namespace Q {
@@ -20,7 +20,7 @@ class vtkRenderer;
 
 namespace Q {
 	namespace vtk {
-class InteractorStyleDentalPlanning : 
+class INTERACTORSTYLE_EXPORT InteractorStyleDentalPlanning : 
 	public UniqueUiInteractorObserver,
 	public InteractorStyleOrthogonalViewer, 
 	public vtkInteractorStyleTrackballActor
