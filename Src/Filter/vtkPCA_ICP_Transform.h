@@ -1,6 +1,6 @@
 #ifndef __VTK_PCA_ICP_TRANSFORM_H__
 #define __VTK_PCA_ICP_TRANSFORM_H__
-#pragma once;
+#pragma once
 // me 
 #include "filter_export.h"
 // vtk

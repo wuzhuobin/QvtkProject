@@ -1,6 +1,6 @@
 #ifndef __QVTK_DENTAL_CROWN_H__
 #define __QVTK_DENTAL_CROWN_H__ 
-#pragma once;
+#pragma once
 // me
 #include "QvtkDentalImplant.h"
 namespace Q {

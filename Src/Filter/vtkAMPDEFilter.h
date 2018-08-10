@@ -19,7 +19,7 @@
  */
 #ifndef __VTK_AMPDE_FILTER_H__
 #define __VTK_AMPDE_FILTER_H__
-#pragma once;
+#pragma once
 // me 
 #include "filter_export.h"
 // vtk

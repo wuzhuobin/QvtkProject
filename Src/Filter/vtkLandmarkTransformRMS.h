@@ -1,6 +1,6 @@
 #ifndef  __vtkLandmarkTransformRMS_h
 #define __vtkLandmarkTransformRMS_h
-#pragma once;
+#pragma once
 // me 
 #include "filter_export.h"
 // vtk

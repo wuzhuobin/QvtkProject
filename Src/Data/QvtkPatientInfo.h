@@ -1,6 +1,6 @@
 #ifndef __SCB_PATIENT_INFO_H__
 #define __SCB_PATIENT_INFO_H__
-#pragma once;
+#pragma once
 // me 
 #include "data_export.h"
 #include "QvtkData.h"

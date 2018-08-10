@@ -20,7 +20,7 @@
 
 #ifndef VTKMRFKMEANSIMAGESEGMENTATIONFILTER_H
 #define VTKMRFKMEANSIMAGESEGMENTATIONFILTER_H
-#pragma once;
+#pragma once
 // me 
 #include "filter_export.h"
 // vtk

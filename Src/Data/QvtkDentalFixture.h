@@ -1,6 +1,6 @@
 #ifndef __QVTK_DENTAL_FIXTURE_H__
 #define __QVTK_DENTAL_FIXTURE_H__
-#pragma once;
+#pragma once
 #include "QvtkDentalImplant.h"
 namespace Q {
 	namespace vtk {

@@ -1,6 +1,6 @@
 #ifndef __QVTK_DENTAL_NERVE_SOURCE_H
 #define __QVTK_DENTAL_NERVE_SOURCE_H
-#pragma once;
+#pragma once
 #include "data_export.h"
 #include "QvtkAnnotationPolyData.h"
 namespace Q {

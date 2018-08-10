@@ -104,7 +104,8 @@ int main(int argc, char* argv[])
 	app.installTranslator(&qtTranslator);
 	Hub hub;
 	QCoreApplication::processEvents();
-	hub.slotInitializationImagesWithLUT(QStringList() << "D:/ccode/SucabotProject/Neural/Resource/template/ch2.nii");
+	//hub.slotInitializationImagesWithLUT(QStringList() << "D:/ccode/SucabotProject/Neural/Resource/template/ch2.nii");
+	//hub.slotInitializationImagesWithLUT(QStringList() <<  "C:/Users/jieji/Desktop/fasdfasdfasdf.nii.gz");
 	return app.exec();
 }
 

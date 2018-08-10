@@ -14,7 +14,7 @@
 
 #ifndef __vtkImageBimodalAnalysis_h
 #define __vtkImageBimodalAnalysis_h
-#pragma once;
+#pragma once
 #include "filter_export.h"
 // VTK includes
 #include <vtkImageAlgorithm.h>

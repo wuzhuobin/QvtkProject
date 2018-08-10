@@ -1,6 +1,6 @@
 #ifndef __QVTK_IMPLANT_H__
 #define __QVTK_IMPLANT_H__
-#pragma once;
+#pragma once
 // me
 #include "data_export.h"
 #include "QvtkAnnotationPolyData.h"
