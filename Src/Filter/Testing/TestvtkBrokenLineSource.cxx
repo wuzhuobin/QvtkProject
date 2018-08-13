@@ -1,7 +1,7 @@
 // me 
 #include "vtkBrokenLineSource.h"
 // qt 
-#include <QtTest/QtTest>
+#include <QtTest>
 #include <QDebug>
 // vtk 
 #include <vtkSmartPointer.h>
