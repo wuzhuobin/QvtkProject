@@ -219,10 +219,17 @@
     </property>
     <addaction name="action_Testing_Action"/>
    </widget>
+   <widget class="QMenu" name="menuFilter">
+    <property name="title">
+     <string>Filter</string>
+    </property>
+    <addaction name="action_BET2Filter"/>
+   </widget>
    <addaction name="menuFile"/>
    <addaction name="menuWidget"/>
    <addaction name="menuInteraction"/>
    <addaction name="menuView"/>
+   <addaction name="menuFilter"/>
    <addaction name="menuWindow"/>
    <addaction name="menuHelp"/>
    <addaction name="menuTesting"/>
@@ -736,6 +743,11 @@
   <action name="action_Multi_Axial">
    <property name="text">
     <string>&amp;Multi Axial</string>
+   </property>
+  </action>
+  <action name="action_BET2Filter">
+   <property name="text">
+    <string>&amp;BET2Filter</string>
    </property>
   </action>
  </widget>

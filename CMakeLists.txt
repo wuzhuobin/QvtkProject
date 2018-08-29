@@ -55,6 +55,7 @@ if(SUPER_BUILD)
 	return()
 endif(SUPER_BUILD)
 add_subdirectory(Src)
+include(CTest)
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
 # # # # # # # # # # # # # # # # # OPTIONS # # # # # # # # # # # # # # # # # # # 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 

@@ -16,6 +16,7 @@
 #include "QvtkPolyDataActor.h"
 #include "QvtkPolyDataActor2D.h"
 #include "QvtkBiopsyData.h"
+//#include "QvtkBET2Filter.h"
 //vtk
 #include <vtkRenderer.h>
 #include <vtkSphereSource.h>
@@ -42,6 +43,9 @@ Hub::Hub(QObject* parent)
 {
 	self = this;
     this->mainWindow = new MainWindow(NUM_OF_ORTHOGONAL_VIEWER);
+//////////////////////////////////////// Filter ////////////////////////////////////////
+	//Q::vtk::BET2Filter *bet2 = new Q::vtk::BET2Filter(this->mainWindow);
+	//connect(this->mainWindow->action_BET2Filter, &QAction::triggered, bet2, &Q::vtk::BET2Filter::show);
 	Q::vtk::Scene* scene = Q::vtk::Scene::getCurrentScene();
 	for (int i = 0; i < NUM_OF_ORTHOGONAL_VIEWER; ++i) {
 		this->mainWindow->getViewer(i)->setEnableDepthPeeling(true);
@@ -65,7 +69,7 @@ Hub::Hub(QObject* parent)
 		this, &Hub::slotClean);
 	QObject::connect(this->mainWindow->action_Exit, &QAction::triggered,
 		this, &Hub::slotExit);
-	// interactorstyle
+//////////////////////////////////////// InteractorStyle ////////////////////////////////////////
 	for (int i = 0; i < NUM_OF_ORTHOGONAL_VIEWER; ++i) {
 		this->styles[i] = Q::vtk::StylesSwitchOrthogonalViewer::New();
 		this->styles[i]->SetViewer(this->mainWindow->getViewer(i));
@@ -86,8 +90,7 @@ Hub::Hub(QObject* parent)
 	QObject::connect(this->mainWindow->action_Seed_Placer, &QAction::toggled,
 		this, &Hub::slotInteractorStyleSeedPlacer);
 	this->mainWindow->stackedWidgetStyle->addWidget(this->styles[0]->GetSeedPlacer()->getWidget());
-
-
+//////////////////////////////////////// Widget ////////////////////////////////////////
 	for (int i = 0; i < NUM_OF_ORTHOGONAL_VIEWER; ++i) {
 		this->widgets[i] = Q::vtk::WidgetCollection::New();
 		this->widgets[i]->SetViewer(this->mainWindow->getViewer(i));
@@ -96,7 +99,6 @@ Hub::Hub(QObject* parent)
 		this->widgets[i]->ProducePlanarSeedWidgets();
 		this->widgets[i]->GetPlanarSeedWidgets()[0]->getWidget()->setEnabled(false);
 	}
-
 	QObject::connect(this->mainWindow->action_Distance_Widget_On, &QAction::triggered,
 		this, &Hub::slotAddDistanceWidget);
 	QObject::connect(this->mainWindow->action_Distance_Widget_Off, &QAction::triggered,
@@ -123,10 +125,10 @@ Hub::Hub(QObject* parent)
 	QObject::connect(this->mainWindow->action_Biopsy_Off, &QAction::triggered,
 		this, &Hub::slotRemoveBiopsyWidget);
 	scene->registerData(new Q::vtk::BiopsyData, Q::vtk::BiopsyWidget::TAG);
-
+//////////////////////////////////////// Testing ////////////////////////////////////////
 	QObject::connect(this->mainWindow->action_Testing_Action, &QAction::triggered,
 		this, &Hub::slotTestingAction);
-
+//////////////////////////////////////// Start ////////////////////////////////////////
 	this->mainWindow->show();
 	this->mainWindow->action_Navigation_Mode->trigger();
 }

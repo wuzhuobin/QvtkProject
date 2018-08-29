@@ -7,3 +7,6 @@
 [submodule "Src/MainWindow/ctkDicomAppWidget2"]
 	path = Src/MainWindow/ctkDicomAppWidget2
 	url = git@github.com:wuzhuobin/ctkDicomAppWidget2.git
+[submodule "Src/ThirdParty/BET2"]
+	path = Src/ThirdParty/BET2
+	url = git@github.com:wuzhuobin/bet2.git

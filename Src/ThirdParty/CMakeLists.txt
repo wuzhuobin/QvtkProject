@@ -1,41 +1,10 @@
-# @file	TemplateCMakeLists.txt
-# @brief	A template CMakeLists.txt which can automatically generate project
+# @file	CMakeLists.txt
+# @brief	A CMakeLists.txt which can automatically generate project
 # @author	WUZHUOBIN
-# @version	1.4.0
-# @since	Sep.19.2017
+# @version	0.0.0
+# @since	Aug.06.2018
+# @date 	Aug.06.2018
 # 
-# This template is for generating CMake project easily. Only a few steps.
-# 1.	Make a good folder name as the parent, because it is going to be your 
-#		CMake Project name. 
-# 2.	Place all header files and implementation files to your parent folder. 
-#		If there is no header files and implementation files, skip this part. 
-# 3.	Create a folder "main" to place your main function. It has to be named 
-#		as "name.cpp". If there is no or a library is being created, skip this 
-#		part. 
-# 4.	Rename "TemplateCMakeLists.txt" to "CMakeLists.txt". 
-# 
-# Update Log: 
-# @date	Sep.19.2017
-# version 1.0.0
-# The first version. 
-#
-# @date	Sep.20.2017
-# version 1.1.0
-# Adding some comments
-#
-# @date Sep.27.2017
-# version 1.2.0
-# This is a simple version. Cannot generate shared library, only generate static
-# library. No export and install.
-#
-# @data	Oct.09.2017
-# version 1.3.0 
-# Adding qrc in library as well, which provide greater compatibility. 
-#
-# @data Dec.07.2017
-# version 1.4.0
-# Deleting Qt5LinguistTools dependency.
-#
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 #			Copyright (c) WUZHUOBIN 											    #
 #			All rights reserved.												    #
@@ -45,19 +14,17 @@
 #			PURPOSE.  See the above copyright notice for more information.		    #
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 cmake_minimum_required(VERSION 3.1) 
-# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
 get_filename_component(
 	FOLDER_NAME 
 	${CMAKE_CURRENT_SOURCE_DIR} 
 	NAME
 )
 project(${FOLDER_NAME})
-
 message(
 	STATUS 
-	"Building submodule ${PROJECT_NAME}..."
+	"CONFIGURING ${PROJECT_NAME}..."
 )
-
 # multi-processor build
 if(${MSVC})
 	set(
@@ -69,229 +36,206 @@ if(${MSVC})
 		"${CMAKE_C_FLAGS} /MP"
 	)
 endif()
-
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
 # # # # # # # # # # # # # # # # # POLICY  # # # # # # # # # # # # # # # # # # # 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
-cmake_policy(SET CMP0043 NEW)
-cmake_policy(SET CMP0028 NEW)
+
 # # # # # # # # # # # # # # # # # CHANGE BELOW  # # # # # # # # # # # # # # # # 
 
-
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
-# # # # # # # # # # # # # # # # # # DEPENDENCY  # # # # # # # # # # # # # # # # 
+# # # # # # # # # # # # # # # # # SUB_DIRECTORY # # # # # # # # # # # # # # # # 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
-
-# Adding dependency library you need
-# Please remember to set it to SYSTEM_LIBRARIES as well 
-
-# ITK
-find_package(ITK REQUIRED)
-include(${ITK_USE_FILE})
-
-# VTK
-find_package(VTK REQUIRED) 
-include(${VTK_USE_FILE})
-
-# QT
-find_package(Qt5Core REQUIRED)
-find_package(Qt5Widgets REQUIRED)
-# # # # # # # # # # # # # # # # # CHANGE BELOW  # # # # # # # # # # # # # # # # 
-#find_package(Qt5.... REQUIRED)
-#find_package(... REQURIED)
-
-# OTHERS
-#find_package()
-#....
-add_subdirectory(QsLog)
-
-# QT_QRC
-#set(
-#	PROJECT_QRC
-#	#PATH	
-#)
-
-
-# WINDOWS RESOURCES
-# set(
-# 	WINDOWS_RESOURCES
-# 	# PATH
-# )
-
-
-# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #  
-# # # # # # # # # # # # # # # # # LIBRARIES # # # # # # # # # # # # # # # # # #  
-# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #  
-
+if(EXISTS ${PROJECT_SOURCE_DIR}/cmake/SubDirectory.cmake)
+	include(${PROJECT_SOURCE_DIR}/cmake/SubDirectory.cmake)
+endif()
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
+# # # # # # # # # # # # # # # # # OPTIONS # # # # # # # # # # # # # # # # # # # 
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
+# Allow the developer to build example.
+option(BUILD_EXAMPLE "Build Example" OFF)
+if(BUILD_EXAMPLE AND EXISTS ${PROJECT_SOURCE_DIR}/${PROJECT_NAME}Example)
+	add_subdirectory(${PROJECT_SOURCE_DIR}/${PROJECT_NAME}Example)
+endif()
+# Allow the developer to do testing or not.
+option(BUILD_TESTING "Build Testing" OFF)
+# Allow the developer to build documentation.
+option(BUILD_DOCUMENTATION "Bulid Documentation" OFF)
+# Allow the developer to select if Dynamic or Static libraries are built
+option(BUILD_SHARED_LIBS "Build Shared Libraries" OFF)
+if(BUILD_SHARED_LIBS)
+# User wants to build Dynamic Libraries, so change the LIB_TYPE variable to CMake keyword 'SHARED'
+	set(LIB_TYPE SHARED)
+else()
+# Set the LIB_TYPE variable to STATIC
+	set(LIB_TYPE STATIC)
+endif()
+# Set output location of shared/module libraries. 
 set(
 	CMAKE_ARCHIVE_OUTPUT_DIRECTORY
 	${CMAKE_BINARY_DIR}/lib
 )
-
+# Set output location of shared/static libraries. 
 set(
 	CMAKE_LIBRARY_OUTPUT_DIRECTORY
 	${CMAKE_BINARY_DIR}/lib
 )
+# Set output location of shared libraries and executables. 
 set(
 	CMAKE_RUNTIME_OUTPUT_DIRECTORY 
 	${CMAKE_BINARY_DIR}/bin
 )
-
 link_directories(
 	${CMAKE_ARCHIVE_OUTPUT_DIRECTORY}
 	${CMAKE_LIBRARY_OUTPUT_DIRECTORY}
 )
-
 set(
-	SYSTEM_LIBRARIES
-	${VTK_LIBRARIES} 
-	${ITK_LIBRARIES}
-	Qt5::Core
-	Qt5::Widgets
+	PROJECT_LIBRARY
+	${PROJECT_LIBRARY}
 )
-
 set(
-	SYSTEM_INCLUDE
+	PROJECT_INCLUDE
 	${PROJECT_SOURCE_DIR}
 	${PROJECT_BINARY_DIR}
 )
-
-# # # # # # # # # # # # # # # # # CHANGE BELOW  # # # # # # # # # # # # # # # # 
-set(
-	SYSTEM_LIBRARIES
-	${SYSTEM_LIBRARIES}
-	#OTHERS
-	#...
-)
-
-set(
-	SYSTEM_INCLUDE
-	${SYSTEM_INCLUDE}
-	#....
-)
-
-
-# Enable always build static library
-set(LIB_TYPE STATIC)
-
-
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #  
 # # # # # # # # # # # # # # # # # CODES # # # # # # # # # # # # # # # # # # # #  
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #  
-
-file(GLOB PROJECT_SRC *.c*)
-file(GLOB PROJECT_INC *.h*)
-file(GLOB PROJECT_UI *.ui)
-set(MAIN_CPP ${PROJECT_SOURCE_DIR}/main/main.cpp)
-
-
-# Output UI headers to specified location
-qt5_wrap_ui(
-	PROJECT_UI_H
-	${PROJECT_UI}
+# Finding needed source files.
+file(
+	GLOB
+	PROJECT_SRC
+	${PROJECT_SOURCE_DIR}/*.c*
 )
-
-qt5_wrap_cpp(
-    PROJECT_MOC
-    ${PROJECT_INC}
+# Finding needed header files.
+file(
+	GLOB
+	PROJECT_INC
+	${PROJECT_SOURCE_DIR}/*.h*
 )
-
-qt5_add_resources(
-	PROJECT_QRC_SRC
-	${PROJECT_QRC}
+# Finding needed build executable source files.
+file(
+	GLOB
+	PROJECT_MAIN_SRC
+	${PROJECT_SOURCE_DIR}/main/*.c*
 )
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
+# # # # # # # # # # # # # # # # # # DEPENDENCY  # # # # # # # # # # # # # # # # 
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+# Finding needed Find*.cmake files.
+file(
+	GLOB
+	PROJECT_FIND_CMAKE
+	${PROJECT_SOURCE_DIR}/cmake/Find*.cmake
+)
+# Include every Find*.cmake file in cmake folder. 
+foreach(ONE ${PROJECT_FIND_CMAKE})
+	include(${ONE})
+endforeach()
+# For shared libraries export 
+include(GenerateExportHeader)
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #  
+# # # # # # # # # # # # # # # # # LIBRARIES # # # # # # # # # # # # # # # # # #  
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #  
 
-# Building library
-if( NOT "${PROJECT_SRC}" STREQUAL "")
-
+# # # # # # # # # # # # # # # # # BUILD LIBRARY # # # # # # # # # # # # # # # #  
+# Enable always build static library
+# set(LIB_TYPE STATIC)
+if(PROJECT_SRC)
 	add_library(
-	    ${PROJECT_NAME}
+		${PROJECT_NAME}
 		${LIB_TYPE}
-	    ${PROJECT_SRC}
-	    ${PROJECT_INC}
-	    ${PROJECT_MOC}
-		${PROJECT_UI}
-		${PROJECT_UI_H}
-		${PROJECT_QRC}
-		${PROJECT_QRC_SRC}
+		${PROJECT_SRC}
+		${PROJECT_INC}
 	)
-
+endif()
+# # # # # # # # # # # # # # # # # BUILD EXECUTABLE # # # # # # # # # # # # # # 
+if(PROJECT_MAIN_SRC)
+	add_executable(
+		${PROJECT_NAME}_main
+		${PROJECT_MAIN_SRC}
+	)
+endif()
+# # # # # # # # # # # # # # # # # BUILD OTHERS # # # # # # # # # # # # # # # #
+# Finding needed Targget*.cmake files.
+file(
+	GLOB
+	PROJECT_TARGET_CMAKE
+	${PROJECT_SOURCE_DIR}/cmake/Target*.cmake
+)
+# Include every Target*.cmake file in cmake folder. 
+foreach(ONE ${PROJECT_TARGET_CMAKE})
+	include(${ONE})
+endforeach()
+# # # # # # # # # # # # # # # # # LINKAGE # # # # # # # # # # # # # # # # # # # 
+# Adding a prefix for exporting target
+foreach(ONE ${PROJECT_INCLUDE})
+	list(
+		APPEND
+		TEMPORARY_PROJECT_INCLUDE 
+		$<BUILD_INTERFACE:${ONE}>)
+endforeach()
+set(PROJECT_INCLUDE ${TEMPORARY_PROJECT_INCLUDE})
+if(TARGET ${PROJECT_NAME})
+	include(GenerateExportHeader)
+	generate_export_header(${PROJECT_NAME})
 	target_link_libraries(
 	    ${PROJECT_NAME}
-		${SYSTEM_LIBRARIES}
+		${PROJECT_LIBRARY}
 	)
-
-	message(
-		STATUS
-		"Linking Libraries\n"
-		"${SYSTEM_LIBRARIES}"
-	)
-	
 	target_include_directories(
 		${PROJECT_NAME}
 		PUBLIC
-		${SYSTEM_INCLUDE}
+		${PROJECT_INCLUDE}
+		$<INSTALL_INTERFACE:include>  
 	)
-
-	message(
-		STATUS
-		"Include directory\n"
-		"${SYSTEM_INCLUDE}"
+	list(
+		APPEND
+		PROJECT_LIBRARY 
+		${PROJECT_NAME}
 	)
-
-	
 endif()
-
-
-if(EXISTS ${MAIN_CPP})
-
-	add_executable(
+if(TARGET ${PROJECT_NAME}_main)
+	target_link_libraries(
 		${PROJECT_NAME}_main
-		${MAIN_CPP}
-		${PROJECT_QRC}
-		${PROJECT_QRC_SRC}
+		${PROJECT_LIBRARY}
 	)
-
-	if(NOT "${PROJECT_SRC}" STREQUAL "")
-		target_link_libraries(
-			${PROJECT_NAME}_main
-			${PROJECT_NAME}
-		)
-	else()
-		target_link_libraries(
-			${PROJECT_NAME}_main
-			${SYSTEM_LIBRARIES}
-		)
-	endif()
-
+	target_include_directories(
+		${PROJECT_NAME}_main
+		PUBLIC
+		${PROJECT_INCLUDE}
+	)
 endif()
-
-
-#Grouping in MSVC
-source_group(
-	"Generated Files"
-	FILES
-	${PROJECT_MOC}
-	${PROJECT_UI_H}
-	${PROJECT_QRC_SRC}
+# # # # # # # # # # # # # # # # # EXPORT # # # # # # # # # # # # # # # # # # # # # 
+# installation to be continue.
+# comment following for normal source project
+if(TARGET ${PROJECT_NAME})
+	install(
+		TARGETS ${PROJECT_NAME}
+		EXPORT ${PROJECT_NAME} 
+		RUNTIME DESTINATION bin
+		LIBRARY DESTINATION lib
+		ARCHIVE DESTINATION lib
+		INCLUDES DESTINATION include
+	)
+	export(
+		EXPORT
+		${PROJECT_NAME}
+		FILE
+		${CMAKE_BINARY_DIR}/lib/cmake/${PROJECT_NAME}.cmake
+	)
+	install(
+		FILES 
+		${PROJECT_BINARY_DIR}/${PROJECT_NAME}_export.h
+		${PROJECT_INC}
+		DESTINATION
+		include
+	)
+	install(
+		EXPORT ${PROJECT_NAME}
+		DESTINATION lib/cmake
+	)
+endif()
+message(
+	STATUS 
+	"CONFIGURED ${PROJECT_NAME}"
 )
-source_group(
-	"Forms Files"
-	FILES
-	${PROJECT_UI}
-)
-source_group(
-	"Header Files" 
-	FILES 
-	${PROJECT_INC}
-)
-source_group(
-	"Source Files" 
-	FILES 
-	${PROJECT_SRC}
-	${MAIN_CPP}
-)
-
-MESSAGE(STATUS "Building submodule ${PROJECT_NAME} finished!")
-
-
