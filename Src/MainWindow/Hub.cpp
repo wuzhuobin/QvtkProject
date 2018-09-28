@@ -200,19 +200,26 @@ void Hub::slotInitializationImport()
 
 void Hub::slotInitialization()
 {
+	//this->mainWindow->getViewer(0)->update();
+	//this->mainWindow->getViewer(1)->update();
+	//this->mainWindow->getViewer(2)->update();
+	//this->mainWindow->getViewer(3)->update();
 	this->styles[0]->GetNavigation()->CentralizeCursorPosition();
 	this->styles[1]->GetNavigation()->CentralizeCursorPosition();
 	this->styles[2]->GetNavigation()->CentralizeCursorPosition();
 	
 	this->mainWindow->getViewer(0)->resetCamera(0);
 	this->mainWindow->getViewer(0)->resetCameraClippingRange(0);
+	this->mainWindow->getViewer(0)->update();
 	this->mainWindow->getViewer(1)->resetCamera(0);
 	this->mainWindow->getViewer(1)->resetCameraClippingRange(0);
+	this->mainWindow->getViewer(1)->update();
 	this->mainWindow->getViewer(2)->resetCamera(0);
 	this->mainWindow->getViewer(2)->resetCameraClippingRange(0);
+	this->mainWindow->getViewer(2)->update();
 	this->mainWindow->getViewer(3)->resetCamera(0);
 	this->mainWindow->getViewer(3)->resetCameraClippingRange(0);
-	Q::vtk::Viewer::updateAllViewers();
+	this->mainWindow->getViewer(3)->update();
 }
 
 void Hub::slotInitializationPolyDataSourceWidget()

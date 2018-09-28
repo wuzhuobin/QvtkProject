@@ -147,8 +147,9 @@ void InteractorStyleWindowLevel::uniqueInstall()
 		this, static_cast<void(InteractorStyleWindowLevel::*)(int)>(&InteractorStyleWindowLevel::SetLevel));
 }
 
-int InteractorStyleWindowLevel::tryPick(double xyz[3]) 
+int InteractorStyleWindowLevel::tryPick(const int XY[2]) 
 {
+	Q_UNUSED(XY);
 	this->CurrentRenderer = this->GetDefaultRenderer();
 	return this->GetInteractor()->GetPicker()->Pick(
 		this->GetInteractor()->GetEventPosition()[0],
@@ -157,8 +158,9 @@ int InteractorStyleWindowLevel::tryPick(double xyz[3])
 		this->GetCurrentRenderer());
 }
 
-DataSet * InteractorStyleWindowLevel::findPokedDataSet()
+DataSet * InteractorStyleWindowLevel::findPokedDataSet(const int XY[2])
 {
+	Q_UNUSED(XY);
 	typedef QList<QMetaObject::Connection> ConnectionList;
 	ConnectionList connections;
 	QList<Q::vtk::Prop*> props = this->getViewer()->getProps();

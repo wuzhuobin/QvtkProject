@@ -52,8 +52,8 @@ namespace Q {
 			virtual void uniqueFunction() override {}
 			virtual void uniqueEnable() override {}
 			virtual void uniqueDisable() override {}
-			virtual int tryPick(double xyz[3] = nullptr) override;
-			virtual DataSet* findPokedDataSet() override;
+			virtual int tryPick(const int XY[2] = nullptr) override;
+			virtual DataSet* findPokedDataSet(const int XY[2] = nullptr) override;
 			virtual Image* FindPokedImage();
 			Ui::InteractorStyleWindowLevel* ui;
 			static Image* pokedImage;

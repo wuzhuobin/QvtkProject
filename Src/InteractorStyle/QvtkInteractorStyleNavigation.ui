@@ -7,62 +7,19 @@
     <x>0</x>
     <y>0</y>
     <width>243</width>
-    <height>64</height>
+    <height>92</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>InteractorStyleNavigation</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="0" column="0">
-    <widget class="QLabel" name="label">
-     <property name="text">
-      <string>X: </string>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="1" colspan="2">
-    <widget class="QDoubleSpinBox" name="doubleSpinBoxX"/>
-   </item>
-   <item row="0" column="3">
-    <widget class="QLabel" name="label_2">
-     <property name="text">
-      <string>Y: </string>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="4" colspan="2">
-    <widget class="QDoubleSpinBox" name="doubleSpinBoxY"/>
-   </item>
    <item row="0" column="6">
     <widget class="QLabel" name="label_3">
      <property name="text">
       <string>Z:</string>
      </property>
     </widget>
-   </item>
-   <item row="0" column="7" colspan="2">
-    <widget class="QDoubleSpinBox" name="doubleSpinBoxZ"/>
-   </item>
-   <item row="1" column="0" colspan="2">
-    <widget class="QLabel" name="label_4">
-     <property name="text">
-      <string>I:</string>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="2">
-    <widget class="QSpinBox" name="spinBoxI"/>
-   </item>
-   <item row="1" column="3" colspan="2">
-    <widget class="QLabel" name="label_5">
-     <property name="text">
-      <string>J:</string>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="5">
-    <widget class="QSpinBox" name="spinBoxJ"/>
    </item>
    <item row="1" column="6" colspan="2">
     <widget class="QLabel" name="label_6">
@@ -71,8 +28,75 @@
      </property>
     </widget>
    </item>
+   <item row="1" column="5">
+    <widget class="QSpinBox" name="spinBoxJ"/>
+   </item>
+   <item row="0" column="1" colspan="2">
+    <widget class="QDoubleSpinBox" name="doubleSpinBoxX"/>
+   </item>
+   <item row="0" column="0">
+    <widget class="QLabel" name="label">
+     <property name="text">
+      <string>X: </string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0" colspan="2">
+    <widget class="QLabel" name="label_4">
+     <property name="text">
+      <string>I:</string>
+     </property>
+    </widget>
+   </item>
    <item row="1" column="8">
     <widget class="QSpinBox" name="spinBoxK"/>
+   </item>
+   <item row="1" column="3" colspan="2">
+    <widget class="QLabel" name="label_5">
+     <property name="text">
+      <string>J:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="4" colspan="2">
+    <widget class="QDoubleSpinBox" name="doubleSpinBoxY"/>
+   </item>
+   <item row="1" column="2">
+    <widget class="QSpinBox" name="spinBoxI"/>
+   </item>
+   <item row="0" column="7" colspan="2">
+    <widget class="QDoubleSpinBox" name="doubleSpinBoxZ"/>
+   </item>
+   <item row="0" column="3">
+    <widget class="QLabel" name="label_2">
+     <property name="text">
+      <string>Y: </string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0" colspan="3">
+    <widget class="QCheckBox" name="checkBoxFast">
+     <property name="text">
+      <string>Fast</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="6" colspan="3">
+    <widget class="QDoubleSpinBox" name="doubleSpinBoxVoxelValue">
+     <property name="readOnly">
+      <bool>true</bool>
+     </property>
+     <property name="buttonSymbols">
+      <enum>QAbstractSpinBox::NoButtons</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="3" colspan="3">
+    <widget class="QLabel" name="label_7">
+     <property name="text">
+      <string>Voxel value: </string>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>

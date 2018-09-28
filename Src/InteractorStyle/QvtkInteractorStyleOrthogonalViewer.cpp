@@ -4,13 +4,15 @@
 #include "QvtkProp.h"
 #include "QvtkOrthogonalViewer.h"
 // vtk 
+#include <vtkRenderWindowInteractor.h>
 #include <vtkInteractorStyle.h>
+#include <vtkAbstractPicker.h>
 // qt 
 #include <QDebug>
 namespace Q {
 	namespace vtk {
 		DataSet *InteractorStyleOrthogonalViewer::pokedDataSet = nullptr;
-		DataSet * InteractorStyleOrthogonalViewer::findPokedDataSet()
+		DataSet * InteractorStyleOrthogonalViewer::findPokedDataSet(const int XY[2]) 
 		{
 			typedef QList<QMetaObject::Connection> ConnectionList;
 			ConnectionList connections;
@@ -24,15 +26,32 @@ namespace Q {
 						InteractorStyleOrthogonalViewer::pokedDataSet = (*cit)->getRenderDataSet();});
 			}
 			InteractorStyleOrthogonalViewer::pokedDataSet = nullptr;
-			this->tryPick();
+			this->tryPick(XY);
 			for (ConnectionList::const_iterator cit = connections.cbegin(); cit != connections.cend(); ++cit) {
 				QObject::disconnect(*cit);
 			}
 			return InteractorStyleOrthogonalViewer::pokedDataSet;
 		}
-		int InteractorStyleOrthogonalViewer::tryPick(double xyz[3])
+		int InteractorStyleOrthogonalViewer::tryPick(const int XY[2])
 		{
-			qWarning() << "Not implemented.";
+			vtkInteractorStyle *style = dynamic_cast<vtkInteractorStyle*>(this);
+			if (style) {
+				style->SetCurrentRenderer(style->GetDefaultRenderer());
+				if (XY == nullptr) {
+					return style->GetInteractor()->GetPicker()->Pick(
+						style->GetInteractor()->GetEventPosition()[0],
+						style->GetInteractor()->GetEventPosition()[1],
+						0,
+						style->GetCurrentRenderer());
+				}
+				else {
+					return style->GetInteractor()->GetPicker()->Pick(
+						XY[0], 
+						XY[1],
+						0,
+						style->GetCurrentRenderer());
+				}
+			}
 			return 0;
 		}
 	}
