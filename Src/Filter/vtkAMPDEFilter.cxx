@@ -66,6 +66,7 @@ void vtkAMPDEFilter::SetKMeans(const std::vector<double>& k)
 
 vtkAMPDEFilter::vtkAMPDEFilter()
 {
+	this->SetNumberOfOutputPorts(2);
 	this->VolumeTolerance = VTK_DOUBLE_MIN;
 	this->TargetVolume = 0;
 	this->ResampleSize[0] = 100;
@@ -76,47 +77,53 @@ vtkAMPDEFilter::vtkAMPDEFilter()
 	this->KMeans.push_back(2000);
 	this->KMeans.push_back(4000);
 	this->AluminiumMean = 2;
+	this->MarchingCubes = vtkMarchingCubes::New();
+}
+
+int vtkAMPDEFilter::FillOutputPortInformation(int port, vtkInformation * info)
+{
+	if (port != 1) {
+		return Superclass::FillOutputPortInformation(port, info);
+	}
+	else {
+		info->Set(vtkDataObject::DATA_TYPE_NAME(), "vtkImageData");
+		return 1;
+	}
 }
 
 vtkAMPDEFilter::~vtkAMPDEFilter()
 {
 	this->KMeans.clear();
+	this->MarchingCubes->Delete();
 }
 
 int vtkAMPDEFilter::RequestData(vtkInformation * request, vtkInformationVector ** inputVector, vtkInformationVector * outputVector)
 {
-
 	// get the info objects
 	vtkInformation *inInfo = inputVector[0]->GetInformationObject(0);
-	vtkInformation *outInfo = outputVector->GetInformationObject(0);
-
+	vtkInformation *outInfo0 = outputVector->GetInformationObject(0);
+	vtkInformation *outInfo1 = outputVector->GetInformationObject(1);
 	// get the input and output
 	vtkImageData *input = vtkImageData::SafeDownCast(
 		inInfo->Get(vtkDataObject::DATA_OBJECT()));
-	vtkPolyData *output = vtkPolyData::SafeDownCast(
-		outInfo->Get(vtkDataObject::DATA_OBJECT()));
-
+	vtkPolyData *output0 = vtkPolyData::SafeDownCast(
+		outInfo0->Get(vtkDataObject::DATA_OBJECT()));
+	vtkImageData *output1 = vtkImageData::SafeDownCast(
+		outInfo1->Get(vtkDataObject::DATA_OBJECT()));
 	int failed = 1;
 	switch (input->GetScalarType())
 	{
-		vtkTemplateMacro(failed = this->ITK_Calculation<VTK_TT>(input, input));
+		vtkTemplateMacro(failed = this->ITK_Calculation<VTK_TT>(input, output1));
 		//failed = this->ITK_Calculation(input, input);
 	}
-
 	if (failed) {
 		vtkErrorMacro(<< "ITK_Calculation failed. ");
 		return 1;
 	}
-
-	vtkNew<vtkMarchingCubes> marchingCubes;
-	marchingCubes->SetInputData(input);
-	marchingCubes->GenerateValues(1, 1, 1);
-	marchingCubes->Update();
-
-	output->ShallowCopy(marchingCubes->GetOutput());
-
-
-
+	this->MarchingCubes->SetInputData(output1);
+	this->MarchingCubes->GenerateValues(1, 1, 1);
+	this->MarchingCubes->Update();
+	output0->ShallowCopy(this->MarchingCubes->GetOutput());
 	return 1;
 }
 //#include <itkImageFileWriter.h>
@@ -442,4 +449,14 @@ void vtkAMPDEFilter::PrintSelf(ostream & os, vtkIndent indent)
 	}
 	os << '\n';
 	os << indent << "AluminiumMean: " << this->AluminiumMean;
+}
+
+vtkImageData * vtkAMPDEFilter::GetOutputImage()
+{
+	return vtkImageData::SafeDownCast(this->GetOutputDataObject(1));
+}
+
+vtkAlgorithmOutput * vtkAMPDEFilter::GetOutputPortImage()
+{
+	return this->GetOutputPort(1);
 }

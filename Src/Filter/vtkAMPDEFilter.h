@@ -24,6 +24,7 @@
 #include "filter_export.h"
 // vtk
 #include <vtkPolyDataAlgorithm.h>
+class vtkMarchingCubes;
 class vtkImageData;
 /**
  * @class	vtkAMPDEFilter
@@ -69,6 +70,8 @@ class vtkImageData;
  * had different intensity distribution. Since then,  vtkAMPDEFilter#ResampleSize, 
  * vtkAMPDEFilter#KMeans, vtkAMPDEFilter#AluminiMean, parameters was added to this filter. 
  * By seting above parameters, the filter can apply to different situation. 
+ * @date	2018/10/10
+ * Adding the image segmentation output as the second ouptut port for easier debuging.
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
  * In the future version, the segmentation should not be segmented from a downsample image. 
  * Perhaps  Or by knowing the volume of the aluminium marker, doing hitogram statistics the finding the volume matching.
@@ -98,6 +101,18 @@ public:
 	 * @param[in]		indent
 	 */
 	virtual void PrintSelf(ostream& os, vtkIndent indent) VTK_OVERRIDE;
+	/**
+	 * @fn		vtkImageData* GetOutputImage()	
+	 * @brief	Get image output.
+	 * @return	The segmentation vtkImageData output. 
+	 */
+	vtkImageData* GetOutputImage();
+	/**
+	 * @fn		vtkAlgorithmOutput* GetOutputPortImage();
+	 * @brief	Get image output port.
+	 * @return	The segmentation output port. 
+	 */
+	vtkAlgorithmOutput* GetOutputPortImage();
 
 	/**
 	 * @brief	Set function for #VolumeTolerance.
@@ -209,6 +224,10 @@ protected:
 
 
 	/**
+	 * @fn		virtual int RequestData(
+	 *	vtkInformation *request, 
+	 *	vtkInformationVector ** inputVector, 
+	 *	vtkInformationVector * outputVector) VTK_OVERRIDE;	
 	 * @brief	vtk pipeline method. 
 	 * @override
 	 */
@@ -217,13 +236,21 @@ protected:
 		vtkInformationVector ** inputVector, 
 		vtkInformationVector * outputVector) VTK_OVERRIDE;
 	/**
-	 * @brief	Make the 1st input port to be vtkImageData. 
-	 * @override
+	 * @fn			virtual int FillInputPortInformation(int port, vtkInformation *info) VTK_OVERRIDE;
+	 * @brief		Make input ports to be vtkImageData. 
 	 * @param[in]	port 
 	 * @param[in]	info
 	 * @return int
 	 */
 	virtual int FillInputPortInformation(int port, vtkInformation *info) VTK_OVERRIDE;
+	/**
+	 * @fn			virtual int FillOutputPortInformation(int port, vtkInformation *info) VTK_OVERRIDE;
+	 * @brief		Make the 1st output port to be vtkImageData. 
+	 * @param[in]	port 
+	 * @param[in]	info
+	 * @return int
+	 */
+	virtual int FillOutputPortInformation(int port, vtkInformation *info) VTK_OVERRIDE;
 
 	/**
 	 * @fn 	template<typename ScalarType>
@@ -241,6 +268,7 @@ protected:
 	double ResampleSize[3]; ///<	The resample size for k-means for increasing speed. 
 	std::vector<double> KMeans; ///<	The size of KMeans is K, the values are means for K-Means algorithm.
 	unsigned int AluminiumMean; ///<	The ordinal of aluminium in kmeans. 
+	vtkMarchingCubes *MarchingCubes; ///<	The Marching cubes algorithm for generating polydata.
 private:
 	vtkAMPDEFilter(const vtkAMPDEFilter&) VTK_DELETE_FUNCTION;
 	void operator=(const vtkAMPDEFilter&) VTK_DELETE_FUNCTION;
