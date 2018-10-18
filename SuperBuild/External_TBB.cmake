@@ -181,12 +181,12 @@ else()
         DEPENDEES 
         build
     )
-    set(TBB_LIBRARY_DEBUG ${CMAKE_BINARY_DIR}/TBB-build/bin/Debug/libtbb_debug.so)
-    set(TBB_LIBRARY_RELEASE ${CMAKE_BINARY_DIR}/TBB-build/bin/Release/libtbb.so)
-    set(TBB_MALLOC_LIBRARY_DEBUG ${CMAKE_BINARY_DIR}/TBB-build/bin/Debug/libtbbmalloc_debug.so)
-    set(TBB_MALLOC_LIBRARY_RELEASE ${CMAKE_BINARY_DIR}/TBB-build/bin/Release/libtbbmalloc.so)
-    set(TBB_MALLOC_PROXY_LIBRARY_DEBUG  ${CMAKE_BINARY_DIR}/TBB-build/bin/Debug/libtbbmalloc_proxy_debug.so)
-    set(TBB_MALLOC_PROXY_LIBRARY_RELEASE ${CMAKE_BINARY_DIR}/TBB-build/bin/Release/libtbbmalloc_proxy.so)
+    set(TBB_LIBRARY_DEBUG ${CMAKE_BINARY_DIR}/TBB-build/bin/libtbb_debug.so)
+    set(TBB_LIBRARY_RELEASE ${CMAKE_BINARY_DIR}/TBB-build/bin/libtbb.so)
+    set(TBB_MALLOC_LIBRARY_DEBUG ${CMAKE_BINARY_DIR}/TBB-build/bin/libtbbmalloc_debug.so)
+    set(TBB_MALLOC_LIBRARY_RELEASE ${CMAKE_BINARY_DIR}/TBB-build/bin/libtbbmalloc.so)
+    set(TBB_MALLOC_PROXY_LIBRARY_DEBUG  ${CMAKE_BINARY_DIR}/TBB-build/bin/libtbbmalloc_proxy_debug.so)
+    set(TBB_MALLOC_PROXY_LIBRARY_RELEASE ${CMAKE_BINARY_DIR}/TBB-build/bin/libtbbmalloc_proxy.so)
 
 endif()
 
