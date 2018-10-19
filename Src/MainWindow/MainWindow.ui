@@ -20,8 +20,8 @@
    <string>MainWindow</string>
   </property>
   <property name="windowIcon">
-   <iconset>
-    <normaloff>:/HyperBlue/hyperblue/icon/Orthopedics-icon.png</normaloff>:/HyperBlue/hyperblue/icon/Orthopedics-icon.png</iconset>
+   <iconset resource="../../Resource/Project.qrc">
+    <normaloff>:/icon/visitor.ico</normaloff>:/icon/visitor.ico</iconset>
   </property>
   <property name="dockNestingEnabled">
    <bool>true</bool>
@@ -223,7 +223,7 @@
     <property name="title">
      <string>Filter</string>
     </property>
-    <addaction name="action_BET2Filter"/>
+    <addaction name="action_BrainExtractionFilter"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuWidget"/>
@@ -745,9 +745,12 @@
     <string>&amp;Multi Axial</string>
    </property>
   </action>
-  <action name="action_BET2Filter">
+  <action name="action_BrainExtractionFilter">
    <property name="text">
-    <string>&amp;BET2Filter</string>
+    <string>&amp;BrainExtractionFilter</string>
+   </property>
+   <property name="toolTip">
+    <string>BrainExtractionFilter</string>
    </property>
   </action>
  </widget>

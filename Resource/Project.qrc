@@ -1,5 +1,7 @@
 <RCC>
   <qresource prefix="/">
+    <file>icon/visitor.ico</file>
+    <file>icon/visitor.png</file>
     <file>Implant/OrthopedicNail.stl</file>
     <file>Implant/OrthopedicNail2.stl</file>
     <file>Implant/Wital Implant.stl</file>

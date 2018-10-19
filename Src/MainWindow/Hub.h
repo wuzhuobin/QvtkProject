@@ -6,6 +6,7 @@
 #include "MainWindow.h"
 #include "QvtkStylesSwitchOrthogonalViewer.h"
 #include "QvtkWidgetCollection.h"
+#include "QvtkStackedFilters.h"
 //qt
 #include <QObject>
 class MAINWINDOW_EXPORT Hub final: public QObject
@@ -21,9 +22,10 @@ public:
 	MainWindow* mainWindow;
 	Q::vtk::StylesSwitchOrthogonalViewer* styles[4];
 	Q::vtk::WidgetCollection* widgets[4];
+	Q::vtk::StackedFilter *filters;
 
 	Q_DISABLE_COPY(Hub);
-public slots:
+public Q_SLOTS:
 	//void 
 	void slotInitializationImages(QStringList imagePaths);
 	void slotInitializationLabel(QString path);
@@ -60,10 +62,10 @@ public slots:
 	void slotRemovePolyDataSourceNormal();
 	void slotAddBiopsyWidget();
 	void slotRemoveBiopsyWidget();
+	// filter
+	void slotBrainExtractionFilter();
 	// testing
 	void slotTestingAction();
-
-
 };
 
 #endif // !__SCB_HUB_H__

@@ -16,7 +16,7 @@
 #include "QvtkPolyDataActor.h"
 #include "QvtkPolyDataActor2D.h"
 #include "QvtkBiopsyData.h"
-//#include "QvtkBET2Filter.h"
+#include "QvtkBrainExtractionFilter.h"
 //vtk
 #include <vtkRenderer.h>
 #include <vtkSphereSource.h>
@@ -125,6 +125,11 @@ Hub::Hub(QObject* parent)
 	QObject::connect(this->mainWindow->action_Biopsy_Off, &QAction::triggered,
 		this, &Hub::slotRemoveBiopsyWidget);
 	scene->registerData(new Q::vtk::BiopsyData, Q::vtk::BiopsyWidget::TAG);
+//////////////////////////////////////// Filter ////////////////////////////////////////
+	this->filters = new Q::vtk::StackedFilter(this->mainWindow);
+	this->filters->hide();
+	QObject::connect(this->mainWindow->action_BrainExtractionFilter, &QAction::triggered,
+		this, &Hub::slotBrainExtractionFilter);
 //////////////////////////////////////// Testing ////////////////////////////////////////
 	QObject::connect(this->mainWindow->action_Testing_Action, &QAction::triggered,
 		this, &Hub::slotTestingAction);
@@ -684,6 +689,12 @@ void Hub::slotRemoveBiopsyWidget()
 	}
 }
 
+void Hub::slotBrainExtractionFilter()
+{
+	this->filters->show();
+	this->filters->setCurrentWidget(this->filters->getBrainExtractionFilter());
+		
+}
 
 void Hub::slotInitializationImages(QStringList imagePaths)
 {
