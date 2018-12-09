@@ -23,8 +23,6 @@
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
 #include <vtkCamera.h>
-#include <vtkMatrix3x3.h>
-#include <vtkMatrix4x4.h>
 #include <vtkSmartPointer.h>
 #include <vtkSTLReader.h>
 #include <vtkPolyDataMapper.h>
@@ -708,7 +706,6 @@ void Hub::slotInitializationImages(QStringList imagePaths)
 		image->setAbsolutePath(cit->split(";"));
 		image->readData();
 		image->setRelativePath(QStringList() << image->getUniqueName() + ".nii.gz");
-
 		for (int i = 0; i < 3; ++i) {
 			ImageSlice* imageSlice = new ImageSlice;
 			imageSlice->setRenderDataSet(image);
