@@ -120,7 +120,7 @@ protected:
    * 
    */
   virtual void InternalUpdate() VTK_OVERRIDE;
-  double RMS; /// <<< Root Meas Square Error between Source and Target.
+  double RMS; ///< Root Meas Square Error between Source and Target.
   vtkPolyData* TransformPolyData; ///< The transformed source poly data.
   double SourceCenter[3]; ///< Center of mass of the source poly data.
   double TargetCenter[3]; ///< Center of mass of the target poly data.
